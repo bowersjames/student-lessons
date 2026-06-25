@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>William PTE Listening Homework</title>
+  <!-- All eight question prompts are separate MP3 files. No browser TTS is used. -->
+  <style>
+    :root{--ink:#17322d;--muted:#60736f;--panel:#fff;--green:#205f50;--soft:#edf7f3;--line:#d7e1dd;--warm:#f6f3e9;--record:#8d2f2a}
+    *{box-sizing:border-box}
+    body{margin:0;background:#eef3f0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+    main{max-width:900px;margin:auto;padding:28px 18px 64px}
+    header,.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 28px rgba(19,52,44,.07)}
+    header{padding:30px;margin-bottom:18px;background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+    h1{margin:0 0 6px;font-size:clamp(28px,5vw,44px);line-height:1.1}
+    h2{margin:0 0 8px;font-size:24px} h3{margin:0;font-size:19px}
+    p{margin:8px 0}.muted{color:var(--muted)}
+    .intro{margin-top:18px;padding:14px 16px;border-left:5px solid var(--green);background:#f2f8f5;border-radius:10px}
+    .instructions{padding:22px;margin-bottom:18px}
+    .section{margin-top:26px}.section-head{margin:0 2px 10px}
+    .item{padding:20px;margin:12px 0}.item-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+    button{appearance:none;border:0;border-radius:11px;padding:11px 16px;background:var(--green);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+    button.secondary{background:#e6efeb;color:var(--ink)} button.recording{background:var(--record)} button:disabled{opacity:.45;cursor:not-allowed}
+    textarea{width:100%;min-height:90px;resize:vertical;border:1px solid #bdcbc6;border-radius:10px;padding:12px;font:inherit;color:inherit;background:#fbfcfa}
+    textarea:focus{outline:3px solid rgba(32,95,80,.16);border-color:var(--green)}
+    .label{font-weight:700;margin:4px 0 7px}
+    .transcript{display:none;margin-top:14px;padding:13px 15px;background:var(--warm);border-left:4px solid #b4842f;border-radius:9px}
+    .transcript.show{display:block}.status{font-weight:650;color:var(--muted)}
+    .recorder{display:none;margin:12px 0 14px;padding:13px 15px;border:1px solid var(--line);border-radius:11px;background:#f8fbf9}
+    .recorder.show{display:block}.recorder audio{width:100%;margin-top:10px}
+    .footer-card{padding:22px;margin-top:28px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .tiny{font-size:13px}.error{color:#9d2a22}
+    .tips{margin:12px 0 8px;padding-left:22px}.tips li{margin:7px 0}
+    .mic-check{padding:22px;margin-bottom:18px}.mic-check .controls{margin-bottom:8px}.mic-ok{color:#205f50}.mic-error{color:#9d2a22}
+    @media(max-width:600px){.item-top{align-items:flex-start;flex-direction:column}.controls button{width:100%}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>PTE Listening Homework</h1>
+    <p class="muted">Repeat Sentence and Write From Dictation</p>
+    <div class="intro">Hi William. I made this short practice to see what you remember after one listen. Do not worry about getting everything perfect. Just give me your first, natural response.</div>
+  </header>
+
+  <section class="card mic-check">
+    <h2>Check your microphone</h2>
+    <p>Click the button below before you begin. Your browser should ask for permission once.</p>
+    <div class="controls"><button id="enable-microphone">Enable microphone</button></div>
+    <p id="microphone-status" class="status">Microphone access has not been checked yet.</p>
+  </section>
+
+  <section class="card instructions">
+    <h2>Before you start</h2>
+    <p>Use headphones if you can. For Repeat Sentence, allow microphone access, listen once, then press Record answer and repeat the sentence. In the real PTE task, you only listen and repeat. I am also asking you to type the sentence afterward so I can separate what you remembered from any pronunciation or speaking difficulties. For Write From Dictation, listen once and type the full sentence.</p>
+    <h3>A few tips before you begin</h3>
+    <ul class="tips">
+      <li>Listen for short word groups instead of trying to hold every word separately.</li>
+      <li>Start speaking as soon as the audio finishes and keep going if one word is missing.</li>
+      <li>For dictation, write the main sentence first, then check small words, endings, and spelling.</li>
+      <li>Your first attempt is the useful one, so do not aim for perfection.</li>
+    </ul>
+    <p>After your first attempt, you can check the transcript and listen one more time. Please keep your first answer unchanged so I can see what you remembered naturally.</p>
+    <p class="tiny muted">Your recordings stay on your device until you download them. When you finish, send me the recordings and your typed answers in our chat. I’ll review them and tell you what to work on next.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Repeat Sentence</h2><p class="muted">Click Listen once. When the sentence ends, press Record answer yourself, repeat the sentence, then stop the recording when you finish.</p></div>
+    <div id="repeatItems"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Write From Dictation</h2><p class="muted">Listen once and type the sentence exactly as you hear it. Do not worry if you miss something. I want to see your first attempt.</p></div>
+    <div id="dictationItems"></div>
+  </section>
+
+  <section class="card footer-card">
+    <h2>Send your work to me</h2>
+    <p>Download your recordings and typed answers, then attach both files in our chat. I’ll listen to them and give you clear feedback.</p>
+    <div class="actions"><button id="download-recordings">Download all recordings</button><button id="download-answers" class="secondary">Download typed answers</button><button id="reset" class="secondary">Reset worksheet</button></div>
+  </section>
+</main>
+
+<script>
+  const items = [{"id":"RS1","type":"repeat","text":"The field team delayed the coastal survey until the tide had fallen.","audio":"audio_hazel_uk/RS1.mp3"},{"id":"RS2","type":"repeat","text":"A minor change in the timetable caused several laboratory sessions to overlap.","audio":"audio_hazel_uk/RS2.mp3"},{"id":"RS3","type":"repeat","text":"Before approving the proposal, the panel requested a clearer estimate of maintenance costs.","audio":"audio_hazel_uk/RS3.mp3"},{"id":"RS4","type":"repeat","text":"What appeared to be a software fault was eventually traced to a cable connected in reverse.","audio":"audio_hazel_uk/RS4.mp3"},{"id":"WFD1","type":"dictation","text":"Neither department had budgeted for repairs to the shared ventilation system.","audio":"audio_hazel_uk/WFD1.mp3"},{"id":"WFD2","type":"dictation","text":"The archived photographs were scanned twice to preserve the faded handwritten notes.","audio":"audio_hazel_uk/WFD2.mp3"},{"id":"WFD3","type":"dictation","text":"Students who miss the site visit must complete an alternative observation report.","audio":"audio_hazel_uk/WFD3.mp3"},{"id":"WFD4","type":"dictation","text":"A reliable forecast depends on where the sensors are placed and how often they are calibrated.","audio":"audio_hazel_uk/WFD4.mp3"}];
+
+  const playCounts = new Map();
+  const recordings = new Map();
+  const recordingUrls = new Map();
+  const activeRecorders = new Map();
+  const promptPlayers = new Map();
+  const promptUrls = new Map();
+  let microphoneReady = false;
+  let microphoneStream = null;
+  const audioReady = true;
+
+  function promptAudioUrl(item){
+    if(promptUrls.has(item.id)) return promptUrls.get(item.id);
+    if(!item.audio.startsWith('data:')) return item.audio;
+    const [meta, payload] = item.audio.split(',');
+    const mime = (meta.match(/^data:([^;]+)/) || [,'audio_padded/mpeg'])[1];
+    const binary = atob(payload);
+    const bytes = new Uint8Array(binary.length);
+    for(let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const url = URL.createObjectURL(new Blob([bytes], {type:mime}));
+    promptUrls.set(item.id, url);
+    return url;
+  }
+
+  function playPrompt(item, onEnd, onError, onStart){
+    const previous = promptPlayers.get(item.id);
+    if(previous){
+      previous.pause();
+      previous.currentTime = 0;
+    }
+    const player = new Audio(promptAudioUrl(item));
+    player.preload = 'auto';
+    promptPlayers.set(item.id, player);
+    let finished = false;
+    const fail = () => {
+      if(finished) return;
+      finished = true;
+      promptPlayers.delete(item.id);
+      onError(player.error?.message || 'Audio playback was blocked or failed.');
+    };
+    player.addEventListener('playing', () => {
+      if(onStart) onStart();
+    }, {once:true});
+    player.addEventListener('ended', () => {
+      if(finished) return;
+      finished = true;
+      promptPlayers.delete(item.id);
+      onEnd();
+    }, {once:true});
+    player.addEventListener('error', fail, {once:true});
+    player.load();
+    const result = player.play();
+    if(result && typeof result.catch === 'function') result.catch(fail);
+  }
+
+  const microphoneButton = document.querySelector('#enable-microphone');
+  const microphoneStatus = document.querySelector('#microphone-status');
+
+  function setPlaybackEnabled(){
+    document.querySelectorAll('[data-play="true"]').forEach(button => {
+      const count = playCounts.get(button.dataset.itemId) || 0;
+      if(count > 0) return;
+      button.disabled = !audioReady;
+    });
+  }
+
+  function microphoneStreamIsActive(){
+    return microphoneStream && microphoneStream.getAudioTracks().some(track => track.readyState === 'live');
+  }
+
+  async function getSharedMicrophoneStream(){
+    if(microphoneStreamIsActive()) return microphoneStream;
+    microphoneStream = await navigator.mediaDevices.getUserMedia({audio:true});
+    return microphoneStream;
+  }
+
+  async function requestMicrophoneAccess(){
+    microphoneStatus.classList.remove('mic-ok','mic-error');
+    if(window.top !== window.self){
+      microphoneStatus.textContent = 'This page is running inside an embedded preview that blocks microphone access. Open it as a normal webpage.';
+      microphoneStatus.classList.add('mic-error');
+      microphoneButton.disabled = true;
+      return false;
+    }
+    if(!window.isSecureContext){
+      microphoneStatus.textContent = 'Microphone access needs a secure HTTPS webpage.';
+      microphoneStatus.classList.add('mic-error');
+      microphoneButton.disabled = true;
+      return false;
+    }
+    if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+      microphoneStatus.textContent = 'This browser cannot record audio. Please use Chrome or Edge.';
+      microphoneStatus.classList.add('mic-error');
+      return false;
+    }
+    microphoneButton.disabled = true;
+    microphoneStatus.textContent = 'Waiting for microphone permission.';
+    try{
+      await getSharedMicrophoneStream();
+      microphoneReady = true;
+      microphoneStatus.textContent = 'Your microphone is ready.';
+      microphoneStatus.classList.add('mic-ok');
+      microphoneButton.textContent = 'Ready to begin';
+      setPlaybackEnabled();
+      return true;
+    }catch(error){
+      microphoneReady = false;
+      microphoneStatus.textContent = 'Microphone access was blocked. Use the padlock beside the web address to allow it, then try again.';
+      microphoneStatus.classList.add('mic-error');
+      microphoneButton.disabled = false;
+      microphoneButton.textContent = 'Try microphone again';
+      return false;
+    }
+  }
+
+  microphoneButton.addEventListener('click', requestMicrophoneAccess);
+
+  if(window.top !== window.self){
+    microphoneStatus.textContent = 'This host blocks microphone access because the worksheet is inside an embedded preview.';
+    microphoneStatus.classList.add('mic-error');
+    microphoneButton.disabled = true;
+  }else if(!window.isSecureContext){
+    microphoneStatus.textContent = 'This page needs secure HTTPS hosting before microphone recording will work.';
+    microphoneStatus.classList.add('mic-error');
+    microphoneButton.disabled = true;
+  }
+
+  function supportedMimeType(){
+    if(!window.MediaRecorder) return '';
+    const options = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+    return options.find(type => MediaRecorder.isTypeSupported(type)) || '';
+  }
+
+  function prepareRecorder(item, state){
+    if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+      state.textContent = 'Voice recording is unavailable in this browser';
+      state.classList.add('error');
+      return null;
+    }
+    try{
+      if(!microphoneStreamIsActive()){
+        microphoneReady = false;
+        setPlaybackEnabled();
+        state.textContent = 'Microphone access was lost. Use the button above to reconnect it.';
+        state.classList.add('error');
+        microphoneButton.disabled = false;
+        microphoneButton.textContent = 'Reconnect microphone';
+        return null;
+      }
+      const stream = microphoneStream;
+      const type = supportedMimeType();
+      const recorderOptions = type ? {mimeType:type,audioBitsPerSecond:48000} : {audioBitsPerSecond:48000};
+      const recorder = new MediaRecorder(stream,recorderOptions);
+      const chunks = [];
+      recorder.addEventListener('dataavailable', event => { if(event.data.size) chunks.push(event.data); });
+      return {stream,recorder,chunks,type:recorder.mimeType || type || 'audio/webm'};
+    }catch(error){
+      microphoneReady = false;
+      setPlaybackEnabled();
+      state.textContent = 'Microphone access was lost. Use the button above to reconnect it.';
+      state.classList.add('error');
+      microphoneButton.disabled = false;
+      microphoneButton.textContent = 'Reconnect microphone';
+      return null;
+    }
+  }
+
+  function finishRecording(item, setup, state, recorderBox, audio, recordButton, stopButton){
+    setup.recorder.addEventListener('stop', () => {
+      const blob = new Blob(setup.chunks,{type:setup.type});
+      recordings.set(item.id,blob);
+      const oldUrl = recordingUrls.get(item.id);
+      if(oldUrl) URL.revokeObjectURL(oldUrl);
+      const url = URL.createObjectURL(blob);
+      recordingUrls.set(item.id,url);
+      audio.src = url;
+      recorderBox.classList.add('show');
+      audio.hidden = false;
+      recordButton.disabled = false;
+      stopButton.disabled = true;
+      const saveButton = document.querySelector(`#save-${item.id}`);
+      if(saveButton) saveButton.disabled = false;
+      activeRecorders.delete(item.id);
+      state.textContent = 'Voice answer saved. You can record again if you want to replace it.';
+    },{once:true});
+  }
+
+  function renderItem(item, number){
+    const div = document.createElement('article');
+    div.className = 'card item';
+    const recorderMarkup = item.type === 'repeat' ? `
+      <div id="recorder-${item.id}" class="recorder">
+        <div class="label">My voice answer</div>
+        <div class="controls">
+          <button id="record-${item.id}" class="recording" disabled>Record answer</button>
+          <button id="stop-${item.id}" class="recording" disabled>Stop recording</button>
+          <button id="save-${item.id}" class="secondary" disabled>Download recording</button>
+        </div>
+        <audio id="audio-${item.id}" controls hidden></audio>
+      </div>` : '';
+    div.innerHTML = `
+      <div class="item-top">
+        <h3>Question ${number}</h3>
+        <span class="status" id="state-${item.id}">Ready</span>
+      </div>
+      <div class="controls">
+        <button id="play-${item.id}">Listen once</button>
+        <button id="check-${item.id}" class="secondary">Check my answer</button>
+      </div>
+      ${recorderMarkup}
+      <div class="label">My first answer</div>
+      <textarea id="answer-${item.id}" placeholder="Type what you heard or remembered"></textarea>
+      <div id="transcript-${item.id}" class="transcript"><strong>Transcript</strong><br>${item.text}<br><span class="tiny">You can listen one more time now.</span></div>`;
+
+    const play = div.querySelector(`#play-${item.id}`);
+    play.dataset.play = 'true';
+    play.dataset.itemId = item.id;
+    play.dataset.itemType = item.type;
+    play.disabled = !audioReady;
+    const check = div.querySelector(`#check-${item.id}`);
+    const transcript = div.querySelector(`#transcript-${item.id}`);
+    const state = div.querySelector(`#state-${item.id}`);
+    const recorderBox = item.type === 'repeat' ? div.querySelector(`#recorder-${item.id}`) : null;
+    const recordButton = item.type === 'repeat' ? div.querySelector(`#record-${item.id}`) : null;
+    const stopButton = item.type === 'repeat' ? div.querySelector(`#stop-${item.id}`) : null;
+    const audio = item.type === 'repeat' ? div.querySelector(`#audio-${item.id}`) : null;
+    const saveButton = item.type === 'repeat' ? div.querySelector(`#save-${item.id}`) : null;
+    let recordingTimeout = null;
+
+    if(recordButton){
+      recordButton.addEventListener('click', async () => {
+        if(activeRecorders.has(item.id)) return;
+        state.classList.remove('error');
+        if(!microphoneReady){
+          state.textContent = 'Checking microphone';
+          await requestMicrophoneAccess();
+        }
+        if(!microphoneReady){
+          state.textContent = 'Microphone is not available here. Open the file directly in Chrome or Edge and allow microphone access.';
+          state.classList.add('error');
+          return;
+        }
+        const setup = prepareRecorder(item,state);
+        if(!setup) return;
+        activeRecorders.set(item.id,setup);
+        finishRecording(item,setup,state,recorderBox,audio,recordButton,stopButton);
+        setup.recorder.start();
+        recordButton.disabled = true;
+        stopButton.disabled = false;
+        state.textContent = 'Recording now';
+        clearTimeout(recordingTimeout);
+        recordingTimeout = setTimeout(() => {
+          const active = activeRecorders.get(item.id);
+          if(active?.recorder.state === 'recording') active.recorder.stop();
+        }, 20000);
+      });
+      stopButton.addEventListener('click', () => {
+        clearTimeout(recordingTimeout);
+        const setup = activeRecorders.get(item.id);
+        if(setup?.recorder.state === 'recording') setup.recorder.stop();
+      });
+      saveButton.addEventListener('click', () => {
+        const blob = recordings.get(item.id);
+        if(blob) downloadBlob(blob, recordingFilename(item.id));
+      });
+    }
+
+    play.addEventListener('click', async () => {
+      const count = playCounts.get(item.id) || 0;
+      if(!audioReady){
+        state.textContent = 'Use the button at the top before listening';
+        return;
+      }
+      if(count >= 2) return;
+      play.disabled = true;
+      state.classList.remove('error');
+
+      state.textContent = count === 0 ? 'Starting audio' : 'Starting replay';
+      playPrompt(item, () => {
+        const next = count + 1;
+        playCounts.set(item.id,next);
+        if(item.type === 'repeat' && next === 1){
+          recorderBox.classList.add('show');
+          recordButton.disabled = false;
+          state.textContent = 'First listen completed. Press Record answer when you are ready.';
+        }else if(next === 1){
+          state.textContent = 'First listen completed';
+        }else{
+          state.textContent = 'Replay completed';
+        }
+        if(next === 1){
+          play.textContent = 'Replay once';
+          play.disabled = !transcript.classList.contains('show');
+        }else{
+          play.disabled = true;
+        }
+      }, () => {
+        state.textContent = 'The question audio did not start. Click Listen once again, or open this file directly in Chrome/Edge.';
+        state.classList.add('error');
+        play.disabled = false;
+      }, () => {
+        state.textContent = count === 0 ? 'Playing' : 'Replaying';
+      });
+    });
+
+    check.addEventListener('click', () => {
+      const answer = div.querySelector(`#answer-${item.id}`).value.trim();
+      if(!answer){state.textContent = 'Type your first answer before checking';return;}
+      transcript.classList.add('show');
+      check.disabled = true;
+      if((playCounts.get(item.id)||0) === 1 && !activeRecorders.has(item.id)) play.disabled = false;
+      state.textContent = 'Transcript revealed';
+    });
+    return div;
+  }
+
+  items.filter(x=>x.type==='repeat').forEach((item,i)=>document.querySelector('#repeatItems').appendChild(renderItem(item,i+1)));
+  items.filter(x=>x.type==='dictation').forEach((item,i)=>document.querySelector('#dictationItems').appendChild(renderItem(item,i+1)));
+
+  function escapeHtml(value){
+    return value.replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+  }
+
+  function recordingFilename(id){
+    const number = id.replace('RS','');
+    return `William-RS-${number}.webm`;
+  }
+
+  function downloadBlob(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function dosDateTime(date = new Date()){
+    const year = Math.max(1980, date.getFullYear());
+    const time = (date.getHours() << 11) | (date.getMinutes() << 5) | Math.floor(date.getSeconds() / 2);
+    const day = (year - 1980) << 9 | (date.getMonth() + 1) << 5 | date.getDate();
+    return {time, day};
+  }
+
+  const crcTable = (() => {
+    const table = new Uint32Array(256);
+    for(let n=0;n<256;n++){
+      let c=n;
+      for(let k=0;k<8;k++) c = (c & 1) ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      table[n]=c >>> 0;
+    }
+    return table;
+  })();
+
+  function crc32(bytes){
+    let crc = 0xffffffff;
+    for(const byte of bytes) crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function u16(value){
+    return new Uint8Array([value & 255, (value >>> 8) & 255]);
+  }
+
+  function u32(value){
+    return new Uint8Array([value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]);
+  }
+
+  function joinBytes(parts){
+    const size = parts.reduce((sum, part) => sum + part.length, 0);
+    const output = new Uint8Array(size);
+    let offset = 0;
+    for(const part of parts){ output.set(part, offset); offset += part.length; }
+    return output;
+  }
+
+  async function createZip(files){
+    const encoder = new TextEncoder();
+    const localParts = [];
+    const centralParts = [];
+    let localOffset = 0;
+    const {time, day} = dosDateTime();
+
+    for(const file of files){
+      const name = encoder.encode(file.name);
+      const data = new Uint8Array(await file.blob.arrayBuffer());
+      const crc = crc32(data);
+      const localHeader = joinBytes([
+        u32(0x04034b50), u16(20), u16(0), u16(0), u16(time), u16(day),
+        u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), name
+      ]);
+      localParts.push(localHeader, data);
+
+      const centralHeader = joinBytes([
+        u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(time), u16(day),
+        u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), u16(0),
+        u16(0), u16(0), u32(0), u32(localOffset), name
+      ]);
+      centralParts.push(centralHeader);
+      localOffset += localHeader.length + data.length;
+    }
+
+    const central = joinBytes(centralParts);
+    const end = joinBytes([
+      u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
+      u32(central.length), u32(localOffset), u16(0)
+    ]);
+    return new Blob([...localParts, central, end], {type:'application/zip'});
+  }
+
+  document.querySelector('#download-recordings').addEventListener('click', async () => {
+    const repeatItems = items.filter(item => item.type === 'repeat');
+    const missing = repeatItems.filter(item => !recordings.has(item.id));
+    if(missing.length && !confirm(`${missing.length} recording${missing.length === 1 ? ' is' : 's are'} missing. Download the available recordings anyway?`)) return;
+    const files = repeatItems
+      .filter(item => recordings.has(item.id))
+      .map(item => ({name: recordingFilename(item.id), blob: recordings.get(item.id)}));
+    if(!files.length){
+      alert('Record at least one Repeat Sentence answer first.');
+      return;
+    }
+    const button = document.querySelector('#download-recordings');
+    const original = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Preparing download';
+    try{
+      const zip = await createZip(files);
+      downloadBlob(zip, 'William-PTE-recordings.zip');
+    }finally{
+      button.disabled = false;
+      button.textContent = original;
+    }
+  });
+
+  document.querySelector('#download-answers').addEventListener('click', () => {
+    const sections = items.map(item => {
+      const answer = document.querySelector(`#answer-${item.id}`).value.trim() || '[No answer entered]';
+      return `<section><h2>${item.id}</h2><h3>First answer</h3><p>${escapeHtml(answer).replace(/\n/g,'<br>')}</p></section>`;
+    });
+    const report = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>William PTE Listening Answers</title>
+<style>body{max-width:820px;margin:40px auto;padding:0 18px;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#17322d}header{border-bottom:2px solid #d7e1dd;padding-bottom:16px}section{padding:18px 0;border-bottom:1px solid #d7e1dd}h1,h2,h3{margin:0 0 8px}h2{font-size:20px}h3{font-size:16px;margin-top:14px}</style>
+</head><body><header><h1>William PTE Listening Answers</h1><p>Completed ${escapeHtml(new Date().toLocaleString())}</p></header>${sections.join('')}</body></html>`;
+    downloadBlob(new Blob([report],{type:'text/html;charset=utf-8'}), 'William-PTE-answers.html');
+  });
+
+  window.addEventListener('beforeunload', () => {
+    if(microphoneStream){
+      microphoneStream.getTracks().forEach(track => track.stop());
+    }
+    promptUrls.forEach(url => URL.revokeObjectURL(url));
+  });
+
+  document.querySelector('#reset').addEventListener('click', () => {
+    if(!confirm('Clear all answers and recordings and reset the worksheet?')) return;
+    promptPlayers.forEach(player => { player.pause(); player.currentTime = 0; });
+    promptPlayers.clear();
+    activeRecorders.forEach(setup => {
+      if(setup.recorder.state === 'recording') setup.recorder.stop();
+    });
+    activeRecorders.clear();
+    recordingUrls.forEach(url => URL.revokeObjectURL(url));
+    recordingUrls.clear();
+    recordings.clear();
+    items.forEach(item => {
+      document.querySelector(`#answer-${item.id}`).value='';
+      document.querySelector(`#transcript-${item.id}`).classList.remove('show');
+      document.querySelector(`#check-${item.id}`).disabled=false;
+      playCounts.set(item.id,0);
+      const play=document.querySelector(`#play-${item.id}`);
+      play.textContent='Listen once';play.disabled=!audioReady;
+      const state=document.querySelector(`#state-${item.id}`);
+      state.textContent='Ready';state.classList.remove('error');
+      if(item.type === 'repeat'){
+        const box=document.querySelector(`#recorder-${item.id}`);
+        const stop=document.querySelector(`#stop-${item.id}`);
+        const audio=document.querySelector(`#audio-${item.id}`);
+        const save=document.querySelector(`#save-${item.id}`);
+        const record=document.querySelector(`#record-${item.id}`);
+        box.classList.remove('show');record.disabled=true;stop.disabled=true;save.disabled=true;audio.hidden=true;audio.removeAttribute('src');
+      }
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
