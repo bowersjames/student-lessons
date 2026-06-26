@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>William PTE WFD Homework</title>
+  <style>
+    :root{
+      --ink:#17322d;
+      --muted:#60736f;
+      --panel:#fff;
+      --green:#205f50;
+      --soft:#edf7f3;
+      --line:#d7e1dd;
+      --warm:#f6f3e9;
+      --gold:#b4842f;
+      --red:#8d2f2a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:#eef3f0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+    main{max-width:900px;margin:auto;padding:28px 18px 64px}
+    header,.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 28px rgba(19,52,44,.07)}
+    header{padding:30px;margin-bottom:18px;background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+    h1{margin:0 0 6px;font-size:clamp(28px,5vw,44px);line-height:1.1}
+    h2{margin:0 0 8px;font-size:24px}
+    h3{margin:0;font-size:19px}
+    p{margin:8px 0}
+    .muted{color:var(--muted)}
+    .intro{margin-top:18px;padding:14px 16px;border-left:5px solid var(--green);background:#f2f8f5;border-radius:10px}
+    .instructions{padding:22px;margin-bottom:18px}
+    .section{margin-top:26px}
+    .section-head{margin:0 2px 10px}
+    .item{padding:20px;margin:12px 0}
+    .item-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .badge{display:inline-block;border-radius:999px;padding:5px 10px;background:#e6efeb;color:var(--ink);font-weight:750;font-size:13px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+    button{appearance:none;border:0;border-radius:11px;padding:11px 16px;background:var(--green);color:#fff;font-weight:750;font-size:15px;cursor:pointer}
+    button.secondary{background:#e6efeb;color:var(--ink)}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    textarea{width:100%;min-height:94px;resize:vertical;border:1px solid #bdcbc6;border-radius:10px;padding:12px;font:inherit;color:inherit;background:#fbfcfa}
+    textarea:focus{outline:3px solid rgba(32,95,80,.16);border-color:var(--green)}
+    .label{font-weight:750;margin:4px 0 7px}
+    .reveal{display:none;margin-top:14px;padding:14px 15px;background:var(--warm);border-left:4px solid var(--gold);border-radius:9px}
+    .reveal.show{display:block}
+    .status{font-weight:650;color:var(--muted)}
+    .tiny{font-size:13px}
+    .error{color:var(--red)}
+    .tips{margin:12px 0 8px;padding-left:22px}
+    .tips li{margin:7px 0}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+    .chip{display:inline-block;border-radius:999px;background:#fff;border:1px solid var(--line);padding:5px 9px;font-weight:700}
+    .answer{font-weight:750}
+    .grouping{font-size:17px}
+    .correction{min-height:64px}
+    .footer-card{padding:22px;margin-top:28px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    @media(max-width:600px){.item-top{align-items:flex-start;flex-direction:column}.controls button{width:100%}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>William - PTE WFD Homework</h1>
+    <p class="muted">Meaning groups + final audit</p>
+    <div class="intro">Listen once. Type the sentence. Then check the groups and audit the small words.</div>
+  </header>
+
+  <section class="card instructions">
+    <h2>Before you start</h2>
+    <p>Use headphones if possible. Each sentence can be played once before you check your answer.</p>
+    <ul class="tips">
+      <li>Listen for groups: who or what, main action, extra information.</li>
+      <li>Type quickly before the sentence fades.</li>
+      <li>After checking, retype the corrected sentence once.</li>
+      <li>Send a screenshot or download your answers when you finish.</li>
+    </ul>
+    <p class="tiny muted">The correct sentence stays hidden until you type an answer and click Check.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Guided grouping</h2>
+      <p class="muted">After checking, study the grouping carefully.</p>
+    </div>
+    <div id="guidedItems"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>WFD practice</h2>
+      <p class="muted">One listen. Type. Then audit the fragile words.</p>
+    </div>
+    <div id="practiceItems"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Exam mode</h2>
+      <p class="muted">No hints until after your first answer.</p>
+    </div>
+    <div id="examItems"></div>
+  </section>
+
+  <section class="card footer-card">
+    <h2>Send your work</h2>
+    <p>Download your typed answers or take screenshots and send them to your teacher.</p>
+    <div class="actions">
+      <button id="download-answers">Download typed answers</button>
+      <button id="reset" class="secondary">Reset worksheet</button>
+    </div>
+  </section>
+</main>
+
+<script>
+  const items = [
+    {
+      id:"WFD1",
+      section:"guided",
+      text:"The university has extended the deadline for all scholarship applications.",
+      grouping:"The university / has extended / the deadline / for all scholarship applications.",
+      audit:["has","the","for","all","applications"],
+      audio:"audio_kokoro_mixed/WFD1.mp3"
+    },
+    {
+      id:"WFD2",
+      section:"guided",
+      text:"Many students improved their results after attending the weekly review sessions.",
+      grouping:"Many students / improved their results / after attending / the weekly review sessions.",
+      audit:["Many","students","improved","their","after","attending","sessions"],
+      audio:"audio_kokoro_mixed/WFD2.mp3"
+    },
+    {
+      id:"WFD3",
+      section:"practice",
+      text:"The research team collected data from several rural communities.",
+      grouping:"The research team / collected data / from several rural communities.",
+      audit:["The","collected","data","from","several","communities"],
+      audio:"audio_kokoro_mixed/WFD3.mp3"
+    },
+    {
+      id:"WFD4",
+      section:"practice",
+      text:"Students must submit their final reports before the end of the semester.",
+      grouping:"Students / must submit / their final reports / before the end / of the semester.",
+      audit:["must","their","reports","before","of","the"],
+      audio:"audio_kokoro_mixed/WFD4.mp3"
+    },
+    {
+      id:"WFD5",
+      section:"practice",
+      text:"The laboratory equipment was checked before the experiment began.",
+      grouping:"The laboratory equipment / was checked / before the experiment began.",
+      audit:["The","was","checked","before","began"],
+      audio:"audio_kokoro_mixed/WFD5.mp3"
+    },
+    {
+      id:"WFD6",
+      section:"practice",
+      text:"Several applicants requested information about the new assessment policy.",
+      grouping:"Several applicants / requested information / about the new assessment policy.",
+      audit:["Several","applicants","requested","about","the","assessment"],
+      audio:"audio_kokoro_mixed/WFD6.mp3"
+    },
+    {
+      id:"WFD7",
+      section:"exam",
+      text:"The course coordinator explained the changes during the morning seminar.",
+      grouping:"The course coordinator / explained the changes / during the morning seminar.",
+      audit:["The","coordinator","explained","the","during","seminar"],
+      audio:"audio_kokoro_mixed/WFD7.mp3"
+    },
+    {
+      id:"WFD8",
+      section:"exam",
+      text:"Regular practice improves accuracy when students review their mistakes carefully.",
+      grouping:"Regular practice / improves accuracy / when students review / their mistakes carefully.",
+      audit:["Regular","improves","accuracy","when","their","carefully"],
+      audio:"audio_kokoro_mixed/WFD8.mp3"
+    }
+  ];
+
+  const playCounts = new Map();
+  const promptPlayers = new Map();
+
+  function escapeHtml(value){
+    return value.replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+  }
+
+  function playBeep(){
+    return new Promise(resolve => {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if(!AudioContext){ resolve(); return; }
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = 660;
+      gain.gain.value = 0.035;
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      setTimeout(() => {
+        osc.stop();
+        ctx.close().finally(resolve);
+      }, 140);
+    });
+  }
+
+  function delay(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function playPrompt(item, state, onDone){
+    const previous = promptPlayers.get(item.id);
+    if(previous){
+      previous.pause();
+      previous.currentTime = 0;
+    }
+    state.textContent = "Beep, then sentence";
+    await playBeep();
+    await delay(1050);
+    const player = new Audio(item.audio);
+    promptPlayers.set(item.id, player);
+    let finished = false;
+    const fail = () => {
+      if(finished) return;
+      finished = true;
+      promptPlayers.delete(item.id);
+      state.textContent = "Audio did not start. Try again.";
+      state.classList.add("error");
+      onDone(false);
+    };
+    player.addEventListener("playing", () => {
+      state.textContent = "Playing";
+      state.classList.remove("error");
+    }, {once:true});
+    player.addEventListener("ended", () => {
+      if(finished) return;
+      finished = true;
+      promptPlayers.delete(item.id);
+      state.textContent = "First listen completed";
+      onDone(true);
+    }, {once:true});
+    player.addEventListener("error", fail, {once:true});
+    const result = player.play();
+    if(result && typeof result.catch === "function") result.catch(fail);
+  }
+
+  function renderItem(item, number){
+    const article = document.createElement("article");
+    article.className = "card item";
+    const label = item.section === "exam" ? "Exam mode" : item.section === "guided" ? "Guided" : "Practice";
+    article.innerHTML = `
+      <div class="item-top">
+        <h3>Question ${number}</h3>
+        <span class="badge">${label}</span>
+      </div>
+      <p id="state-${item.id}" class="status">Ready</p>
+      <div class="controls">
+        <button id="play-${item.id}">Listen once</button>
+        <button id="check-${item.id}" class="secondary">Check</button>
+      </div>
+      <div class="label">My first answer</div>
+      <textarea id="answer-${item.id}" placeholder="Type the full sentence here"></textarea>
+      <div id="reveal-${item.id}" class="reveal">
+        <div class="label">Correct sentence</div>
+        <p class="answer">${escapeHtml(item.text)}</p>
+        <div class="label">Grouping</div>
+        <p class="grouping">${escapeHtml(item.grouping)}</p>
+        <div class="label">Audit</div>
+        <div class="chips">${item.audit.map(word => `<span class="chip">${escapeHtml(word)}</span>`).join("")}</div>
+        <div class="label">My correction</div>
+        <textarea id="correction-${item.id}" class="correction" placeholder="Retype the corrected sentence once"></textarea>
+      </div>`;
+
+    const play = article.querySelector(`#play-${item.id}`);
+    const check = article.querySelector(`#check-${item.id}`);
+    const state = article.querySelector(`#state-${item.id}`);
+    const answer = article.querySelector(`#answer-${item.id}`);
+    const reveal = article.querySelector(`#reveal-${item.id}`);
+
+    play.addEventListener("click", () => {
+      if((playCounts.get(item.id) || 0) > 0) return;
+      play.disabled = true;
+      check.disabled = true;
+      playPrompt(item, state, ok => {
+        if(ok){
+          playCounts.set(item.id, 1);
+          play.textContent = "Listened";
+          play.disabled = true;
+        }else{
+          play.disabled = false;
+        }
+        check.disabled = false;
+      });
+    });
+
+    check.addEventListener("click", () => {
+      if(!answer.value.trim()){
+        state.textContent = "Type your first answer before checking";
+        state.classList.add("error");
+        return;
+      }
+      reveal.classList.add("show");
+      check.disabled = true;
+      state.textContent = "Answer revealed";
+      state.classList.remove("error");
+    });
+
+    return article;
+  }
+
+  function appendItems(section, target){
+    items.filter(item => item.section === section).forEach((item, index) => {
+      target.appendChild(renderItem(item, index + 1));
+    });
+  }
+
+  appendItems("guided", document.querySelector("#guidedItems"));
+  appendItems("practice", document.querySelector("#practiceItems"));
+  appendItems("exam", document.querySelector("#examItems"));
+
+  function downloadBlob(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  document.querySelector("#download-answers").addEventListener("click", () => {
+    const rows = items.map(item => {
+      const first = document.querySelector(`#answer-${item.id}`).value.trim() || "[No answer entered]";
+      const correction = document.querySelector(`#correction-${item.id}`)?.value.trim() || "[No correction entered]";
+      return `<section><h2>${item.id}</h2><h3>First answer</h3><p>${escapeHtml(first).replace(/\n/g,"<br>")}</p><h3>Correction</h3><p>${escapeHtml(correction).replace(/\n/g,"<br>")}</p></section>`;
+    }).join("");
+    const report = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>William WFD Homework Answers</title><style>body{max-width:820px;margin:40px auto;padding:0 18px;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#17322d}header{border-bottom:2px solid #d7e1dd;padding-bottom:16px}section{padding:18px 0;border-bottom:1px solid #d7e1dd}h1,h2,h3{margin:0 0 8px}h2{font-size:20px}h3{font-size:16px;margin-top:14px}</style></head><body><header><h1>William WFD Homework Answers</h1><p>Completed ${escapeHtml(new Date().toLocaleString())}</p></header>${rows}</body></html>`;
+    downloadBlob(new Blob([report], {type:"text/html;charset=utf-8"}), "William-WFD-homework-answers.html");
+  });
+
+  document.querySelector("#reset").addEventListener("click", () => {
+    if(!confirm("Clear all answers and reset the worksheet?")) return;
+    promptPlayers.forEach(player => { player.pause(); player.currentTime = 0; });
+    promptPlayers.clear();
+    playCounts.clear();
+    items.forEach(item => {
+      document.querySelector(`#answer-${item.id}`).value = "";
+      const correction = document.querySelector(`#correction-${item.id}`);
+      if(correction) correction.value = "";
+      document.querySelector(`#reveal-${item.id}`).classList.remove("show");
+      const play = document.querySelector(`#play-${item.id}`);
+      play.disabled = false;
+      play.textContent = "Listen once";
+      const check = document.querySelector(`#check-${item.id}`);
+      check.disabled = false;
+      const state = document.querySelector(`#state-${item.id}`);
+      state.textContent = "Ready";
+      state.classList.remove("error");
+    });
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+</script>
+</body>
+</html>
