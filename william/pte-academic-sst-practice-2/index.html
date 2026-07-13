@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex,nofollow">
+  <title>William - PTE Academic SST Practice 2</title>
+  <style>
+    :root {
+      --primary: oklch(0.43 0.075 235);
+      --on-primary: oklch(0.99 0.002 235);
+      --primary-soft: oklch(0.91 0.035 235);
+      --secondary: oklch(0.46 0.045 155);
+      --secondary-soft: oklch(0.91 0.035 155);
+      --gold-soft: oklch(0.93 0.06 90);
+      --surface: oklch(0.982 0.006 90);
+      --surface-low: oklch(0.966 0.008 90);
+      --surface-high: oklch(0.935 0.009 90);
+      --ink: oklch(0.23 0.015 145);
+      --muted: oklch(0.42 0.02 145);
+      --line: oklch(0.79 0.012 145);
+      --error: oklch(0.48 0.17 28);
+      --shadow: 0 1px 2px rgba(24, 43, 55, 0.06), 0 14px 38px rgba(24, 43, 55, 0.10);
+      font-family: "Segoe UI", Aptos, Arial, sans-serif;
+      color: var(--ink);
+      background: oklch(0.945 0.008 90);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body { min-width: 760px; overflow: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    button, textarea, a { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: 0.48; }
+    button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--primary-soft); outline-offset: 2px; }
+    [hidden] { display: none !important; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { text-wrap: balance; }
+    p { line-height: 1.5; text-wrap: pretty; }
+    mark { padding: 0 0.16em; border-radius: 0.18em; background: var(--gold-soft); color: inherit; }
+
+    main { width: 100%; height: 100%; padding: 10px; display: grid; place-items: center; }
+    .app {
+      width: min(1280px, 100%);
+      height: min(840px, calc(100dvh - 20px));
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) 64px;
+      overflow: hidden;
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      outline: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .stage { min-height: 0; overflow: hidden; }
+    .screen { width: 100%; height: 100%; overflow: hidden; }
+    .screen-inner { width: 100%; height: 100%; padding: 32px 38px; display: grid; align-content: start; gap: 22px; }
+    .screen-inner.centre { width: min(1080px, 100%); margin: 0 auto; align-content: center; }
+    .task-screen .screen-inner { grid-template-rows: auto minmax(0, 1fr); }
+    .screen-head { min-height: 72px; display: flex; justify-content: space-between; gap: 30px; align-items: center; }
+    .screen-title { display: grid; grid-template-columns: 62px 1fr; gap: 18px; align-items: center; }
+    .screen-title > div { display: grid; gap: 6px; }
+    .title-icon { width: 62px; height: 62px; display: grid; place-items: center; border-radius: 50%; background: var(--primary); color: var(--on-primary); box-shadow: 0 10px 24px rgba(20,72,101,.18); }
+    .title-icon svg { width: 30px; height: 30px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .screen-head h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.06; letter-spacing: -0.02em; }
+    .screen-head p { max-width: 760px; color: var(--muted); font-size: 17px; }
+
+    .cover { background: var(--surface); }
+    .cover-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 44px; align-items: center; }
+    .cover-copy { display: grid; gap: 24px; }
+    .cover h1 { font-size: clamp(46px, 6vw, 76px); line-height: 0.98; letter-spacing: -0.035em; }
+    .cover-copy > p { max-width: 760px; color: var(--muted); font-size: 21px; }
+    .cover-list { display: grid; gap: 12px; padding-top: 4px; }
+    .cover-line { display: flex; gap: 12px; align-items: center; font-size: 17px; }
+    .tick { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--secondary-soft); color: var(--secondary); font-weight: 800; }
+    .cover-card { padding: 34px; display: grid; gap: 18px; border-radius: 24px; background: var(--primary); color: var(--on-primary); box-shadow: 0 18px 38px rgba(18, 66, 93, 0.20); }
+    .cover-card strong { font-size: 40px; line-height: 1; }
+    .cover-card p { opacity: 0.88; font-size: 17px; }
+
+    .method-card { min-height: 0; display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 28px; align-items: stretch; }
+    .method-copy { padding: 32px; display: grid; align-content: center; gap: 18px; border-radius: 22px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06); }
+    .method-copy h3 { font-size: 27px; }
+    .method-copy p { color: var(--muted); font-size: 18px; }
+    .method-copy strong { color: var(--primary); }
+    .note-map { display: grid; grid-template-columns: repeat(3, 1fr); overflow: hidden; border-radius: 22px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.06), 0 10px 28px rgba(24,43,55,.07); }
+    .note-column { padding: 28px 24px; display: grid; align-content: center; gap: 14px; border-left: 1px solid var(--line); }
+    .note-column:first-child { border-left: 0; }
+    .note-column h3 { color: var(--primary); font-size: 15px; letter-spacing: 0.06em; }
+    .note-column p { font-size: 21px; line-height: 1.35; }
+    .signal { font-weight: 800; }
+    .method-close { padding: 18px 22px; border-left: 5px solid var(--secondary); border-radius: 0 16px 16px 0; background: var(--secondary-soft); font-size: 18px; }
+
+    .task-layout { min-height: 0; display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.78fr); gap: 24px; }
+    .workspace, .side-card { min-height: 0; border-radius: 22px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06); }
+    .workspace { padding: 28px; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 18px; }
+    .task-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .play {
+      min-height: 58px;
+      padding: 0 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: 16px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 750;
+      transition-property: transform, box-shadow, background;
+      transition-duration: 160ms;
+    }
+    .play:active, .action:active, .nav-button:active { transform: scale(0.96); }
+    .play:not(:disabled):hover { box-shadow: 0 8px 20px rgba(20,72,101,.20); }
+    .timer { min-width: 92px; text-align: right; color: var(--primary); font-size: 24px; font-weight: 760; font-variant-numeric: tabular-nums; }
+    .audio-status { min-height: 25px; color: var(--muted); }
+    .fallback { color: var(--error); font-weight: 650; }
+    .fallback a { color: inherit; }
+    textarea {
+      width: 100%;
+      min-height: 0;
+      resize: none;
+      padding: 22px;
+      border: 0;
+      border-radius: 16px;
+      background: var(--surface-low);
+      color: var(--ink);
+      font-size: 19px;
+      line-height: 1.5;
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+    textarea:focus { box-shadow: inset 0 0 0 2px var(--primary); }
+    .answer-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .word-count { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .word-count.safe { color: var(--secondary); font-weight: 750; }
+    .word-count.over { color: var(--error); font-weight: 750; }
+    .action {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 730;
+      transition-property: transform, opacity, box-shadow;
+      transition-duration: 150ms;
+    }
+    .action.secondary { background: var(--surface-high); color: var(--ink); }
+
+    .side-card { padding: 28px; display: grid; align-content: start; gap: 20px; overflow: auto; }
+    .side-card h3 { font-size: 24px; }
+    .cue-list { display: grid; gap: 12px; }
+    .cue { min-height: 72px; padding: 14px 18px; display: grid; align-content: center; border-radius: 16px; background: var(--surface-low); }
+    .cue strong { display: block; margin-bottom: 3px; color: var(--primary); }
+    .paper-frame { padding: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-radius: 16px; background: var(--primary-soft); }
+    .paper-frame span { padding: 4px 8px; text-align: center; color: var(--primary); font-size: 13px; font-weight: 800; letter-spacing: 0.035em; border-left: 1px solid rgba(33,91,123,.20); }
+    .paper-frame span:first-child { border-left: 0; }
+    .plain-reminder { padding: 18px; border-radius: 16px; background: var(--surface-low); color: var(--muted); font-size: 17px; }
+
+    .review { min-height: 0; grid-column: 1 / -1; display: grid; grid-template-rows: minmax(0, 1fr) 48px; gap: 16px; }
+    .review-scroll { min-height: 0; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr); grid-template-rows: minmax(0, 1fr) auto; gap: 18px; }
+    .review-block { min-height: 0; padding: 22px; display: grid; gap: 12px; border-radius: 20px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06); }
+    .review-block h3 { color: var(--primary); font-size: 20px; }
+    .review-scroll > .review-block:first-child { grid-column: 1; grid-row: 1 / 3; grid-template-rows: auto minmax(0, 1fr); }
+    .review-scroll > .review-block:nth-child(2) { grid-column: 2; grid-row: 1; align-content: start; }
+    .transcript { min-height: 0; overflow: auto; padding: 20px; border-radius: 16px; background: var(--surface-low); box-shadow: inset 0 0 0 1px var(--line); font-size: 16px; line-height: 1.62; }
+    .model { padding: 20px; border-left: 5px solid var(--secondary); border-radius: 0 16px 16px 0; background: var(--secondary-soft); font-size: 17px; line-height: 1.55; }
+    .review-check { grid-column: 2; grid-row: 2; padding: 17px 19px; border-radius: 16px; background: var(--gold-soft); }
+
+    .complete-grid { min-height: 0; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 26px; }
+    .complete-card { padding: 32px; display: grid; gap: 18px; border-radius: 22px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06); }
+    .complete-card h3 { font-size: 26px; }
+    .steps { display: grid; gap: 14px; counter-reset: step; }
+    .step { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+    .step::before { counter-increment: step; content: counter(step); width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 800; }
+    .complete-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .link-action { min-height: 48px; padding: 0 18px; display: inline-flex; align-items: center; text-decoration: none; border-radius: 14px; background: var(--primary); color: var(--on-primary); font-weight: 730; }
+    .download-list { display: grid; gap: 10px; }
+    .download-list a { color: var(--primary); font-weight: 650; }
+    .done-status { min-height: 24px; color: var(--secondary); font-weight: 700; }
+
+    footer { display: grid; grid-template-columns: 150px 1fr 150px; align-items: center; gap: 22px; padding: 0 22px; background: var(--surface); box-shadow: inset 0 1px 0 var(--line); }
+    .nav-button { min-width: 118px; min-height: 46px; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--primary); font-weight: 750; transition-property: transform, background, box-shadow; transition-duration: 150ms; }
+    .nav-button:hover:not(:disabled) { background: var(--primary-soft); box-shadow: 0 5px 14px rgba(24,43,55,.07); }
+    .nav-button.next { justify-self: end; background: var(--primary); color: var(--on-primary); }
+    .progress-wrap { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
+    .progress-track { height: 7px; overflow: hidden; border-radius: 99px; background: var(--surface-high); }
+    .progress-bar { width: 0; height: 100%; background: var(--primary); transition: width 180ms ease; }
+    .progress-label { min-width: 42px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+    @media (max-height: 720px) {
+      .screen-inner { padding: 22px 30px; gap: 16px; }
+      .screen-head h2 { font-size: 31px; }
+      .screen-head p { font-size: 16px; }
+      .screen-title { grid-template-columns: 52px 1fr; gap: 14px; }
+      .title-icon { width: 52px; height: 52px; }
+      .cover h1 { font-size: 56px; }
+      .cover-copy > p { font-size: 18px; }
+      .workspace, .side-card { padding: 20px; }
+      .task-layout { gap: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="app" aria-label="William PTE Academic Summarize Spoken Text homework">
+      <div class="stage">
+        <section class="screen cover" data-screen="0">
+          <div class="screen-inner centre">
+            <div class="cover-grid">
+              <div class="cover-copy">
+                <h1>Summarize Spoken Text</h1>
+                <p>Three new recordings. Use short paper notes, then write each summary after the audio finishes.</p>
+                <div class="cover-list">
+                  <div class="cover-line"><span class="tick">✓</span><span>One play for each recording</span></div>
+                  <div class="cover-line"><span class="tick">✓</span><span>50-70 words for each summary</span></div>
+                  <div class="cover-line"><span class="tick">✓</span><span>About 30-35 minutes in total</span></div>
+                </div>
+              </div>
+              <div class="cover-card">
+                <strong>3</strong>
+                <p>fresh PTE Academic listening tasks</p>
+                <strong>1</strong>
+                <p>note system for all three tasks</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" data-screen="1" hidden>
+          <div class="screen-inner centre">
+            <div class="screen-head">
+              <div class="screen-title">
+                <span class="title-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 5v14M12 5v14M19 5v14M3 9h4M10 14h4M17 8h4"/></svg>
+                </span>
+                <div>
+                  <h2>One note system</h2>
+                  <p>Signal words show the connection. The three headings show where to put your short notes.</p>
+                </div>
+              </div>
+            </div>
+            <div class="method-card">
+              <div class="method-copy">
+                <h3>During the recording</h3>
+                <p>Write <strong>keywords</strong>, not full sentences. Put each idea under the best heading.</p>
+                <p>Use an arrow when one idea causes another.</p>
+              </div>
+              <div class="note-map" aria-label="Example note map">
+                <div class="note-column"><h3>BENEFITS</h3><p>later start<br>→ more sleep</p></div>
+                <div class="note-column"><h3>PROBLEMS</h3><p><span class="signal">BUT</span><br>transport harder</p></div>
+                <div class="note-column"><h3>CONDITIONS</h3><p><span class="signal">ONLY IF</span><br>new timetables</p></div>
+              </div>
+            </div>
+            <p class="method-close">After the recording, read across your notes, say the main relationship once, then write your summary.</p>
+          </div>
+        </section>
+
+        <section class="screen task-screen" data-screen="2" hidden>
+          <div class="screen-inner">
+            <div class="screen-head">
+              <div class="screen-title">
+                <span class="title-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M3 12h2l2-5 3 10 3-13 3 16 2-8h3"/></svg>
+                </span>
+                <div><h2>Recording 1</h2><p>Use the three headings and listen for the signal words.</p></div>
+              </div>
+            </div>
+            <div class="task-layout" data-task="1">
+              <div class="workspace attempt-view">
+                <div class="task-tools">
+                  <button class="play" data-play="1"><span aria-hidden="true">▶</span><span class="play-label">Play recording</span></button>
+                  <span class="timer" data-timer="1">10:00</span>
+                </div>
+                <p class="audio-status" data-status="1">Prepare your paper headings before you press play.</p>
+                <textarea data-answer="1" aria-label="Recording 1 summary" placeholder="Write your 50-70 word summary after the recording finishes."></textarea>
+                <div class="answer-row">
+                  <span class="word-count" data-count="1">0 words</span>
+                  <button class="action" data-review="1" disabled>Review my answer</button>
+                </div>
+                <p class="fallback" data-fallback="1" hidden>Audio did not start. <a href="audio/01-community-tool-libraries.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <audio data-audio="1" preload="metadata" src="audio/01-community-tool-libraries.mp3"></audio>
+              </div>
+              <aside class="side-card attempt-view">
+                <h3>Hear the signal</h3>
+                <div class="cue-list">
+                  <div class="cue"><strong>Contrast</strong>but, however, although</div>
+                  <div class="cue"><strong>Cause and effect</strong>because → reason, so → result</div>
+                  <div class="cue"><strong>Condition</strong>if, only if, unless</div>
+                </div>
+                <div class="paper-frame"><span>BENEFITS</span><span>PROBLEMS</span><span>CONDITIONS</span></div>
+              </aside>
+              <div class="review" hidden>
+                <div class="review-scroll">
+                  <div class="review-block">
+                    <h3>Transcript</h3>
+                    <div class="transcript">Community tool libraries allow residents to borrow equipment such as drills, ladders and gardening tools instead of buying items they may use only once or twice a year. This can lower household costs and reduce the number of rarely used products stored in homes. The libraries can also bring neighbours together <mark>because</mark> experienced members sometimes show other people how to use unfamiliar equipment safely. <mark>However</mark>, shared tools create practical problems. Popular items may be unavailable at busy times, and damaged equipment can injure the next borrower. Staff must inspect, clean and repair every item, which requires money, secure storage and trained workers. A digital booking system can improve access, <mark>but</mark> it will not help people who have limited internet access or live far from the collection point. Tool libraries are therefore most useful <mark>when</mark> borrowing sites are easy to reach, reservations are reliable and maintenance is treated as a core service rather than an extra cost. They should also make clear that some electrical, structural or specialist jobs still require a qualified professional. With these conditions, sharing equipment can reduce waste and expense without weakening safety.</div>
+                  </div>
+                  <div class="review-block">
+                    <h3>Model response</h3>
+                    <p class="model">Community tool libraries can <strong>lower household costs</strong>, reduce the number of rarely used products and help neighbours share practical knowledge. <mark>However</mark>, popular items may be unavailable or damaged, while inspection and storage are expensive. These schemes work best <strong>when booking is reliable, equipment is maintained, borrowing sites are convenient and professional safety advice remains available for difficult jobs</strong>.</p>
+                  </div>
+                  <p class="review-check">Compare your answer. Did you keep one benefit, one problem and the important conditions?</p>
+                </div>
+                <button class="action secondary" data-edit="1">Return to my answer</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen task-screen" data-screen="3" hidden>
+          <div class="screen-inner">
+            <div class="screen-head">
+              <div class="screen-title">
+                <span class="title-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M3 12h2l2-5 3 10 3-13 3 16 2-8h3"/></svg>
+                </span>
+                <div><h2>Recording 2</h2><p>Use the same paper frame. This time, the signal list is hidden.</p></div>
+              </div>
+            </div>
+            <div class="task-layout" data-task="2">
+              <div class="workspace attempt-view">
+                <div class="task-tools">
+                  <button class="play" data-play="2"><span aria-hidden="true">▶</span><span class="play-label">Play recording</span></button>
+                  <span class="timer" data-timer="2">10:00</span>
+                </div>
+                <p class="audio-status" data-status="2">Write only short notes while you listen.</p>
+                <textarea data-answer="2" aria-label="Recording 2 summary" placeholder="Write your 50-70 word summary after the recording finishes."></textarea>
+                <div class="answer-row">
+                  <span class="word-count" data-count="2">0 words</span>
+                  <button class="action" data-review="2" disabled>Review my answer</button>
+                </div>
+                <p class="fallback" data-fallback="2" hidden>Audio did not start. <a href="audio/02-remote-medical-appointments.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <audio data-audio="2" preload="metadata" src="audio/02-remote-medical-appointments.mp3"></audio>
+              </div>
+              <aside class="side-card attempt-view">
+                <h3>Your paper frame</h3>
+                <div class="paper-frame"><span>BENEFITS</span><span>PROBLEMS</span><span>CONDITIONS</span></div>
+                <p class="plain-reminder">Keep each note short enough that you can return to listening immediately.</p>
+              </aside>
+              <div class="review" hidden>
+                <div class="review-scroll">
+                  <div class="review-block">
+                    <h3>Transcript</h3>
+                    <div class="transcript">Remote medical appointments became much more common when clinics needed to reduce face-to-face contact, and many patients have continued to use them. A video or telephone consultation can save travel time, give rural patients faster access to a specialist and make routine follow-up easier for people with limited mobility. It may also help clinicians check whether a treatment is working without asking a patient to spend hours reaching a hospital. <mark>However</mark>, remote care has clear limits. A clinician cannot examine an injury properly through a poor camera, and important signs may be missed <mark>when</mark> the sound or internet connection fails. Privacy is another concern <mark>because</mark> patients may discuss sensitive information at home or through an insecure platform. Remote appointments are safest <mark>when</mark> clinics decide in advance which cases are suitable, use secure technology and provide clear instructions. Patients must also be able to change to an in-person appointment when symptoms are uncertain or a physical examination is needed. Used in this way, remote care can extend access and make follow-up more convenient, <mark>but</mark> it should support rather than replace local medical services.</div>
+                  </div>
+                  <div class="review-block">
+                    <h3>Model response</h3>
+                    <p class="model">Remote medical appointments can <strong>save travel time, improve specialist access and make routine follow-up easier</strong>. <mark>However</mark>, poor connections, privacy risks and the lack of a physical examination can lead to missed information. Remote care is safest <strong>when clinics select suitable cases, use secure technology and allow patients to move to an in-person appointment</strong> whenever symptoms are uncertain.</p>
+                  </div>
+                  <p class="review-check">Compare your answer. Did you keep the physical examination as a limit rather than saying remote care is always unsafe?</p>
+                </div>
+                <button class="action secondary" data-edit="2">Return to my answer</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen task-screen" data-screen="4" hidden>
+          <div class="screen-inner">
+            <div class="screen-head">
+              <div class="screen-title">
+                <span class="title-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M3 12h2l2-5 3 10 3-13 3 16 2-8h3"/></svg>
+                </span>
+                <div><h2>Recording 3</h2><p>Complete this attempt with no note prompts on the screen.</p></div>
+              </div>
+            </div>
+            <div class="task-layout" data-task="3">
+              <div class="workspace attempt-view">
+                <div class="task-tools">
+                  <button class="play" data-play="3"><span aria-hidden="true">▶</span><span class="play-label">Play recording</span></button>
+                  <span class="timer" data-timer="3">10:00</span>
+                </div>
+                <p class="audio-status" data-status="3">Use your paper method, then write after the audio finishes.</p>
+                <textarea data-answer="3" aria-label="Recording 3 summary" placeholder="Write your 50-70 word summary after the recording finishes."></textarea>
+                <div class="answer-row">
+                  <span class="word-count" data-count="3">0 words</span>
+                  <button class="action" data-review="3" disabled>Review my answer</button>
+                </div>
+                <p class="fallback" data-fallback="3" hidden>Audio did not start. <a href="audio/03-free-museum-entry.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <audio data-audio="3" preload="metadata" src="audio/03-free-museum-entry.mp3"></audio>
+              </div>
+              <aside class="side-card attempt-view">
+                <h3>Independent attempt</h3>
+                <p class="plain-reminder">Prepare your paper before pressing play. Follow the recording rather than trying to catch every word.</p>
+              </aside>
+              <div class="review" hidden>
+                <div class="review-scroll">
+                  <div class="review-block">
+                    <h3>Transcript</h3>
+                    <div class="transcript">Removing admission charges from museums can make collections available to people who might otherwise decide that a family visit is too expensive. Free entry may attract first-time visitors, encourage schools to return more often and allow local residents to spend a short time in a gallery without feeling that they must see everything at once. Museums can also benefit when a larger and more varied audience supports cafés, shops and membership programmes. <mark>However</mark>, free entry does not remove the cost of running a museum. Buildings still need security, conservation work and trained staff, while crowded galleries can make the visit less enjoyable and may put fragile objects at risk. Visitor numbers can also be misleading <mark>because</mark> a busy entrance does not prove that people are learning from the collection. A free-entry policy works best <mark>when</mark> museums receive stable public funding, manage crowded periods with timed booking and offer clear interpretation for different audiences. Donations, paid exhibitions and commercial services may provide extra income, <mark>but</mark> they cannot always replace predictable funding. Free entry can widen access, <mark>but only when</mark> museums protect both the visitor experience and the collections they are responsible for.</div>
+                  </div>
+                  <div class="review-block">
+                    <h3>Model response</h3>
+                    <p class="model">Free museum entry can <strong>widen access, encourage school visits and attract a more varied audience</strong>. <mark>However</mark>, museums still face staffing, conservation and crowd-control costs, while high visitor numbers do not guarantee learning. The policy works best <strong>when public funding is stable, busy periods are managed and museums protect both the visitor experience and their collections</strong>.</p>
+                  </div>
+                  <p class="review-check">Compare your answer. Did you keep free entry as useful under conditions rather than completely good or completely bad?</p>
+                </div>
+                <button class="action secondary" data-edit="3">Return to my answer</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" data-screen="5" hidden>
+          <div class="screen-inner centre">
+            <div class="screen-head">
+              <div class="screen-title">
+                <span class="title-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5zM15 4v4h4M8 13l2.5 2.5L16 10"/></svg>
+                </span>
+                <div><h2>Keep your work together</h2><p>Copy your summaries into the SST Google Doc and keep your paper notes for the next lesson.</p></div>
+              </div>
+            </div>
+            <div class="complete-grid">
+              <div class="complete-card">
+                <h3>Finish the homework</h3>
+                <div class="steps">
+                  <div class="step"><p>Copy or download all three summaries.</p></div>
+                  <div class="step"><p>Open the shared SST Google Doc and paste the summaries below today's work.</p></div>
+                  <div class="step"><p>Add one clear photo of your paper notes underneath.</p></div>
+                </div>
+                <div class="complete-actions">
+                  <button class="action" id="copy-all">Copy all answers</button>
+                  <button class="action secondary" id="download-results">Download results</button>
+                  <a class="link-action" href="https://docs.google.com/document/d/18M9Ias1dJc2Qe7MGGtWnOjBn5wmz09CtEG9JGdA70ks/edit?usp=sharing" target="_blank" rel="noopener">Open SST Google Doc</a>
+                </div>
+                <p class="done-status" id="done-status" aria-live="polite"></p>
+              </div>
+              <div class="complete-card">
+                <h3>MP3 backups</h3>
+                <p>Use these only if a recording did not play inside the page.</p>
+                <div class="download-list">
+                  <a href="audio/01-community-tool-libraries.mp3" download>Recording 1 - Community tool libraries</a>
+                  <a href="audio/02-remote-medical-appointments.mp3" download>Recording 2 - Remote medical appointments</a>
+                  <a href="audio/03-free-museum-entry.mp3" download>Recording 3 - Free museum entry</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <button class="nav-button" id="back">← Back</button>
+        <div class="progress-wrap" aria-label="Homework progress">
+          <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          <span class="progress-label" id="progress-label">1 / 6</span>
+        </div>
+        <button class="nav-button next" id="next">Next →</button>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "william-pte-sst-homework-2-v1";
+      const screens = [...document.querySelectorAll("[data-screen]")];
+      const state = loadState();
+      let current = Math.min(Math.max(Number(state.current) || 0, 0), screens.length - 1);
+      let ticker = null;
+
+      function loadState() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { current: 0, answers: {}, used: {}, deadlines: {}, reviewed: {} };
+        } catch {
+          return { current: 0, answers: {}, used: {}, deadlines: {}, reviewed: {} };
+        }
+      }
+
+      function saveState() {
+        state.current = current;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function stopAudio() {
+        document.querySelectorAll("audio").forEach(audio => {
+          if (!audio.paused) audio.pause();
+        });
+      }
+
+      function showScreen(index) {
+        stopAudio();
+        current = Math.min(Math.max(index, 0), screens.length - 1);
+        screens.forEach((screen, i) => { screen.hidden = i !== current; });
+        document.querySelector("#back").disabled = current === 0;
+        document.querySelector("#next").disabled = current === screens.length - 1;
+        document.querySelector("#next").textContent = current === screens.length - 2 ? "Finish →" : "Next →";
+        document.querySelector("#progress-bar").style.width = `${((current + 1) / screens.length) * 100}%`;
+        document.querySelector("#progress-label").textContent = `${current + 1} / ${screens.length}`;
+        saveState();
+      }
+
+      function wordCount(text) {
+        const match = text.trim().match(/\b[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*\b/gu);
+        return match ? match.length : 0;
+      }
+
+      function updateAnswer(item) {
+        const textarea = document.querySelector(`[data-answer="${item}"]`);
+        const count = wordCount(textarea.value);
+        const label = document.querySelector(`[data-count="${item}"]`);
+        const review = document.querySelector(`[data-review="${item}"]`);
+        label.textContent = `${count} ${count === 1 ? "word" : "words"}`;
+        label.className = "word-count" + (count >= 50 && count <= 70 ? " safe" : count > 70 ? " over" : "");
+        review.disabled = count < 50;
+        state.answers[item] = textarea.value;
+        saveState();
+      }
+
+      function updateTimer(item) {
+        const deadline = state.deadlines[item];
+        const label = document.querySelector(`[data-timer="${item}"]`);
+        if (!deadline) { label.textContent = "10:00"; return; }
+        const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        label.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        if (remaining === 0) document.querySelector(`[data-status="${item}"]`).textContent = "Time finished. Complete your last check.";
+      }
+
+      function updatePlayState(item) {
+        const button = document.querySelector(`[data-play="${item}"]`);
+        if (state.used[item]) {
+          button.disabled = true;
+          button.querySelector(".play-label").textContent = "Recording used";
+        }
+      }
+
+      function setReview(item, reviewing) {
+        const task = document.querySelector(`[data-task="${item}"]`);
+        task.querySelectorAll(".attempt-view").forEach(node => { node.hidden = reviewing; });
+        task.querySelector(".review").hidden = !reviewing;
+        state.reviewed[item] = reviewing;
+        saveState();
+      }
+
+      for (let item = 1; item <= 3; item += 1) {
+        const textarea = document.querySelector(`[data-answer="${item}"]`);
+        textarea.value = state.answers[item] || "";
+        textarea.addEventListener("input", () => updateAnswer(item));
+        updateAnswer(item);
+        updatePlayState(item);
+        updateTimer(item);
+        setReview(item, Boolean(state.reviewed[item]));
+
+        const audio = document.querySelector(`[data-audio="${item}"]`);
+        const play = document.querySelector(`[data-play="${item}"]`);
+        const status = document.querySelector(`[data-status="${item}"]`);
+        const fallback = document.querySelector(`[data-fallback="${item}"]`);
+
+        play.addEventListener("click", async () => {
+          if (state.used[item]) return;
+          state.used[item] = true;
+          state.deadlines[item] = Date.now() + 10 * 60 * 1000;
+          updatePlayState(item);
+          updateTimer(item);
+          status.textContent = "Recording playing. Use short paper notes.";
+          saveState();
+          try {
+            await audio.play();
+          } catch {
+            fallback.hidden = false;
+            status.textContent = "The recording did not start inside the page.";
+          }
+        });
+
+        audio.addEventListener("ended", () => {
+          status.textContent = "Recording finished. Read across your notes, then write.";
+        });
+
+        document.querySelector(`[data-review="${item}"]`).addEventListener("click", () => setReview(item, true));
+        document.querySelector(`[data-edit="${item}"]`).addEventListener("click", () => setReview(item, false));
+      }
+
+      function resultText() {
+        const parts = ["William - PTE Academic Summarize Spoken Text Homework", ""];
+        for (let item = 1; item <= 3; item += 1) {
+          const answer = state.answers[item] || "No answer saved";
+          parts.push(`Recording ${item} - ${wordCount(answer)} words`, answer, "");
+        }
+        parts.push("Paper notes", "BENEFITS | PROBLEMS | CONDITIONS", "Add one clear photo to the shared SST Google Doc.");
+        return parts.join("\n");
+      }
+
+      document.querySelector("#copy-all").addEventListener("click", async () => {
+        const status = document.querySelector("#done-status");
+        try {
+          await navigator.clipboard.writeText(resultText());
+          status.textContent = "All answers copied.";
+        } catch {
+          status.textContent = "Copy was blocked. Use Download results instead.";
+        }
+      });
+
+      document.querySelector("#download-results").addEventListener("click", () => {
+        const blob = new Blob([resultText()], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "William-PTE-SST-homework-2.txt";
+        link.click();
+        URL.revokeObjectURL(link.href);
+        document.querySelector("#done-status").textContent = "Results downloaded.";
+      });
+
+      document.querySelector("#back").addEventListener("click", () => showScreen(current - 1));
+      document.querySelector("#next").addEventListener("click", () => showScreen(current + 1));
+      window.addEventListener("beforeunload", saveState);
+
+      ticker = window.setInterval(() => {
+        for (let item = 1; item <= 3; item += 1) updateTimer(item);
+      }, 1000);
+
+      showScreen(current);
+    })();
+  </script>
+</body>
+</html>
