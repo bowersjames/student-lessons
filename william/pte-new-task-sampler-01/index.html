@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-15-desktop-fit-1">
+  <meta name="release-version" content="2026-07-15-interface-refinement-2">
   <title>William — Three New PTE Tasks</title>
   <style>
     :root {
@@ -169,7 +169,14 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .orientation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .orientation-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: center; }
+    .route-arrow {
+      color: var(--primary);
+      font-size: 28px;
+      font-weight: 760;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
     .orientation-card {
       min-width: 0;
       padding: 25px;
@@ -180,8 +187,8 @@
       box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06);
     }
     .orientation-card .task-mark { width: 48px; height: 48px; border-radius: 15px; box-shadow: none; }
-    .orientation-card:nth-child(2) .task-mark { background: var(--secondary); }
-    .orientation-card:nth-child(3) .task-mark { background: var(--gold); }
+    .orientation-card.reading .task-mark { background: var(--secondary); }
+    .orientation-card.writing .task-mark { background: var(--gold); }
     .orientation-card h3 { font-size: 22px; line-height: 1.15; }
     .orientation-card p { color: var(--muted); }
     .time-chip {
@@ -194,11 +201,10 @@
       font-variant-numeric: tabular-nums;
     }
     .one-rule {
-      padding: 18px 20px;
-      border-radius: 17px;
-      background: var(--gold-soft);
+      padding: 0;
       color: oklch(0.34 0.055 78);
       font-weight: 680;
+      text-align: center;
     }
 
     .task-layout {
@@ -210,15 +216,15 @@
       gap: 22px;
       align-items: stretch;
     }
-    .workspace, .side-card, .feedback-card, .essay-card, .completion-card {
+    .workspace, .feedback-card, .completion-card {
       min-width: 0;
       padding: clamp(22px, 3vw, 32px);
       border-radius: 22px;
       background: white;
       box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06);
     }
-    .workspace { min-height: 0; display: grid; align-content: start; gap: 22px; overflow: auto; }
-    .side-card { min-height: 0; display: grid; align-content: start; gap: 18px; overflow: auto; }
+    .workspace { min-height: 0; display: grid; align-content: start; gap: 22px; overflow: hidden; }
+    .side-card { min-height: 0; padding: 8px 6px; display: grid; align-content: start; gap: 18px; overflow: hidden; background: transparent; box-shadow: none; }
     .side-card h3, .feedback-card h3, .essay-card h3, .completion-card h3 { font-size: 21px; }
     .side-card p, .feedback-card p, .completion-card p { color: var(--muted); }
 
@@ -323,22 +329,22 @@
     .correct-order { margin: 0; padding-left: 24px; display: grid; gap: 10px; }
     .correct-order li { padding-left: 5px; line-height: 1.45; }
 
-    .essay-layout { min-height: 0; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: stretch; }
-    .essay-card { min-height: 0; display: grid; grid-template-rows: auto auto minmax(110px, 1fr) auto auto auto; gap: 12px; overflow: hidden; }
-    .prompt-box { padding: 18px 20px; border-radius: 17px; background: var(--primary-soft); font-size: 18px; font-weight: 630; }
+    .essay-layout { min-height: 0; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 24px; align-items: stretch; }
+    .essay-card { min-width: 0; min-height: 0; padding: 0; display: grid; grid-template-rows: auto auto minmax(180px, 1fr) auto auto auto; gap: 12px; overflow: hidden; background: transparent; box-shadow: none; }
+    .prompt-box { padding: 2px 0 8px 15px; border-left: 4px solid var(--primary); border-radius: 0; background: transparent; font-size: 18px; line-height: 1.45; font-weight: 630; }
     .essay-box {
       width: 100%;
       height: 100%;
       min-height: 0;
-      padding: 18px;
+      padding: 20px;
       resize: none;
       border: 0;
       border-radius: 17px;
-      background: var(--surface-low);
+      background: white;
       color: var(--ink);
-      box-shadow: inset 0 0 0 1px var(--line);
-      font-size: 17px;
-      line-height: 1.55;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+      font-size: 18px;
+      line-height: 1.58;
     }
     .essay-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--muted); }
     .word-count { font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -393,10 +399,9 @@
     #back { grid-column: 1; }
     #next { grid-column: 3; }
     .nav-button.next { background: var(--primary); color: white; box-shadow: 0 6px 16px rgba(20,72,101,.15); }
-    .progress-wrap { grid-column: 2; grid-row: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+    .progress-wrap { grid-column: 2; grid-row: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; }
     .progress-track { min-width: 0; height: 7px; overflow: hidden; border-radius: 999px; background: var(--surface-high); }
     .progress-bar { width: 16.66%; height: 100%; border-radius: inherit; background: var(--primary); transition-property: width; transition-duration: 180ms; }
-    .progress-label { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
     .nav-hint { grid-column: 2; grid-row: 2; min-height: 14px; color: var(--muted); font-size: 12px; line-height: 1.1; text-align: center; }
 
     @media (min-width: 821px) {
@@ -413,13 +418,14 @@
       .cover-card { padding: 22px; gap: 16px; }
       .cover-stat { grid-template-columns: 42px 1fr; gap: 12px; }
       .stat-number { width: 42px; height: 42px; }
-      .orientation-grid { gap: 12px; }
+      .orientation-grid { gap: 10px; }
       .orientation-card { padding: 17px; gap: 10px; }
       .orientation-card h3 { font-size: 19px; }
       .one-rule { padding: 13px 16px; }
-      .task-layout, .essay-layout { gap: 14px; }
-      .essay-layout { grid-template-columns: minmax(0, 1fr) 240px; }
-      .workspace, .side-card, .feedback-card, .essay-card, .completion-card { padding: 16px; border-radius: 18px; }
+      .task-layout, .essay-layout { gap: 16px; }
+      .essay-layout { grid-template-columns: minmax(0, 1fr) 190px; }
+      .workspace, .feedback-card, .completion-card { padding: 16px; border-radius: 18px; }
+      .side-card { padding: 6px 4px; }
       .workspace, .side-card { gap: 12px; }
       .side-card h3, .feedback-card h3, .essay-card h3, .completion-card h3 { font-size: 18px; }
       .side-card p, .feedback-card p, .completion-card p { font-size: 14px; line-height: 1.4; }
@@ -438,8 +444,8 @@
       .move-button { min-width: 36px; width: 36px; min-height: 36px; }
       .correct-order { gap: 6px; font-size: 14px; }
       .essay-card { gap: 9px; }
-      .prompt-box { padding: 11px 13px; border-radius: 13px; font-size: 15px; line-height: 1.35; }
-      .essay-box { padding: 12px; border-radius: 13px; font-size: 15px; line-height: 1.45; }
+      .prompt-box { padding: 0 0 7px 13px; border-radius: 0; font-size: 16px; line-height: 1.4; }
+      .essay-box { padding: 17px; border-radius: 13px; font-size: 17px; line-height: 1.52; }
       .essay-meta { gap: 8px; font-size: 13px; }
       .self-check { gap: 5px; }
       .check-row { min-height: 34px; font-size: 14px; }
@@ -466,6 +472,7 @@
       .cover-copy h1 { font-size: clamp(42px, 12vw, 64px); }
       .cover-card { padding: 26px; }
       .orientation-grid { grid-template-columns: minmax(0, 1fr); }
+      .route-arrow { justify-self: center; transform: rotate(90deg); }
       .screen-head { align-items: flex-start; }
       .screen-title { grid-template-columns: 50px minmax(0, 1fr); gap: 13px; }
       .title-icon { width: 50px; height: 50px; }
@@ -486,7 +493,8 @@
       .screen-head p { font-size: 15px; }
       .screen-title { grid-template-columns: 44px minmax(0, 1fr); gap: 11px; }
       .title-icon { width: 44px; height: 44px; font-size: 14px; }
-      .workspace, .side-card, .feedback-card, .essay-card, .completion-card { padding: 20px 16px; border-radius: 18px; }
+      .workspace, .feedback-card, .completion-card { padding: 20px 16px; border-radius: 18px; }
+      .side-card, .essay-card { padding: 0; }
       .task-tools { align-items: stretch; }
       .task-tools .action { width: 100%; }
       .gapped-text { font-size: 17px; line-height: 2.25; }
@@ -497,7 +505,6 @@
       .essay-box { min-height: 480px; }
       footer { grid-template-columns: 86px minmax(0, 1fr) 86px; padding: 10px 8px; gap: 8px; }
       .progress-wrap { gap: 7px; }
-      .progress-label { font-size: 12px; }
       .nav-button { min-height: 44px; padding: 0 6px; font-size: 14px; }
       .nav-hint { padding: 0 6px; font-size: 12px; }
     }
@@ -535,26 +542,22 @@
 
       <section class="screen" data-screen="1" hidden>
         <div class="screen-inner centre">
-          <header class="screen-head">
-            <div class="screen-title">
-              <span class="title-icon" aria-hidden="true">3</span>
-              <div><h2>Your route</h2><p>Complete one task at a time. Your work stays saved on this device.</p></div>
-            </div>
-          </header>
           <div class="orientation-grid">
-            <article class="orientation-card">
+            <article class="orientation-card listening">
               <span class="task-mark" aria-hidden="true">L</span>
               <span class="time-chip">5–7 min</span>
               <h3>Fill in the Blanks</h3>
               <p>Skim the transcript, listen once and type five missing words.</p>
             </article>
-            <article class="orientation-card">
+            <span class="route-arrow" aria-hidden="true">→</span>
+            <article class="orientation-card reading">
               <span class="task-mark" aria-hidden="true">R</span>
               <span class="time-chip">5–7 min</span>
               <h3>Reorder Paragraph</h3>
               <p>Move five text boxes into one logical order.</p>
             </article>
-            <article class="orientation-card">
+            <span class="route-arrow" aria-hidden="true">→</span>
+            <article class="orientation-card writing">
               <span class="task-mark" aria-hidden="true">W</span>
               <span class="time-chip">20 min</span>
               <h3>Write Essay</h3>
@@ -715,8 +718,7 @@
     <footer>
       <button class="nav-button" id="back">← Back</button>
       <div class="progress-wrap" aria-label="Homework progress">
-        <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
-        <span class="progress-label" id="progress-label">1 / 6</span>
+        <div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-valuetext="Introduction"><div class="progress-bar" id="progress-bar"></div></div>
       </div>
       <button class="nav-button next" id="next">Next →</button>
       <p class="nav-hint" id="nav-hint" aria-live="polite"></p>
@@ -809,12 +811,14 @@
       }
 
       function updateNavigation() {
+        const screenNames = ["Introduction", "Task overview", "Fill in the Blanks", "Reorder Paragraph", "Write Essay", "Homework complete"];
         screens.forEach((screen, position) => { screen.hidden = position !== current; });
         document.querySelector("#back").disabled = current === 0;
         document.querySelector("#next").disabled = current === screens.length - 1 || !canAdvance(current);
         document.querySelector("#next").textContent = current === screens.length - 2 ? "Finish →" : "Next →";
         document.querySelector("#progress-bar").style.width = `${((current + 1) / screens.length) * 100}%`;
-        document.querySelector("#progress-label").textContent = `${current + 1} / ${screens.length}`;
+        document.querySelector("#progress-track").setAttribute("aria-valuenow", String(current + 1));
+        document.querySelector("#progress-track").setAttribute("aria-valuetext", screenNames[current]);
         document.querySelector("#nav-hint").textContent = advanceHint(current);
         if (current === 5) renderCompletion();
         saveState();
