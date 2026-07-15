@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-15-interface-refinement-2">
-  <title>William — Three New PTE Tasks</title>
+  <meta name="release-version" content="2026-07-15-wfd-audio-v2">
+  <title>William — PTE Task Practice</title>
   <style>
     :root {
       --primary: oklch(0.43 0.075 235);
@@ -88,7 +88,8 @@
     .screen-inner.centre { align-content: center; }
     [data-screen="2"] .screen-inner,
     [data-screen="3"] .screen-inner,
-    [data-screen="4"] .screen-inner { grid-template-rows: auto minmax(0, 1fr); }
+    [data-screen="4"] .screen-inner,
+    [data-screen="5"] .screen-inner { grid-template-rows: auto minmax(0, 1fr); }
 
     .screen-head {
       display: flex;
@@ -289,6 +290,47 @@
     }
     .score-number { font-size: 30px; }
 
+    .wfd-workspace { gap: 12px; }
+    .wfd-list { min-height: 0; display: grid; border-top: 1px solid var(--line); }
+    .wfd-row {
+      min-width: 0;
+      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 112px;
+      gap: 8px 14px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .wfd-lead { display: grid; gap: 7px; align-content: center; }
+    .wfd-lead strong { font-size: 17px; }
+    .wfd-input {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 14px;
+      resize: none;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-low);
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .wfd-state { color: var(--muted); font-size: 14px; font-weight: 680; }
+    .wfd-feedback, .wfd-fallback { grid-column: 2 / 4; }
+    .wfd-feedback {
+      padding: 9px 11px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      border-radius: 11px;
+      background: var(--success-soft);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .wfd-feedback strong { color: var(--primary); white-space: nowrap; }
+    .wfd-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+    .wfd-note { color: var(--muted); font-size: 14px; }
+
     .reorder-list { margin: 0; padding: 0; display: grid; gap: 12px; list-style: none; }
     .reorder-card {
       min-width: 0;
@@ -436,6 +478,13 @@
       .gap-input { min-height: 36px; padding: 3px 7px; }
       .score-panel { padding: 12px; gap: 10px; }
       .score-number { font-size: 24px; }
+      .wfd-workspace { gap: 8px; }
+      .wfd-row { padding: 7px 0; grid-template-columns: 132px minmax(0, 1fr) 100px; gap: 6px 10px; }
+      .wfd-lead { gap: 5px; }
+      .wfd-lead strong { font-size: 15px; }
+      .wfd-input { min-height: 44px; padding: 9px 11px; font-size: 14px; }
+      .wfd-feedback { padding: 7px 9px; font-size: 13px; }
+      .wfd-state, .wfd-note { font-size: 13px; }
       .reorder-list { gap: 7px; }
       .reorder-card { padding: 9px 10px; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; border-radius: 13px; }
       .position { width: 34px; height: 34px; border-radius: 10px; }
@@ -467,7 +516,7 @@
       .screen-inner.centre { align-content: start; }
       .cover-grid, .task-layout, .essay-layout, .completion-grid { grid-template-columns: minmax(0, 1fr); }
       .task-layout, .essay-layout { height: auto; }
-      [data-screen="2"] .screen-inner, [data-screen="3"] .screen-inner, [data-screen="4"] .screen-inner { grid-template-rows: auto auto; }
+      [data-screen="2"] .screen-inner, [data-screen="3"] .screen-inner, [data-screen="4"] .screen-inner, [data-screen="5"] .screen-inner { grid-template-rows: auto auto; }
       .cover-grid { gap: 28px; }
       .cover-copy h1 { font-size: clamp(42px, 12vw, 64px); }
       .cover-card { padding: 26px; }
@@ -478,6 +527,10 @@
       .title-icon { width: 50px; height: 50px; }
       .screen-head h2 { font-size: clamp(28px, 8vw, 38px); }
       .workspace, .side-card, .essay-card { overflow: visible; }
+      .wfd-row { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 16px 0; }
+      .wfd-lead { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+      .wfd-input, .wfd-state, .wfd-feedback, .wfd-fallback { grid-column: 1; }
+      .wfd-feedback { grid-template-columns: minmax(0, 1fr); }
       .side-card { order: 2; }
       .essay-card { grid-template-rows: auto; }
       .essay-box { height: auto; min-height: 420px; resize: vertical; }
@@ -522,8 +575,8 @@
           <div class="cover-grid">
             <div class="cover-copy">
               <p class="eyebrow">PTE Academic homework</p>
-              <h1>Three new PTE tasks</h1>
-              <p>One listening task, one reading task and one full essay. Make a natural first attempt so your teacher can see what to teach next.</p>
+              <h1>PTE task practice</h1>
+              <p>Two listening tasks, one reading task and one full essay. Make a natural first attempt so your teacher can see what to teach next.</p>
               <div class="task-pills" aria-label="Skills in this homework">
                 <span class="pill">Listening</span>
                 <span class="pill">Reading</span>
@@ -532,8 +585,8 @@
             </div>
             <aside class="cover-card" aria-label="Homework summary">
               <h2>What to expect</h2>
-              <div class="cover-stat"><span class="stat-number">3</span><span><strong>Task types</strong>Each one is new practice.</span></div>
-              <div class="cover-stat"><span class="stat-number">35</span><span><strong>About 35 minutes</strong>The essay takes 20 minutes.</span></div>
+              <div class="cover-stat"><span class="stat-number">4</span><span><strong>Task types</strong>Listening, reading and writing.</span></div>
+              <div class="cover-stat"><span class="stat-number">45</span><span><strong>About 40–45 minutes</strong>The essay takes 20 minutes.</span></div>
               <div class="cover-stat"><span class="stat-number">1</span><span><strong>Results file</strong>Save it when you finish.</span></div>
             </aside>
           </div>
@@ -545,9 +598,9 @@
           <div class="orientation-grid">
             <article class="orientation-card listening">
               <span class="task-mark" aria-hidden="true">L</span>
-              <span class="time-chip">5–7 min</span>
-              <h3>Fill in the Blanks</h3>
-              <p>Skim the transcript, listen once and type five missing words.</p>
+              <span class="time-chip">10–15 min</span>
+              <h3>Two listening tasks</h3>
+              <p>Fill five gaps, then type three fresh dictation sentences.</p>
             </article>
             <span class="route-arrow" aria-hidden="true">→</span>
             <article class="orientation-card reading">
@@ -564,7 +617,7 @@
               <p>Write 200–300 words and keep the result for teacher feedback.</p>
             </article>
           </div>
-          <p class="one-rule">Make one natural first attempt. Check the first two tasks after submitting. Keep the essay for teacher feedback.</p>
+          <p class="one-rule">Make one natural first attempt. Check the listening and reading tasks after submitting. Keep the essay for teacher feedback.</p>
         </div>
       </section>
 
@@ -597,8 +650,8 @@
                 and purpose before drawing conclusions.
               </p>
               <button class="action" id="fib-check" disabled>Check my words</button>
-              <p class="fallback" id="fib-fallback" hidden>Audio did not start. <a href="audio/01-map-projections-cued-v1.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>, then return to fill the gaps.</p>
-              <audio id="fib-audio" preload="metadata" src="audio/01-map-projections-cued-v1.mp3"></audio>
+              <p class="fallback" id="fib-fallback" hidden>Audio did not start. <a href="audio/01-map-projections-cued-v2-sonia.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>, then return to fill the gaps.</p>
+              <audio id="fib-audio" preload="metadata" src="audio/01-map-projections-cued-v2-sonia.mp3"></audio>
               <div class="score-panel" id="fib-result" hidden>
                 <strong class="score-number" id="fib-score">0 / 5</strong>
                 <p id="fib-score-message">Your first attempt is saved.</p>
@@ -615,6 +668,53 @@
       </section>
 
       <section class="screen" data-screen="3" hidden>
+        <div class="screen-inner">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">L</span>
+              <div><h2>Write From Dictation</h2><p>Listen once and type the complete sentence exactly as you hear it.</p></div>
+            </div>
+          </header>
+          <section class="workspace wfd-workspace" aria-label="Write From Dictation task">
+            <div class="wfd-list">
+              <article class="wfd-row" data-wfd-row="0">
+                <div class="wfd-lead"><strong>Sentence 1</strong><button class="action secondary" type="button" data-wfd-play="0">Listen once</button></div>
+                <textarea class="wfd-input" rows="2" data-wfd-input="0" aria-label="Write From Dictation sentence 1" placeholder="Type the full sentence"></textarea>
+                <p class="wfd-state" data-wfd-state="0" aria-live="polite">Ready</p>
+                <p class="fallback wfd-fallback" data-wfd-fallback="0" hidden>Audio did not start. <a href="audio/02-wfd-orchestra-cued-v1.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <div class="wfd-feedback" data-wfd-feedback="0" hidden><strong data-wfd-score="0"></strong><span data-wfd-source="0"></span></div>
+                <audio data-wfd-audio="0" preload="metadata" src="audio/02-wfd-orchestra-cued-v1.mp3"></audio>
+              </article>
+              <article class="wfd-row" data-wfd-row="1">
+                <div class="wfd-lead"><strong>Sentence 2</strong><button class="action secondary" type="button" data-wfd-play="1">Listen once</button></div>
+                <textarea class="wfd-input" rows="2" data-wfd-input="1" aria-label="Write From Dictation sentence 2" placeholder="Type the full sentence"></textarea>
+                <p class="wfd-state" data-wfd-state="1" aria-live="polite">Ready</p>
+                <p class="fallback wfd-fallback" data-wfd-fallback="1" hidden>Audio did not start. <a href="audio/03-wfd-solar-panels-cued-v2.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <div class="wfd-feedback" data-wfd-feedback="1" hidden><strong data-wfd-score="1"></strong><span data-wfd-source="1"></span></div>
+                <audio data-wfd-audio="1" preload="metadata" src="audio/03-wfd-solar-panels-cued-v2.mp3"></audio>
+              </article>
+              <article class="wfd-row" data-wfd-row="2">
+                <div class="wfd-lead"><strong>Sentence 3</strong><button class="action secondary" type="button" data-wfd-play="2">Listen once</button></div>
+                <textarea class="wfd-input" rows="2" data-wfd-input="2" aria-label="Write From Dictation sentence 3" placeholder="Type the full sentence"></textarea>
+                <p class="wfd-state" data-wfd-state="2" aria-live="polite">Ready</p>
+                <p class="fallback wfd-fallback" data-wfd-fallback="2" hidden>Audio did not start. <a href="audio/04-wfd-reusable-containers-cued-v1.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+                <div class="wfd-feedback" data-wfd-feedback="2" hidden><strong data-wfd-score="2"></strong><span data-wfd-source="2"></span></div>
+                <audio data-wfd-audio="2" preload="metadata" src="audio/04-wfd-reusable-containers-cued-v1.mp3"></audio>
+              </article>
+            </div>
+            <div class="wfd-actions">
+              <button class="action" id="wfd-check" disabled>Check my sentences</button>
+              <p class="wfd-note">The practice result counts words recovered in the correct order. It is not a PTE score prediction.</p>
+            </div>
+            <div class="score-panel" id="wfd-result" hidden>
+              <strong class="score-number" id="wfd-total">0 / 33</strong>
+              <p>Your three first attempts are saved. Compare each source with what you typed.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="4" hidden>
         <div class="screen-inner">
           <header class="screen-head">
             <div class="screen-title">
@@ -644,7 +744,7 @@
         </div>
       </section>
 
-      <section class="screen" data-screen="4" hidden>
+      <section class="screen" data-screen="5" hidden>
         <div class="screen-inner">
           <header class="screen-head">
             <div class="screen-title">
@@ -682,7 +782,7 @@
         </div>
       </section>
 
-      <section class="screen" data-screen="5" hidden>
+      <section class="screen" data-screen="6" hidden>
         <div class="screen-inner centre">
           <header class="screen-head">
             <div class="screen-title">
@@ -693,7 +793,7 @@
           <div class="completion-grid">
             <section class="completion-card">
               <h3>Save your work</h3>
-              <p>Your results include the two first attempts, their practice scores and your full essay.</p>
+              <p>Your results include three objective first attempts, their practice feedback and your full essay.</p>
               <div class="completion-actions">
                 <button class="action" id="copy-results">Copy my results</button>
                 <button class="action secondary" id="download-results">Save results as a file</button>
@@ -705,10 +805,11 @@
               <h3>Your task record</h3>
               <div class="result-summary">
                 <div class="result-row"><strong>Listening blanks</strong><strong id="summary-fib">—</strong></div>
+                <div class="result-row"><strong>Dictation words</strong><strong id="summary-wfd">—</strong></div>
                 <div class="result-row"><strong>Reorder pairs</strong><strong id="summary-reorder">—</strong></div>
                 <div class="result-row"><strong>Essay</strong><strong id="summary-essay">—</strong></div>
               </div>
-              <p>The first two numbers are practice-item results, not PTE score predictions.</p>
+              <p>The first three numbers are practice-item results, not PTE score predictions.</p>
             </aside>
           </div>
         </div>
@@ -718,7 +819,7 @@
     <footer>
       <button class="nav-button" id="back">← Back</button>
       <div class="progress-wrap" aria-label="Homework progress">
-        <div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-valuetext="Introduction"><div class="progress-bar" id="progress-bar"></div></div>
+        <div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" aria-valuetext="Introduction"><div class="progress-bar" id="progress-bar"></div></div>
       </div>
       <button class="nav-button next" id="next">Next →</button>
       <p class="nav-hint" id="nav-hint" aria-live="polite"></p>
@@ -730,6 +831,11 @@
       const STORAGE_KEY = "william-pte-new-task-sampler-01-v1";
       const screens = [...document.querySelectorAll("[data-screen]")];
       const correctGaps = ["projection", "curved", "poles", "accurately", "scale"];
+      const wfdItems = [
+        { source: "The orchestra rehearses in a smaller hall while the theatre is renovated." },
+        { source: "Dust reduces the amount of electricity produced by solar panels." },
+        { source: "Reusable containers are becoming common in shops that sell takeaway meals." },
+      ];
       const correctOrder = [1, 2, 3, 4, 5];
       const paragraphs = {
         1: "In the late 1940s, retailers began looking for a faster way to identify products at checkout.",
@@ -749,6 +855,7 @@
         return {
           current: 0,
           fib: { entries: ["", "", "", "", ""], used: false, checked: false, firstEntries: null, score: null },
+          wfd: { entries: ["", "", ""], used: [false, false, false], checked: false, firstEntries: null, scores: null, total: null },
           reorder: { order: [3, 1, 5, 2, 4], checked: false, firstOrder: null, score: null },
           essay: { text: "", started: false, deadline: null, finished: false, finishedAt: null, selfChecks: [] },
         };
@@ -763,6 +870,7 @@
             ...base,
             ...saved,
             fib: { ...base.fib, ...(saved.fib || {}) },
+            wfd: { ...base.wfd, ...(saved.wfd || {}) },
             reorder: { ...base.reorder, ...(saved.reorder || {}) },
             essay: { ...base.essay, ...(saved.essay || {}) },
           };
@@ -775,6 +883,7 @@
       let current = Math.min(Math.max(Number(state.current) || 0, 0), screens.length - 1);
       let previewTimer = null;
       let essayTimer = null;
+      let activeWfdIndex = null;
       const dragged = { id: null };
 
       function saveState() {
@@ -791,27 +900,53 @@
         return words ? words.length : 0;
       }
 
+      function wordTokens(value) {
+        return (value.toLowerCase().match(/[a-z0-9]+(?:'[a-z0-9]+)?/g) || []);
+      }
+
+      function orderedWordScore(attempt, source) {
+        const heard = wordTokens(attempt);
+        const answer = wordTokens(source);
+        const rows = answer.length + 1;
+        const cols = heard.length + 1;
+        const table = Array.from({ length: rows }, () => Array(cols).fill(0));
+        for (let row = 1; row < rows; row += 1) {
+          for (let col = 1; col < cols; col += 1) {
+            table[row][col] = answer[row - 1] === heard[col - 1]
+              ? table[row - 1][col - 1] + 1
+              : Math.max(table[row - 1][col], table[row][col - 1]);
+          }
+        }
+        return table[rows - 1][cols - 1];
+      }
+
       function canAdvance(index) {
         if (index === 2) return state.fib.checked;
-        if (index === 3) return state.reorder.checked;
-        if (index === 4) return state.essay.finished;
+        if (index === 3) return state.wfd.checked;
+        if (index === 4) return state.reorder.checked;
+        if (index === 5) return state.essay.finished;
         return true;
       }
 
       function advanceHint(index) {
         if (index === 2 && !state.fib.checked) return "Check all five words before continuing.";
-        if (index === 3 && !state.reorder.checked) return "Check your full order before continuing.";
-        if (index === 4 && !state.essay.finished) return "Finish the essay before continuing.";
+        if (index === 3 && !state.wfd.checked) return "Listen once to all three sentences, then check them.";
+        if (index === 4 && !state.reorder.checked) return "Check your full order before continuing.";
+        if (index === 5 && !state.essay.finished) return "Finish the essay before continuing.";
         return "";
       }
 
       function stopAudio() {
         const audio = document.querySelector("#fib-audio");
         if (!audio.paused) audio.pause();
+        document.querySelectorAll("[data-wfd-audio]").forEach(player => {
+          if (!player.paused) player.pause();
+        });
+        activeWfdIndex = null;
       }
 
       function updateNavigation() {
-        const screenNames = ["Introduction", "Task overview", "Fill in the Blanks", "Reorder Paragraph", "Write Essay", "Homework complete"];
+        const screenNames = ["Introduction", "Task overview", "Fill in the Blanks", "Write From Dictation", "Reorder Paragraph", "Write Essay", "Homework complete"];
         screens.forEach((screen, position) => { screen.hidden = position !== current; });
         document.querySelector("#back").disabled = current === 0;
         document.querySelector("#next").disabled = current === screens.length - 1 || !canAdvance(current);
@@ -820,7 +955,7 @@
         document.querySelector("#progress-track").setAttribute("aria-valuenow", String(current + 1));
         document.querySelector("#progress-track").setAttribute("aria-valuetext", screenNames[current]);
         document.querySelector("#nav-hint").textContent = advanceHint(current);
-        if (current === 5) renderCompletion();
+        if (current === 6) renderCompletion();
         saveState();
       }
 
@@ -919,6 +1054,96 @@
         renderFib();
       });
 
+      const wfdInputs = [...document.querySelectorAll("[data-wfd-input]")];
+      const wfdPlayers = [...document.querySelectorAll("[data-wfd-audio]")];
+      wfdInputs.forEach((input, index) => {
+        input.value = state.wfd.entries[index] || "";
+        input.addEventListener("input", () => {
+          state.wfd.entries[index] = input.value;
+          renderWfd();
+          saveState();
+        });
+      });
+
+      function renderWfd() {
+        const complete = state.wfd.entries.every(value => value.trim());
+        const allUsed = state.wfd.used.every(Boolean);
+        document.querySelector("#wfd-check").disabled = !complete || !allUsed || state.wfd.checked || activeWfdIndex !== null;
+        wfdItems.forEach((item, index) => {
+          const play = document.querySelector(`[data-wfd-play="${index}"]`);
+          const input = wfdInputs[index];
+          const status = document.querySelector(`[data-wfd-state="${index}"]`);
+          const feedback = document.querySelector(`[data-wfd-feedback="${index}"]`);
+          play.disabled = state.wfd.used[index] || state.wfd.checked || activeWfdIndex !== null;
+          play.textContent = state.wfd.used[index] ? "Recording used" : "Listen once";
+          input.disabled = state.wfd.checked;
+          if (state.wfd.checked) {
+            status.textContent = "Checked";
+            feedback.hidden = false;
+            document.querySelector(`[data-wfd-score="${index}"]`).textContent = `${state.wfd.scores[index]} / ${wordTokens(item.source).length} ordered words`;
+            document.querySelector(`[data-wfd-source="${index}"]`).textContent = item.source;
+          } else {
+            feedback.hidden = true;
+            if (activeWfdIndex === index) status.textContent = "Playing";
+            else if (state.wfd.used[index]) status.textContent = "First listen completed";
+            else status.textContent = "Ready";
+          }
+        });
+        document.querySelector("#wfd-result").hidden = !state.wfd.checked;
+        if (state.wfd.checked) document.querySelector("#wfd-total").textContent = `${state.wfd.total} / 33`;
+        if (current === 3) updateNavigation();
+      }
+
+      async function playWfd(index) {
+        if (state.wfd.used[index] || state.wfd.checked || activeWfdIndex !== null) return;
+        const player = wfdPlayers[index];
+        const fallback = document.querySelector(`[data-wfd-fallback="${index}"]`);
+        fallback.hidden = true;
+        activeWfdIndex = index;
+        renderWfd();
+        try {
+          player.currentTime = 0;
+          await player.play();
+          state.wfd.used[index] = true;
+          saveState();
+          renderWfd();
+        } catch {
+          activeWfdIndex = null;
+          fallback.hidden = false;
+          renderWfd();
+          document.querySelector(`[data-wfd-state="${index}"]`).textContent = "The recording did not start inside the page.";
+        }
+      }
+
+      wfdItems.forEach((item, index) => {
+        document.querySelector(`[data-wfd-play="${index}"]`).addEventListener("click", () => playWfd(index));
+        wfdPlayers[index].addEventListener("ended", () => {
+          activeWfdIndex = null;
+          renderWfd();
+        });
+        wfdPlayers[index].addEventListener("error", () => {
+          activeWfdIndex = null;
+          document.querySelector(`[data-wfd-fallback="${index}"]`).hidden = false;
+          renderWfd();
+          document.querySelector(`[data-wfd-state="${index}"]`).textContent = "The recording could not load inside the page.";
+        });
+        document.querySelector(`[data-wfd-fallback="${index}"] a`).addEventListener("click", () => {
+          state.wfd.used[index] = true;
+          saveState();
+          renderWfd();
+        });
+      });
+
+      document.querySelector("#wfd-check").addEventListener("click", () => {
+        if (state.wfd.checked || !state.wfd.used.every(Boolean) || !state.wfd.entries.every(value => value.trim())) return;
+        state.wfd.firstEntries = [...state.wfd.entries];
+        state.wfd.scores = wfdItems.map((item, index) => orderedWordScore(state.wfd.firstEntries[index], item.source));
+        state.wfd.total = state.wfd.scores.reduce((sum, score) => sum + score, 0);
+        state.wfd.checked = true;
+        saveState();
+        renderWfd();
+      });
+
       function pairScore(order) {
         return order.slice(0, -1).reduce((score, value, index) => {
           const first = correctOrder.indexOf(value);
@@ -973,7 +1198,7 @@
         document.querySelector("#reorder-result").hidden = !state.reorder.checked;
         document.querySelector("#reorder-answer").hidden = !state.reorder.checked;
         if (state.reorder.checked) document.querySelector("#reorder-score").textContent = `${state.reorder.score} / 4`;
-        if (current === 3) updateNavigation();
+        if (current === 4) updateNavigation();
       }
 
       document.querySelector("#correct-order").innerHTML = correctOrder.map(id => `<li>${paragraphs[id]}</li>`).join("");
@@ -1036,7 +1261,7 @@
           ? (state.essay.deadline - state.essay.finishedAt <= 0 ? "Time is up. Your essay is saved for teacher feedback." : "Your essay is saved for teacher feedback.")
           : "This page does not give an automatic PTE score. Your teacher will review the essay.";
         updateEssayTimer();
-        if (current === 4) updateNavigation();
+        if (current === 5) updateNavigation();
       }
 
       document.querySelector("#essay-start").addEventListener("click", () => {
@@ -1057,32 +1282,42 @@
 
       function resultText() {
         const fibEntries = state.fib.firstEntries || state.fib.entries;
+        const wfdEntries = state.wfd.firstEntries || state.wfd.entries;
         const reorderOrder = state.reorder.firstOrder || state.reorder.order;
         return [
-          "William — Three New PTE Tasks",
+          "William — PTE Task Practice",
           "",
           "1. Listening Fill in the Blanks (Type In)",
           `First entries: ${fibEntries.map((word, index) => `${index + 1}. ${word || "[blank]"}`).join(" | ")}`,
           `Practice score: ${state.fib.score ?? "Not checked"} / 5`,
           `Correct words: ${correctGaps.map((word, index) => `${index + 1}. ${word}`).join(" | ")}`,
           "",
-          "2. Reorder Paragraph",
+          "2. Write From Dictation",
+          ...wfdItems.flatMap((item, index) => [
+            `Sentence ${index + 1} first attempt: ${wfdEntries[index] || "[blank]"}`,
+            `Ordered words recovered: ${state.wfd.scores ? state.wfd.scores[index] : "Not checked"} / ${wordTokens(item.source).length}`,
+            `Source: ${item.source}`,
+          ]),
+          `Total ordered words recovered: ${state.wfd.total ?? "Not checked"} / 33`,
+          "",
+          "3. Reorder Paragraph",
           `First order: ${reorderOrder.join(" → ")}`,
           `Correct adjacent pairs: ${state.reorder.score ?? "Not checked"} / 4`,
           `Correct order: ${correctOrder.join(" → ")}`,
           "",
-          "3. Write Essay",
+          "4. Write Essay",
           `Word count: ${wordCount(state.essay.text)}`,
           `Self-checks: ${state.essay.selfChecks.length ? state.essay.selfChecks.join(", ") : "None selected"}`,
           "",
           state.essay.text || "No essay written",
           "",
-          "The two item results above are practice results, not PTE score predictions.",
+          "The three item results above are practice results, not PTE score predictions.",
         ].join("\n");
       }
 
       function renderCompletion() {
         document.querySelector("#summary-fib").textContent = `${state.fib.score ?? "—"} / 5`;
+        document.querySelector("#summary-wfd").textContent = `${state.wfd.total ?? "—"} / 33`;
         document.querySelector("#summary-reorder").textContent = `${state.reorder.score ?? "—"} / 4`;
         document.querySelector("#summary-essay").textContent = `${wordCount(state.essay.text)} words`;
       }
@@ -1124,6 +1359,7 @@
       });
 
       renderFib();
+      renderWfd();
       renderReorder();
       renderEssay();
       showScreen(current);
