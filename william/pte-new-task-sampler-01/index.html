@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex,nofollow">
+  <title>William — Three New PTE Tasks</title>
+  <style>
+    :root {
+      --primary: oklch(0.43 0.075 235);
+      --primary-strong: oklch(0.36 0.075 235);
+      --primary-soft: oklch(0.92 0.032 235);
+      --secondary: oklch(0.46 0.045 155);
+      --secondary-soft: oklch(0.92 0.032 155);
+      --gold: oklch(0.62 0.11 82);
+      --gold-soft: oklch(0.95 0.045 88);
+      --surface: oklch(0.986 0.005 90);
+      --surface-low: oklch(0.966 0.008 90);
+      --surface-high: oklch(0.935 0.009 90);
+      --ink: oklch(0.23 0.015 145);
+      --muted: oklch(0.43 0.018 145);
+      --line: oklch(0.80 0.012 145);
+      --success: oklch(0.48 0.105 150);
+      --success-soft: oklch(0.94 0.035 150);
+      --error: oklch(0.48 0.17 28);
+      --error-soft: oklch(0.95 0.035 28);
+      --shadow: 0 1px 2px rgba(24, 43, 55, 0.06), 0 14px 38px rgba(24, 43, 55, 0.10);
+      font-family: "Segoe UI", Aptos, Arial, sans-serif;
+      color: var(--ink);
+      background: oklch(0.945 0.008 90);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 0; min-height: 100%; }
+    body {
+      min-width: 0;
+      min-height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--surface-high);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, textarea, input, a { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: 0.52; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, textarea:focus-visible, input:focus-visible, a:focus-visible {
+      outline: 3px solid var(--primary-soft);
+      outline-offset: 3px;
+    }
+    [hidden] { display: none !important; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { text-wrap: balance; }
+    p { line-height: 1.52; text-wrap: pretty; }
+
+    .page {
+      width: min(1160px, calc(100% - 24px));
+      min-height: calc(100dvh - 24px);
+      margin: 12px auto;
+      display: grid;
+      grid-template-rows: minmax(620px, auto) auto;
+      overflow: clip;
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .stage { min-width: 0; }
+    .screen { min-width: 0; }
+    .screen-inner {
+      min-width: 0;
+      min-height: 620px;
+      padding: clamp(26px, 4vw, 54px);
+      display: grid;
+      align-content: start;
+      gap: 28px;
+    }
+    .screen-inner.centre { align-content: center; }
+
+    .screen-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .screen-title {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+    }
+    .title-icon, .task-mark {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-weight: 820;
+      box-shadow: 0 10px 24px rgba(20, 72, 101, 0.18);
+    }
+    .screen-head h2 { font-size: clamp(30px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.025em; }
+    .screen-head p { margin-top: 5px; color: var(--muted); font-size: 17px; }
+
+    .eyebrow {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 820;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+      gap: clamp(30px, 5vw, 64px);
+      align-items: center;
+    }
+    .cover-copy { display: grid; gap: 22px; }
+    .cover-copy h1 { max-width: 760px; font-size: clamp(46px, 7vw, 78px); line-height: 0.98; letter-spacing: -0.045em; }
+    .cover-copy > p { max-width: 680px; color: var(--muted); font-size: clamp(18px, 2vw, 22px); }
+    .task-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      min-height: 40px;
+      padding: 9px 14px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 740;
+    }
+    .cover-card {
+      padding: 34px;
+      display: grid;
+      gap: 24px;
+      border-radius: 24px;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 18px 38px rgba(18, 66, 93, 0.20);
+    }
+    .cover-card h2 { font-size: 26px; }
+    .cover-stat { display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: center; }
+    .cover-stat strong { display: block; font-size: 20px; }
+    .cover-stat span:last-child { color: oklch(0.91 0.018 235); }
+    .stat-number {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.12);
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .orientation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .orientation-card {
+      min-width: 0;
+      padding: 25px;
+      display: grid;
+      gap: 16px;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06);
+    }
+    .orientation-card .task-mark { width: 48px; height: 48px; border-radius: 15px; box-shadow: none; }
+    .orientation-card:nth-child(2) .task-mark { background: var(--secondary); }
+    .orientation-card:nth-child(3) .task-mark { background: var(--gold); }
+    .orientation-card h3 { font-size: 22px; line-height: 1.15; }
+    .orientation-card p { color: var(--muted); }
+    .time-chip {
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--surface-low);
+      color: var(--primary);
+      font-weight: 780;
+      font-variant-numeric: tabular-nums;
+    }
+    .one-rule {
+      padding: 18px 20px;
+      border-radius: 17px;
+      background: var(--gold-soft);
+      color: oklch(0.34 0.055 78);
+      font-weight: 680;
+    }
+
+    .task-layout {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(290px, 0.68fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .workspace, .side-card, .feedback-card, .essay-card, .completion-card {
+      min-width: 0;
+      padding: clamp(22px, 3vw, 32px);
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 1px 2px rgba(24,43,55,.05), 0 10px 28px rgba(24,43,55,.06);
+    }
+    .workspace { display: grid; gap: 22px; }
+    .side-card { display: grid; gap: 18px; }
+    .side-card h3, .feedback-card h3, .essay-card h3, .completion-card h3 { font-size: 21px; }
+    .side-card p, .feedback-card p, .completion-card p { color: var(--muted); }
+
+    .task-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+    .action, .move-button, .nav-button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 14px;
+      font-weight: 770;
+      transition-property: transform, box-shadow, background-color;
+      transition-duration: 150ms;
+    }
+    .action:active:not(:disabled), .move-button:active:not(:disabled), .nav-button:active:not(:disabled) { transform: scale(0.96); }
+    .action {
+      padding: 0 18px;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 7px 18px rgba(20,72,101,.16);
+    }
+    .action:hover:not(:disabled) { background: var(--primary-strong); box-shadow: 0 9px 22px rgba(20,72,101,.20); }
+    .action.secondary { background: white; color: var(--primary); box-shadow: inset 0 0 0 1px var(--line); }
+    .action.danger { background: white; color: var(--error); box-shadow: inset 0 0 0 1px oklch(0.80 0.06 28); }
+    .countdown, .timer, .score-number {
+      color: var(--primary);
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown, .timer { font-size: 21px; }
+    .status { min-height: 25px; color: var(--muted); font-weight: 620; }
+    .fallback { padding: 14px 16px; border-radius: 14px; background: var(--gold-soft); }
+    .fallback a { color: var(--primary); font-weight: 760; }
+
+    .gapped-text {
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 2.05;
+    }
+    .gap-wrap { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+    .gap-input {
+      width: 10ch;
+      min-height: 42px;
+      padding: 5px 9px;
+      border: 0;
+      border-bottom: 2px solid var(--primary);
+      border-radius: 9px 9px 4px 4px;
+      background: var(--primary-soft);
+      color: var(--ink);
+      font-weight: 740;
+    }
+    .gap-input.correct { border-bottom-color: var(--success); background: var(--success-soft); }
+    .gap-input.incorrect { border-bottom-color: var(--error); background: var(--error-soft); }
+    .gap-answer { color: var(--success); font-size: 14px; font-weight: 820; }
+    .score-panel {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      border-radius: 17px;
+      background: var(--success-soft);
+    }
+    .score-number { font-size: 30px; }
+
+    .reorder-list { margin: 0; padding: 0; display: grid; gap: 12px; list-style: none; }
+    .reorder-card {
+      min-width: 0;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      border-radius: 17px;
+      background: var(--surface-low);
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+    .reorder-card[draggable="true"] { cursor: grab; }
+    .reorder-card.dragging { opacity: 0.55; box-shadow: inset 0 0 0 2px var(--primary); }
+    .position {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: white;
+      color: var(--primary);
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .reorder-card p { font-size: 16px; line-height: 1.42; }
+    .move-controls { display: grid; grid-template-columns: repeat(2, 42px); gap: 7px; }
+    .move-button {
+      min-width: 42px;
+      width: 42px;
+      min-height: 42px;
+      padding: 0;
+      background: white;
+      color: var(--primary);
+      box-shadow: inset 0 0 0 1px var(--line);
+      font-size: 18px;
+    }
+    .correct-order { margin: 0; padding-left: 24px; display: grid; gap: 10px; }
+    .correct-order li { padding-left: 5px; line-height: 1.45; }
+
+    .essay-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: start; }
+    .essay-card { display: grid; gap: 18px; }
+    .prompt-box { padding: 18px 20px; border-radius: 17px; background: var(--primary-soft); font-size: 18px; font-weight: 630; }
+    .essay-box {
+      width: 100%;
+      min-height: 340px;
+      padding: 18px;
+      resize: vertical;
+      border: 0;
+      border-radius: 17px;
+      background: var(--surface-low);
+      color: var(--ink);
+      box-shadow: inset 0 0 0 1px var(--line);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    .essay-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--muted); }
+    .word-count { font-weight: 800; font-variant-numeric: tabular-nums; }
+    .word-count.safe { color: var(--success); }
+    .word-count.over { color: var(--error); }
+    .self-check { display: grid; gap: 11px; }
+    .check-row {
+      min-height: 44px;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+    .check-row input { width: 20px; height: 20px; accent-color: var(--primary); }
+
+    .completion-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); gap: 22px; }
+    .completion-card { display: grid; gap: 18px; }
+    .completion-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .result-summary { display: grid; gap: 12px; }
+    .result-row {
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      border-radius: 15px;
+      background: var(--surface-low);
+    }
+    .result-row strong:last-child { color: var(--primary); font-variant-numeric: tabular-nums; }
+    .done-status { min-height: 25px; color: var(--secondary); font-weight: 760; }
+
+    footer {
+      min-width: 0;
+      padding: 14px 20px;
+      display: grid;
+      grid-template-columns: minmax(100px, 150px) minmax(0, 1fr) minmax(100px, 150px);
+      gap: 18px;
+      align-items: center;
+      background: var(--surface);
+      box-shadow: inset 0 1px 0 var(--line);
+    }
+    .nav-button {
+      padding: 0 16px;
+      background: white;
+      color: var(--primary);
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+    .nav-button.next { background: var(--primary); color: white; box-shadow: 0 6px 16px rgba(20,72,101,.15); }
+    .progress-wrap { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+    .progress-track { min-width: 0; height: 7px; overflow: hidden; border-radius: 999px; background: var(--surface-high); }
+    .progress-bar { width: 16.66%; height: 100%; border-radius: inherit; background: var(--primary); transition-property: width; transition-duration: 180ms; }
+    .progress-label { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+    .nav-hint { grid-column: 1 / -1; min-height: 19px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    @media (max-width: 820px) {
+      .page { width: min(100% - 16px, 720px); min-height: calc(100dvh - 16px); margin: 8px auto; border-radius: 22px; grid-template-rows: auto auto; }
+      .screen-inner { min-height: 0; padding: 28px 24px; gap: 22px; }
+      .screen-inner.centre { align-content: start; }
+      .cover-grid, .task-layout, .essay-layout, .completion-grid { grid-template-columns: minmax(0, 1fr); }
+      .cover-grid { gap: 28px; }
+      .cover-copy h1 { font-size: clamp(42px, 12vw, 64px); }
+      .cover-card { padding: 26px; }
+      .orientation-grid { grid-template-columns: minmax(0, 1fr); }
+      .screen-head { align-items: flex-start; }
+      .screen-title { grid-template-columns: 50px minmax(0, 1fr); gap: 13px; }
+      .title-icon { width: 50px; height: 50px; }
+      .screen-head h2 { font-size: clamp(28px, 8vw, 38px); }
+      .side-card { order: 2; }
+      .essay-box { min-height: 420px; }
+      footer { grid-template-columns: 100px minmax(0, 1fr) 100px; padding: 12px 14px; gap: 10px; }
+      .nav-button { min-width: 0; padding: 0 10px; }
+      .nav-hint { text-align: left; }
+    }
+
+    @media (max-width: 520px) {
+      .page { width: 100%; min-height: 100dvh; margin: 0; border-radius: 0; box-shadow: none; }
+      .screen-inner { padding: 24px 16px 28px; }
+      .screen-head p { font-size: 15px; }
+      .screen-title { grid-template-columns: 44px minmax(0, 1fr); gap: 11px; }
+      .title-icon { width: 44px; height: 44px; font-size: 14px; }
+      .workspace, .side-card, .feedback-card, .essay-card, .completion-card { padding: 20px 16px; border-radius: 18px; }
+      .task-tools { align-items: stretch; }
+      .task-tools .action { width: 100%; }
+      .gapped-text { font-size: 17px; line-height: 2.25; }
+      .gap-input { width: 9ch; }
+      .reorder-card { grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 14px; }
+      .move-controls { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .move-button { width: 100%; }
+      .essay-box { min-height: 480px; }
+      footer { grid-template-columns: 86px minmax(0, 1fr) 86px; padding: 10px 8px; gap: 8px; }
+      .progress-wrap { gap: 7px; }
+      .progress-label { font-size: 12px; }
+      .nav-button { min-height: 44px; padding: 0 6px; font-size: 14px; }
+      .nav-hint { padding: 0 6px; font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-label="William's PTE homework">
+    <div class="stage">
+      <section class="screen" data-screen="0">
+        <div class="screen-inner centre">
+          <div class="cover-grid">
+            <div class="cover-copy">
+              <p class="eyebrow">PTE Academic homework</p>
+              <h1>Three new PTE tasks</h1>
+              <p>One listening task, one reading task and one full essay. Make a natural first attempt so your teacher can see what to teach next.</p>
+              <div class="task-pills" aria-label="Skills in this homework">
+                <span class="pill">Listening</span>
+                <span class="pill">Reading</span>
+                <span class="pill">Writing</span>
+              </div>
+            </div>
+            <aside class="cover-card" aria-label="Homework summary">
+              <h2>What to expect</h2>
+              <div class="cover-stat"><span class="stat-number">3</span><span><strong>Task types</strong>Each one is new practice.</span></div>
+              <div class="cover-stat"><span class="stat-number">35</span><span><strong>About 35 minutes</strong>The essay takes 20 minutes.</span></div>
+              <div class="cover-stat"><span class="stat-number">1</span><span><strong>Results file</strong>Save it when you finish.</span></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" hidden>
+        <div class="screen-inner centre">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">3</span>
+              <div><h2>Your route</h2><p>Complete one task at a time. Your work stays saved on this device.</p></div>
+            </div>
+          </header>
+          <div class="orientation-grid">
+            <article class="orientation-card">
+              <span class="task-mark" aria-hidden="true">L</span>
+              <span class="time-chip">5–7 min</span>
+              <h3>Fill in the Blanks</h3>
+              <p>Skim the transcript, listen once and type five missing words.</p>
+            </article>
+            <article class="orientation-card">
+              <span class="task-mark" aria-hidden="true">R</span>
+              <span class="time-chip">5–7 min</span>
+              <h3>Reorder Paragraph</h3>
+              <p>Move five text boxes into one logical order.</p>
+            </article>
+            <article class="orientation-card">
+              <span class="task-mark" aria-hidden="true">W</span>
+              <span class="time-chip">20 min</span>
+              <h3>Write Essay</h3>
+              <p>Write 200–300 words and keep the result for teacher feedback.</p>
+            </article>
+          </div>
+          <p class="one-rule">Make one natural first attempt. Check the first two tasks after submitting. Keep the essay for teacher feedback.</p>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="2" hidden>
+        <div class="screen-inner">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">L</span>
+              <div><h2>Fill in the Blanks</h2><p>Skim for seven seconds. The recording then plays once.</p></div>
+            </div>
+          </header>
+          <div class="task-layout">
+            <section class="workspace" aria-label="Listening fill in the blanks task">
+              <div class="task-tools">
+                <button class="action" id="fib-start">Start 7-second preview</button>
+                <span class="countdown" id="fib-countdown" aria-live="polite">Ready</span>
+              </div>
+              <p class="status" id="fib-status" aria-live="polite">The recording includes a short tone before the speaker begins.</p>
+              <p class="gapped-text">
+                Flat maps are useful because they allow people to see the whole world at once, but every map
+                <span class="gap-wrap"><input class="gap-input" data-gap="0" aria-label="Missing word 1" autocomplete="off" spellcheck="false"><span class="gap-answer" data-gap-answer="0" hidden></span></span>
+                changes something. The Earth is
+                <span class="gap-wrap"><input class="gap-input" data-gap="1" aria-label="Missing word 2" autocomplete="off" spellcheck="false"><span class="gap-answer" data-gap-answer="1" hidden></span></span>,
+                while a map is flat, so distances, areas or shapes must be stretched. On some common maps, places near the
+                <span class="gap-wrap"><input class="gap-input" data-gap="2" aria-label="Missing word 3" autocomplete="off" spellcheck="false"><span class="gap-answer" data-gap-answer="2" hidden></span></span>
+                appear much larger than they really are. Other projections preserve area more
+                <span class="gap-wrap"><input class="gap-input" data-gap="3" aria-label="Missing word 4" autocomplete="off" spellcheck="false"><span class="gap-answer" data-gap-answer="3" hidden></span></span>
+                but change shape. For this reason, geographers choose a projection according to the question they want to answer, and careful readers should compare the map's
+                <span class="gap-wrap"><input class="gap-input" data-gap="4" aria-label="Missing word 5" autocomplete="off" spellcheck="false"><span class="gap-answer" data-gap-answer="4" hidden></span></span>
+                and purpose before drawing conclusions.
+              </p>
+              <button class="action" id="fib-check" disabled>Check my words</button>
+              <p class="fallback" id="fib-fallback" hidden>Audio did not start. <a href="audio/01-map-projections-cued-v1.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>, then return to fill the gaps.</p>
+              <audio id="fib-audio" preload="metadata" src="audio/01-map-projections-cued-v1.mp3"></audio>
+              <div class="score-panel" id="fib-result" hidden>
+                <strong class="score-number" id="fib-score">0 / 5</strong>
+                <p id="fib-score-message">Your first attempt is saved.</p>
+              </div>
+            </section>
+            <aside class="side-card">
+              <h3>During the task</h3>
+              <p>Type one word in each gap. You can press Tab to move to the next gap.</p>
+              <p>Spelling counts. Check your words only after the recording finishes.</p>
+              <p>This practice score counts the five missing words. It is not a PTE score prediction.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="3" hidden>
+        <div class="screen-inner">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">R</span>
+              <div><h2>Reorder Paragraph</h2><p>Move the five boxes into one logical text.</p></div>
+            </div>
+          </header>
+          <div class="task-layout">
+            <section class="workspace">
+              <ol class="reorder-list" id="reorder-list" aria-label="Paragraph boxes"></ol>
+              <button class="action" id="reorder-check">Check my order</button>
+              <div class="score-panel" id="reorder-result" hidden>
+                <strong class="score-number" id="reorder-score">0 / 4</strong>
+                <p>Your first order is saved. The practice score counts correctly ordered adjacent pairs.</p>
+              </div>
+            </section>
+            <aside class="side-card">
+              <h3>How to move a box</h3>
+              <p>Use the up and down buttons. On a computer, you can also drag a box.</p>
+              <p>Submit one complete order before you see the answer.</p>
+              <div class="feedback-card" id="reorder-answer" hidden>
+                <h3>Correct order</h3>
+                <ol class="correct-order" id="correct-order"></ol>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="4" hidden>
+        <div class="screen-inner">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">W</span>
+              <div><h2>Write Essay</h2><p>Write 200–300 words. The timer begins when you start.</p></div>
+            </div>
+          </header>
+          <div class="essay-layout">
+            <section class="essay-card">
+              <div class="prompt-box">Some people argue that university courses should include compulsory work experience, while others believe academic study should remain the main focus. Discuss both views and give your own opinion.</div>
+              <div class="task-tools">
+                <button class="action" id="essay-start">Start 20-minute essay</button>
+                <span class="timer" id="essay-timer" aria-live="polite">20:00</span>
+              </div>
+              <textarea class="essay-box" id="essay-text" aria-label="Essay response" placeholder="Start writing after you begin the timer." disabled></textarea>
+              <div class="essay-meta">
+                <span class="word-count" id="essay-count">0 words</span>
+                <span id="essay-range">Target: 200–300 words</span>
+              </div>
+              <button class="action" id="essay-finish" disabled>Finish essay</button>
+              <p class="status" id="essay-status" aria-live="polite">This page does not give an automatic PTE score. Your teacher will review the essay.</p>
+            </section>
+            <aside class="side-card">
+              <h3>Final self-check</h3>
+              <p id="self-check-intro">Finish the essay first. Then record a short final check.</p>
+              <div class="self-check" id="self-check" hidden>
+                <label class="check-row"><input type="checkbox" data-self-check="length"><span>I wrote 200–300 words.</span></label>
+                <label class="check-row"><input type="checkbox" data-self-check="views"><span>I addressed both views.</span></label>
+                <label class="check-row"><input type="checkbox" data-self-check="opinion"><span>My opinion is clear.</span></label>
+                <label class="check-row"><input type="checkbox" data-self-check="paragraphs"><span>I used paragraphs.</span></label>
+                <label class="check-row"><input type="checkbox" data-self-check="language"><span>I checked grammar and spelling.</span></label>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="5" hidden>
+        <div class="screen-inner centre">
+          <header class="screen-head">
+            <div class="screen-title">
+              <span class="title-icon" aria-hidden="true">✓</span>
+              <div><h2>Homework complete</h2><p>Save one results file and send it to your teacher in your normal lesson chat.</p></div>
+            </div>
+          </header>
+          <div class="completion-grid">
+            <section class="completion-card">
+              <h3>Save your work</h3>
+              <p>Your results include the two first attempts, their practice scores and your full essay.</p>
+              <div class="completion-actions">
+                <button class="action" id="copy-results">Copy my results</button>
+                <button class="action secondary" id="download-results">Save results as a file</button>
+              </div>
+              <p class="done-status" id="done-status" aria-live="polite"></p>
+              <button class="action danger" id="reset-homework">Reset this homework</button>
+            </section>
+            <aside class="completion-card">
+              <h3>Your task record</h3>
+              <div class="result-summary">
+                <div class="result-row"><strong>Listening blanks</strong><strong id="summary-fib">—</strong></div>
+                <div class="result-row"><strong>Reorder pairs</strong><strong id="summary-reorder">—</strong></div>
+                <div class="result-row"><strong>Essay</strong><strong id="summary-essay">—</strong></div>
+              </div>
+              <p>The first two numbers are practice-item results, not PTE score predictions.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <button class="nav-button" id="back">← Back</button>
+      <div class="progress-wrap" aria-label="Homework progress">
+        <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+        <span class="progress-label" id="progress-label">1 / 6</span>
+      </div>
+      <button class="nav-button next" id="next">Next →</button>
+      <p class="nav-hint" id="nav-hint" aria-live="polite"></p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "william-pte-new-task-sampler-01-v1";
+      const screens = [...document.querySelectorAll("[data-screen]")];
+      const correctGaps = ["projection", "curved", "poles", "accurately", "scale"];
+      const correctOrder = [1, 2, 3, 4, 5];
+      const paragraphs = {
+        1: "In the late 1940s, retailers began looking for a faster way to identify products at checkout.",
+        2: "One early proposal used circular ink patterns, but the equipment was expensive and unreliable.",
+        3: "The idea gained momentum in the 1960s, when improvements in lasers and computers made automatic scanning more practical.",
+        4: "After industry groups agreed on a standard code, the first commercial barcode scan took place in an Ohio supermarket in 1974.",
+        5: "From there, barcodes spread rapidly because they reduced pricing errors and gave shops better information about stock.",
+      };
+
+      const hash = new URLSearchParams(location.hash.slice(1));
+      if (hash.get("reset") === "1") {
+        try { localStorage.removeItem(STORAGE_KEY); } catch { /* The page still works without local storage. */ }
+      }
+      if ([...hash.keys()].length) history.replaceState(null, "", location.pathname + location.search);
+
+      function defaults() {
+        return {
+          current: 0,
+          fib: { entries: ["", "", "", "", ""], used: false, checked: false, firstEntries: null, score: null },
+          reorder: { order: [3, 1, 5, 2, 4], checked: false, firstOrder: null, score: null },
+          essay: { text: "", started: false, deadline: null, finished: false, finishedAt: null, selfChecks: [] },
+        };
+      }
+
+      function loadState() {
+        const base = defaults();
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || typeof saved !== "object") return base;
+          return {
+            ...base,
+            ...saved,
+            fib: { ...base.fib, ...(saved.fib || {}) },
+            reorder: { ...base.reorder, ...(saved.reorder || {}) },
+            essay: { ...base.essay, ...(saved.essay || {}) },
+          };
+        } catch {
+          return base;
+        }
+      }
+
+      const state = loadState();
+      let current = Math.min(Math.max(Number(state.current) || 0, 0), screens.length - 1);
+      let previewTimer = null;
+      let essayTimer = null;
+      const dragged = { id: null };
+
+      function saveState() {
+        state.current = current;
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* Inputs remain usable. */ }
+      }
+
+      function normaliseWord(value) {
+        return value.trim().toLowerCase().replace(/[’]/g, "'");
+      }
+
+      function wordCount(value) {
+        const words = value.trim().match(/\b[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*\b/gu);
+        return words ? words.length : 0;
+      }
+
+      function canAdvance(index) {
+        if (index === 2) return state.fib.checked;
+        if (index === 3) return state.reorder.checked;
+        if (index === 4) return state.essay.finished;
+        return true;
+      }
+
+      function advanceHint(index) {
+        if (index === 2 && !state.fib.checked) return "Check all five words before continuing.";
+        if (index === 3 && !state.reorder.checked) return "Check your full order before continuing.";
+        if (index === 4 && !state.essay.finished) return "Finish the essay before continuing.";
+        return "";
+      }
+
+      function stopAudio() {
+        const audio = document.querySelector("#fib-audio");
+        if (!audio.paused) audio.pause();
+      }
+
+      function updateNavigation() {
+        screens.forEach((screen, position) => { screen.hidden = position !== current; });
+        document.querySelector("#back").disabled = current === 0;
+        document.querySelector("#next").disabled = current === screens.length - 1 || !canAdvance(current);
+        document.querySelector("#next").textContent = current === screens.length - 2 ? "Finish →" : "Next →";
+        document.querySelector("#progress-bar").style.width = `${((current + 1) / screens.length) * 100}%`;
+        document.querySelector("#progress-label").textContent = `${current + 1} / ${screens.length}`;
+        document.querySelector("#nav-hint").textContent = advanceHint(current);
+        if (current === 5) renderCompletion();
+        saveState();
+      }
+
+      function showScreen(index) {
+        const target = Math.min(Math.max(index, 0), screens.length - 1);
+        if (target !== current) stopAudio();
+        current = target;
+        updateNavigation();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      const gapInputs = [...document.querySelectorAll("[data-gap]")];
+      gapInputs.forEach((input, index) => {
+        input.value = state.fib.entries[index] || "";
+        input.addEventListener("input", () => {
+          state.fib.entries[index] = input.value;
+          renderFib();
+          saveState();
+        });
+      });
+
+      function renderFib() {
+        const complete = state.fib.entries.every(value => value.trim());
+        document.querySelector("#fib-start").disabled = state.fib.used || Boolean(previewTimer);
+        document.querySelector("#fib-check").disabled = !complete || !state.fib.used || state.fib.checked;
+        gapInputs.forEach((input, index) => {
+          input.disabled = state.fib.checked;
+          input.classList.remove("correct", "incorrect");
+          const answer = document.querySelector(`[data-gap-answer="${index}"]`);
+          if (state.fib.checked) {
+            const correct = normaliseWord(state.fib.firstEntries[index]) === correctGaps[index];
+            input.classList.add(correct ? "correct" : "incorrect");
+            answer.hidden = false;
+            answer.textContent = correct ? "✓" : correctGaps[index];
+          } else {
+            answer.hidden = true;
+          }
+        });
+        document.querySelector("#fib-result").hidden = !state.fib.checked;
+        if (state.fib.checked) {
+          document.querySelector("#fib-score").textContent = `${state.fib.score} / 5`;
+          document.querySelector("#fib-score-message").textContent = state.fib.score === 5
+            ? "All five words are correct. Your first attempt is saved."
+            : "Your first attempt is saved. Compare the spelling beside each gap.";
+        }
+        if (state.fib.used && !previewTimer) {
+          document.querySelector("#fib-countdown").textContent = "Used";
+          document.querySelector("#fib-start").textContent = "Recording used";
+        }
+        if (current === 2) updateNavigation();
+      }
+
+      function beginPreview() {
+        if (state.fib.used || previewTimer) return;
+        let remaining = 7;
+        const countdown = document.querySelector("#fib-countdown");
+        const status = document.querySelector("#fib-status");
+        document.querySelector("#fib-start").disabled = true;
+        countdown.textContent = `0:${String(remaining).padStart(2, "0")}`;
+        status.textContent = "Skim the transcript. Ignore the gaps for now.";
+        previewTimer = setInterval(async () => {
+          remaining -= 1;
+          countdown.textContent = remaining > 0 ? `0:${String(remaining).padStart(2, "0")}` : "Playing";
+          if (remaining > 0) return;
+          clearInterval(previewTimer);
+          previewTimer = null;
+          state.fib.used = true;
+          saveState();
+          renderFib();
+          status.textContent = "Recording playing. Type the missing words.";
+          const audio = document.querySelector("#fib-audio");
+          try {
+            audio.currentTime = 0;
+            await audio.play();
+          } catch {
+            document.querySelector("#fib-fallback").hidden = false;
+            status.textContent = "The recording did not start inside the page.";
+          }
+        }, 1000);
+      }
+
+      document.querySelector("#fib-start").addEventListener("click", beginPreview);
+      document.querySelector("#fib-audio").addEventListener("ended", () => {
+        document.querySelector("#fib-status").textContent = "Recording finished. Check every gap, then submit your words.";
+      });
+      document.querySelector("#fib-audio").addEventListener("error", () => {
+        document.querySelector("#fib-fallback").hidden = false;
+        document.querySelector("#fib-status").textContent = "The recording could not load inside the page.";
+      });
+      document.querySelector("#fib-check").addEventListener("click", () => {
+        if (state.fib.checked || !state.fib.entries.every(value => value.trim())) return;
+        state.fib.firstEntries = [...state.fib.entries];
+        state.fib.score = state.fib.firstEntries.reduce((score, value, index) => score + (normaliseWord(value) === correctGaps[index] ? 1 : 0), 0);
+        state.fib.checked = true;
+        saveState();
+        renderFib();
+      });
+
+      function pairScore(order) {
+        return order.slice(0, -1).reduce((score, value, index) => {
+          const first = correctOrder.indexOf(value);
+          const second = correctOrder.indexOf(order[index + 1]);
+          return score + (second === first + 1 ? 1 : 0);
+        }, 0);
+      }
+
+      function moveParagraph(id, delta) {
+        if (state.reorder.checked) return;
+        const index = state.reorder.order.indexOf(id);
+        const target = index + delta;
+        if (target < 0 || target >= state.reorder.order.length) return;
+        [state.reorder.order[index], state.reorder.order[target]] = [state.reorder.order[target], state.reorder.order[index]];
+        renderReorder();
+        saveState();
+      }
+
+      function renderReorder() {
+        const list = document.querySelector("#reorder-list");
+        list.replaceChildren();
+        state.reorder.order.forEach((id, index) => {
+          const item = document.createElement("li");
+          item.className = "reorder-card";
+          item.draggable = !state.reorder.checked;
+          item.dataset.id = id;
+          item.innerHTML = `
+            <span class="position">${index + 1}</span>
+            <p>${paragraphs[id]}</p>
+            <span class="move-controls">
+              <button class="move-button" type="button" aria-label="Move box ${index + 1} up" data-move="up" ${index === 0 || state.reorder.checked ? "disabled" : ""}>↑</button>
+              <button class="move-button" type="button" aria-label="Move box ${index + 1} down" data-move="down" ${index === state.reorder.order.length - 1 || state.reorder.checked ? "disabled" : ""}>↓</button>
+            </span>`;
+          item.querySelector('[data-move="up"]').addEventListener("click", () => moveParagraph(id, -1));
+          item.querySelector('[data-move="down"]').addEventListener("click", () => moveParagraph(id, 1));
+          item.addEventListener("dragstart", () => { dragged.id = id; item.classList.add("dragging"); });
+          item.addEventListener("dragend", () => { dragged.id = null; item.classList.remove("dragging"); });
+          item.addEventListener("dragover", event => event.preventDefault());
+          item.addEventListener("drop", event => {
+            event.preventDefault();
+            if (state.reorder.checked || dragged.id === null || dragged.id === id) return;
+            const order = state.reorder.order.filter(value => value !== dragged.id);
+            const target = order.indexOf(id);
+            order.splice(target, 0, dragged.id);
+            state.reorder.order = order;
+            renderReorder();
+            saveState();
+          });
+          list.append(item);
+        });
+        document.querySelector("#reorder-check").disabled = state.reorder.checked;
+        document.querySelector("#reorder-result").hidden = !state.reorder.checked;
+        document.querySelector("#reorder-answer").hidden = !state.reorder.checked;
+        if (state.reorder.checked) document.querySelector("#reorder-score").textContent = `${state.reorder.score} / 4`;
+        if (current === 3) updateNavigation();
+      }
+
+      document.querySelector("#correct-order").innerHTML = correctOrder.map(id => `<li>${paragraphs[id]}</li>`).join("");
+      document.querySelector("#reorder-check").addEventListener("click", () => {
+        if (state.reorder.checked) return;
+        state.reorder.firstOrder = [...state.reorder.order];
+        state.reorder.score = pairScore(state.reorder.firstOrder);
+        state.reorder.checked = true;
+        saveState();
+        renderReorder();
+      });
+
+      const essayText = document.querySelector("#essay-text");
+      essayText.value = state.essay.text;
+      essayText.addEventListener("input", () => {
+        state.essay.text = essayText.value;
+        renderEssay();
+        saveState();
+      });
+
+      function formatClock(milliseconds) {
+        const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
+        return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+      }
+
+      function finishEssay(automatic = false) {
+        if (!state.essay.started || state.essay.finished) return;
+        state.essay.finished = true;
+        state.essay.finishedAt = automatic ? state.essay.deadline : Date.now();
+        saveState();
+        renderEssay();
+      }
+
+      function updateEssayTimer() {
+        const label = document.querySelector("#essay-timer");
+        if (!state.essay.started) { label.textContent = "20:00"; return; }
+        const endpoint = state.essay.finished ? state.essay.finishedAt : Date.now();
+        const remaining = state.essay.deadline - endpoint;
+        label.textContent = formatClock(remaining);
+        if (!state.essay.finished && remaining <= 0) finishEssay(true);
+      }
+
+      function renderEssay() {
+        const count = wordCount(state.essay.text);
+        essayText.value = state.essay.text;
+        essayText.disabled = !state.essay.started || state.essay.finished;
+        document.querySelector("#essay-start").disabled = state.essay.started;
+        document.querySelector("#essay-finish").disabled = !state.essay.started || state.essay.finished || !state.essay.text.trim();
+        const countLabel = document.querySelector("#essay-count");
+        countLabel.textContent = `${count} ${count === 1 ? "word" : "words"}`;
+        countLabel.className = "word-count" + (count >= 200 && count <= 300 ? " safe" : count > 300 ? " over" : "");
+        document.querySelector("#self-check").hidden = !state.essay.finished;
+        document.querySelector("#self-check-intro").textContent = state.essay.finished
+          ? "Record what you checked. This is not an automatic score."
+          : "Finish the essay first. Then record a short final check.";
+        document.querySelectorAll("[data-self-check]").forEach(input => {
+          input.checked = state.essay.selfChecks.includes(input.dataset.selfCheck);
+        });
+        document.querySelector("#essay-status").textContent = state.essay.finished
+          ? (state.essay.deadline - state.essay.finishedAt <= 0 ? "Time is up. Your essay is saved for teacher feedback." : "Your essay is saved for teacher feedback.")
+          : "This page does not give an automatic PTE score. Your teacher will review the essay.";
+        updateEssayTimer();
+        if (current === 4) updateNavigation();
+      }
+
+      document.querySelector("#essay-start").addEventListener("click", () => {
+        if (state.essay.started) return;
+        state.essay.started = true;
+        state.essay.deadline = Date.now() + 20 * 60 * 1000;
+        saveState();
+        renderEssay();
+        essayText.focus();
+      });
+      document.querySelector("#essay-finish").addEventListener("click", () => finishEssay(false));
+      document.querySelectorAll("[data-self-check]").forEach(input => {
+        input.addEventListener("change", () => {
+          state.essay.selfChecks = [...document.querySelectorAll("[data-self-check]:checked")].map(node => node.dataset.selfCheck);
+          saveState();
+        });
+      });
+
+      function resultText() {
+        const fibEntries = state.fib.firstEntries || state.fib.entries;
+        const reorderOrder = state.reorder.firstOrder || state.reorder.order;
+        return [
+          "William — Three New PTE Tasks",
+          "",
+          "1. Listening Fill in the Blanks (Type In)",
+          `First entries: ${fibEntries.map((word, index) => `${index + 1}. ${word || "[blank]"}`).join(" | ")}`,
+          `Practice score: ${state.fib.score ?? "Not checked"} / 5`,
+          `Correct words: ${correctGaps.map((word, index) => `${index + 1}. ${word}`).join(" | ")}`,
+          "",
+          "2. Reorder Paragraph",
+          `First order: ${reorderOrder.join(" → ")}`,
+          `Correct adjacent pairs: ${state.reorder.score ?? "Not checked"} / 4`,
+          `Correct order: ${correctOrder.join(" → ")}`,
+          "",
+          "3. Write Essay",
+          `Word count: ${wordCount(state.essay.text)}`,
+          `Self-checks: ${state.essay.selfChecks.length ? state.essay.selfChecks.join(", ") : "None selected"}`,
+          "",
+          state.essay.text || "No essay written",
+          "",
+          "The two item results above are practice results, not PTE score predictions.",
+        ].join("\n");
+      }
+
+      function renderCompletion() {
+        document.querySelector("#summary-fib").textContent = `${state.fib.score ?? "—"} / 5`;
+        document.querySelector("#summary-reorder").textContent = `${state.reorder.score ?? "—"} / 4`;
+        document.querySelector("#summary-essay").textContent = `${wordCount(state.essay.text)} words`;
+      }
+
+      document.querySelector("#copy-results").addEventListener("click", async () => {
+        const status = document.querySelector("#done-status");
+        try {
+          await navigator.clipboard.writeText(resultText());
+          status.textContent = "Your results were copied.";
+        } catch {
+          status.textContent = "Copy was blocked. Use Save results as a file instead.";
+        }
+      });
+      document.querySelector("#download-results").addEventListener("click", () => {
+        const blob = new Blob([resultText()], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = "William-PTE-new-task-homework.txt";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        document.querySelector("#done-status").textContent = "Your results were saved as a text file.";
+      });
+      document.querySelector("#reset-homework").addEventListener("click", () => {
+        if (!confirm("Clear all saved answers on this device and start again?")) return;
+        try { localStorage.removeItem(STORAGE_KEY); } catch { /* Reload still resets the page state in memory. */ }
+        location.reload();
+      });
+
+      document.querySelector("#back").addEventListener("click", () => showScreen(current - 1));
+      document.querySelector("#next").addEventListener("click", () => {
+        if (!canAdvance(current)) return;
+        showScreen(current + 1);
+      });
+      window.addEventListener("pagehide", () => {
+        saveState();
+      });
+
+      renderFib();
+      renderReorder();
+      renderEssay();
+      showScreen(current);
+      essayTimer = setInterval(updateEssayTimer, 1000);
+    })();
+  </script>
+</body>
+</html>
