@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>William — Reorder Paragraph Practice</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-soft: #eef2ff;
+      --ink: #19202b;
+      --muted: #5e6878;
+      --primary: #4255b9;
+      --primary-strong: #30419f;
+      --primary-soft: #e8ebff;
+      --success: #176b4d;
+      --success-soft: #e3f5ed;
+      --warning: #7b4e00;
+      --warning-soft: #fff2d5;
+      --line: rgba(25, 32, 43, 0.12);
+      --shadow: 0 1px 2px rgba(25, 32, 43, 0.08), 0 12px 34px rgba(25, 32, 43, 0.08);
+      --radius-outer: 28px;
+      --radius-card: 18px;
+      --radius-control: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(66, 85, 185, 0.09), transparent 30rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button { font: inherit; }
+
+    button:focus-visible {
+      outline: 3px solid rgba(66, 85, 185, 0.34);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(100% - 32px, 980px);
+      margin: 0 auto;
+      padding: 36px 0 56px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 720;
+      letter-spacing: 0.02em;
+    }
+
+    .badge {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+    }
+
+    .panel {
+      padding: clamp(22px, 4vw, 42px);
+      border-radius: var(--radius-outer);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      gap: 12px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--primary-strong);
+      font-size: 14px;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 0;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.3vw, 20px);
+      text-wrap: pretty;
+    }
+
+    .task {
+      display: grid;
+      gap: 22px;
+      padding-top: 28px;
+    }
+
+    .progress-nav {
+      padding: 20px 0 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .progress-step {
+      min-height: 56px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 0;
+      border-radius: 16px;
+      background: #f6f7fb;
+      color: var(--muted);
+      box-shadow: inset 0 0 0 1px var(--line);
+      cursor: pointer;
+      font-weight: 740;
+      transition-property: transform, background-color, color, opacity;
+      transition-duration: 140ms;
+      transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .progress-step[aria-current="step"] {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      box-shadow: inset 0 0 0 2px rgba(66, 85, 185, 0.28);
+    }
+
+    .progress-step:disabled { opacity: 0.42; cursor: not-allowed; }
+    .progress-step:active:not(:disabled) { transform: scale(0.96); }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--surface);
+      color: inherit;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .support-region {
+      display: grid;
+      gap: 12px;
+    }
+
+    .support-card {
+      padding: 17px;
+      border-radius: 20px;
+      background: var(--surface-soft);
+      color: #303c74;
+      box-shadow: inset 0 0 0 1px rgba(66, 85, 185, 0.10);
+    }
+
+    .support-card h3 { margin-bottom: 8px; font-size: 18px; }
+    .support-card p { margin-bottom: 0; }
+
+    .cue-list {
+      margin: 0;
+      padding-left: 22px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .hint-copy {
+      margin: 0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--primary-soft);
+      color: #303c74;
+      text-wrap: pretty;
+    }
+
+    .task-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .task-head h2 {
+      margin-bottom: 7px;
+      font-size: clamp(23px, 3.6vw, 31px);
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .task-head p {
+      margin-bottom: 0;
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    .step-count {
+      min-width: 72px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--primary-strong);
+      font-size: 14px;
+      font-weight: 780;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .reorder-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .sentence-card {
+      min-width: 0;
+      padding: 15px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      border-radius: var(--radius-card);
+      background: #f9faff;
+      box-shadow: inset 0 0 0 1px var(--line), 0 2px 8px rgba(25, 32, 43, 0.04);
+      transition-property: transform, box-shadow, background-color;
+      transition-duration: 160ms;
+      transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .position {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sentence-text {
+      margin: 0;
+      font-size: clamp(16px, 2vw, 18px);
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .sentence-copy { min-width: 0; }
+
+    .sentence-label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--primary-strong);
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .move-controls {
+      display: grid;
+      grid-template-columns: repeat(2, 48px);
+      gap: 8px;
+    }
+
+    .icon-button {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: var(--radius-control);
+      background: var(--surface);
+      color: var(--primary-strong);
+      box-shadow: inset 0 0 0 1px rgba(66, 85, 185, 0.2), 0 1px 2px rgba(25, 32, 43, 0.05);
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 850;
+      transition-property: transform, background-color, box-shadow, opacity;
+      transition-duration: 140ms;
+      transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .icon-button:hover:not(:disabled) {
+      background: var(--primary-soft);
+      box-shadow: inset 0 0 0 1px rgba(66, 85, 185, 0.28), 0 4px 12px rgba(66, 85, 185, 0.11);
+    }
+
+    .icon-button:active:not(:disabled),
+    .button:active:not(:disabled) { transform: scale(0.96); }
+
+    .icon-button:disabled {
+      opacity: 0.34;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 11px 18px;
+      border: 0;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      font-weight: 780;
+      transition-property: transform, background-color, box-shadow, opacity;
+      transition-duration: 140ms;
+      transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .button.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(25, 32, 43, 0.12), 0 6px 18px rgba(66, 85, 185, 0.24);
+    }
+
+    .button.primary:hover:not(:disabled) { background: var(--primary-strong); }
+
+    .button.secondary {
+      background: var(--surface-soft);
+      color: var(--primary-strong);
+      box-shadow: inset 0 0 0 1px rgba(66, 85, 185, 0.12);
+    }
+
+    .button.secondary:hover:not(:disabled) { background: var(--primary-soft); }
+
+    .button:disabled {
+      opacity: 0.46;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .status {
+      min-height: 24px;
+      margin: 0 0 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 680;
+    }
+
+    .feedback {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 20px;
+      background: #f7f8fc;
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    [hidden] { display: none !important; }
+
+    .feedback h3 {
+      margin-bottom: 0;
+      font-size: 19px;
+      text-wrap: balance;
+    }
+
+    .pair-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .pair {
+      padding: 13px 14px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      border-radius: 14px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .pair.correct { background: var(--success-soft); color: var(--success); }
+    .pair.try-again { background: var(--warning-soft); color: var(--warning); }
+
+    .pair-mark {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      font-weight: 900;
+    }
+
+    .pair strong { display: block; margin-bottom: 2px; }
+
+    .continue-wrap { display: flex; justify-content: flex-end; }
+
+    .completion {
+      padding: 20px;
+      border-radius: 20px;
+      background: var(--success-soft);
+      color: var(--success);
+    }
+
+    .completion h3 { margin-bottom: 6px; }
+    .completion p { margin-bottom: 0; }
+
+    .footer-note {
+      margin: 18px 4px 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 20px, 980px); padding: 14px 0 32px; }
+      .panel { padding: 22px 16px; border-radius: 22px; }
+      .topline { align-items: flex-start; }
+      .progress-nav { gap: 7px; }
+      .progress-step { min-height: 52px; padding: 7px; }
+      .progress-step span:last-child { display: none; }
+      .task-head { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+      .step-count { justify-self: start; }
+      .sentence-card {
+        grid-template-columns: 42px minmax(0, 1fr);
+        padding: 14px;
+      }
+      .position { width: 42px; height: 42px; }
+      .move-controls {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .icon-button { width: 100%; }
+      .actions { align-items: stretch; }
+      .button { flex: 1 1 140px; }
+      .status { width: 100%; margin-left: 0; }
+      .pair { grid-template-columns: 26px minmax(0, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topline">
+      <span>William · PTE Academic</span>
+      <span class="badge">Fresh practice</span>
+    </div>
+
+    <article class="panel">
+      <header class="hero">
+        <p class="eyebrow">Reorder Paragraph</p>
+        <h1>Build the chain one link at a time</h1>
+        <p class="intro">Move the boxes into a logical paragraph. Check the reference words, cause and chronology between each pair.</p>
+      </header>
+
+      <nav class="progress-nav" id="progress-nav" aria-label="Exercise progress"></nav>
+
+      <section class="task" aria-labelledby="task-title">
+        <div class="task-head">
+          <div>
+            <h2 id="task-title" tabindex="-1"></h2>
+            <p id="task-instruction">Use the arrow buttons to move each sentence. Your link feedback appears only after you check.</p>
+          </div>
+          <span class="step-count" id="step-count" aria-label="Practice progress"></span>
+        </div>
+
+        <div class="support-region" id="support-region"></div>
+
+        <ol class="reorder-list" id="reorder-list" aria-label="Sentences to reorder"></ol>
+
+        <div class="actions">
+          <button class="button secondary" id="reset-button" type="button">Reset</button>
+          <button class="button primary" id="check-button" type="button">Check my links</button>
+          <p class="status" id="status" aria-live="polite"></p>
+        </div>
+
+        <section class="feedback" id="feedback" aria-labelledby="feedback-title" aria-live="polite" hidden>
+          <h3 id="feedback-title">Adjacent links</h3>
+          <ul class="pair-list" id="pair-list"></ul>
+        </section>
+
+        <div class="continue-wrap" id="continue-wrap" hidden>
+          <button class="button primary" id="continue-button" type="button">Continue to exercise 2</button>
+        </div>
+
+        <section class="completion" id="completion" aria-live="polite" hidden>
+          <h3>Practice complete</h3>
+          <p>You checked all three fresh paragraphs by testing the links between neighbouring sentences.</p>
+        </section>
+      </section>
+    </article>
+
+    <p class="footer-note">This practice gives link feedback only. It is not a PTE score prediction.</p>
+  </main>
+
+  <script>
+    (() => {
+      const tasks = [
+        {
+          title: "Exercise 1 · Guided link check",
+          mode: "guided",
+          initial: ["C", "A", "D", "B"],
+          answer: ["B", "A", "D", "C"],
+          sentences: {
+            A: "The first readings were inconsistent, so the team checked the equipment.",
+            B: "A research team installed sensors beside a busy road.",
+            C: "After one faulty sensor was replaced, the measurements became stable.",
+            D: "They discovered that one device had been damaged during installation."
+          },
+          links: {
+            "B-A": "“The team” refers to the research team, and the readings follow the installation.",
+            "A-D": "“They discovered” follows the equipment check and explains the inconsistent readings.",
+            "D-C": "The faulty sensor refers to the damaged device; replacing it leads to stable measurements."
+          }
+        },
+        {
+          title: "Exercise 2 · Transfer with one optional hint",
+          mode: "hint",
+          initial: ["C", "E", "B", "D", "A"],
+          answer: ["B", "A", "D", "C", "E"],
+          sentences: {
+            A: "By the 1980s, however, smaller sensors made continuous monitoring practical in ordinary hospitals.",
+            B: "Early heart monitors were large machines used mainly in specialist wards.",
+            C: "As a result, nurses could notice dangerous changes sooner, even when they were caring for several patients.",
+            D: "Once these compact devices became reliable, hospitals began attaching them to more patients.",
+            E: "Today, wearable versions can send similar measurements to clinicians while patients are at home."
+          },
+          links: {
+            "B-A": "The early large machines contrast with smaller sensors by the 1980s.",
+            "A-D": "“These compact devices” refers to the smaller sensors.",
+            "D-C": "Wider monitoring produces the stated result for nurses.",
+            "C-E": "“Today” moves the chronology to wearable monitoring at home."
+          }
+        },
+        {
+          title: "Exercise 3 · Independent transfer",
+          mode: "independent",
+          initial: ["A", "D", "E", "C", "B"],
+          answer: ["B", "C", "D", "A", "E"],
+          sentences: {
+            A: "This shared catalogue allowed libraries to see which books other institutions already held.",
+            B: "Before digital databases, librarians recorded book details on paper cards.",
+            C: "As university collections expanded, maintaining separate card systems became increasingly difficult.",
+            D: "In the 1970s, several libraries began entering these records into a common computer network.",
+            E: "The network later supported faster borrowing between institutions."
+          },
+          links: {
+            "B-C": "Separate paper-card systems became harder to maintain as university collections expanded.",
+            "C-D": "“These records” refers to the book records, and the shared network responds to the difficulty.",
+            "D-A": "“This shared catalogue” refers to the common computer network.",
+            "A-E": "“The network” continues the same system, while “later” advances the sequence."
+          }
+        }
+      ];
+
+      const state = tasks.map(task => ({
+        order: [...task.initial],
+        checked: false,
+        hintOpen: false
+      }));
+
+      const list = document.querySelector("#reorder-list");
+      const taskTitle = document.querySelector("#task-title");
+      const taskInstruction = document.querySelector("#task-instruction");
+      const stepCount = document.querySelector("#step-count");
+      const progressNav = document.querySelector("#progress-nav");
+      const supportRegion = document.querySelector("#support-region");
+      const resetButton = document.querySelector("#reset-button");
+      const checkButton = document.querySelector("#check-button");
+      const status = document.querySelector("#status");
+      const feedback = document.querySelector("#feedback");
+      const pairList = document.querySelector("#pair-list");
+      const continueWrap = document.querySelector("#continue-wrap");
+      const continueButton = document.querySelector("#continue-button");
+      const completion = document.querySelector("#completion");
+      const completionTitle = completion.querySelector("h3");
+      const completionCopy = completion.querySelector("p");
+
+      let taskIndex = 0;
+      let unlockedIndex = 0;
+
+      function currentTask() { return tasks[taskIndex]; }
+      function currentState() { return state[taskIndex]; }
+
+      function renderProgress() {
+        const labels = ["Guided", "One hint", "Independent"];
+        progressNav.replaceChildren();
+        tasks.forEach((task, index) => {
+          const button = document.createElement("button");
+          button.className = "progress-step";
+          button.type = "button";
+          button.disabled = index > unlockedIndex;
+          if (index === taskIndex) button.setAttribute("aria-current", "step");
+          button.setAttribute("aria-label", `Open exercise ${index + 1}: ${labels[index]}`);
+
+          const number = document.createElement("span");
+          number.className = "step-number";
+          number.textContent = String(index + 1);
+          const label = document.createElement("span");
+          label.textContent = labels[index];
+          button.append(number, label);
+          button.addEventListener("click", () => openTask(index, true));
+          progressNav.append(button);
+        });
+      }
+
+      function renderSupport() {
+        const task = currentTask();
+        const taskState = currentState();
+        supportRegion.replaceChildren();
+        supportRegion.hidden = task.mode === "independent";
+
+        if (task.mode === "guided") {
+          const card = document.createElement("aside");
+          card.className = "support-card";
+          card.setAttribute("aria-label", "Guided link questions");
+          const title = document.createElement("h3");
+          title.textContent = "Ask these questions before you check";
+          const cues = document.createElement("ol");
+          cues.className = "cue-list";
+          [
+            "Which box introduces the people and place without referring back?",
+            "What problem made the team inspect the equipment?",
+            "Who does “They” refer to, and what did the inspection reveal?",
+            "Which result can happen only after the faulty device is replaced?"
+          ].forEach(cue => {
+            const item = document.createElement("li");
+            item.textContent = cue;
+            cues.append(item);
+          });
+          card.append(title, cues);
+          supportRegion.append(card);
+        }
+
+        if (task.mode === "hint") {
+          const button = document.createElement("button");
+          button.className = "button secondary";
+          button.type = "button";
+          button.textContent = taskState.hintOpen ? "Hide hint" : "Show one hint";
+          button.setAttribute("aria-expanded", String(taskState.hintOpen));
+          button.addEventListener("click", () => {
+            taskState.hintOpen = !taskState.hintOpen;
+            renderSupport();
+            supportRegion.querySelector("button")?.focus();
+          });
+          supportRegion.append(button);
+
+          if (taskState.hintOpen) {
+            const hint = document.createElement("p");
+            hint.className = "hint-copy";
+            hint.textContent = "Find the sentence that introduces early heart monitors. Then track the time and reference signals: however, these compact devices, as a result, and today.";
+            supportRegion.append(hint);
+          }
+        }
+      }
+
+      function renderOrder(focusKey = null) {
+        const task = currentTask();
+        const taskState = currentState();
+        list.replaceChildren();
+
+        taskState.order.forEach((id, index) => {
+          const item = document.createElement("li");
+          item.className = "sentence-card";
+          item.dataset.id = id;
+
+          const position = document.createElement("span");
+          position.className = "position";
+          position.textContent = String(index + 1);
+          position.setAttribute("aria-hidden", "true");
+
+          const copy = document.createElement("div");
+          copy.className = "sentence-copy";
+          const label = document.createElement("span");
+          label.className = "sentence-label";
+          label.textContent = `Box ${id}`;
+          const text = document.createElement("p");
+          text.className = "sentence-text";
+          text.textContent = task.sentences[id];
+          copy.append(label, text);
+
+          const controls = document.createElement("div");
+          controls.className = "move-controls";
+
+          const up = document.createElement("button");
+          up.className = "icon-button";
+          up.type = "button";
+          up.textContent = "↑";
+          up.dataset.focusKey = `${id}-up`;
+          up.setAttribute("aria-label", `Move box ${id} up from position ${index + 1}`);
+          up.disabled = index === 0;
+          up.addEventListener("click", () => moveSentence(id, -1));
+
+          const down = document.createElement("button");
+          down.className = "icon-button";
+          down.type = "button";
+          down.textContent = "↓";
+          down.dataset.focusKey = `${id}-down`;
+          down.setAttribute("aria-label", `Move box ${id} down from position ${index + 1}`);
+          down.disabled = index === taskState.order.length - 1;
+          down.addEventListener("click", () => moveSentence(id, 1));
+
+          controls.append(up, down);
+          item.append(position, copy, controls);
+          list.append(item);
+        });
+
+        if (focusKey) {
+          const requested = document.querySelector(`[data-focus-key="${focusKey}"]`);
+          if (requested && !requested.disabled) requested.focus();
+          else {
+            const id = focusKey.split("-")[0];
+            document.querySelector(`[data-id="${id}"] .icon-button:not(:disabled)`)?.focus();
+          }
+        }
+      }
+
+      function hideResults() {
+        feedback.hidden = true;
+        continueWrap.hidden = true;
+        completion.hidden = true;
+        pairList.replaceChildren();
+        status.textContent = "";
+      }
+
+      function moveSentence(id, direction) {
+        const taskState = currentState();
+        const index = taskState.order.indexOf(id);
+        const target = index + direction;
+        if (target < 0 || target >= taskState.order.length) return;
+        [taskState.order[index], taskState.order[target]] = [taskState.order[target], taskState.order[index]];
+        taskState.checked = false;
+        hideResults();
+        renderOrder(`${id}-${direction < 0 ? "up" : "down"}`);
+      }
+
+      function evaluateLinks() {
+        const task = currentTask();
+        const taskState = currentState();
+        return taskState.order.slice(0, -1).map((first, index) => {
+          const second = taskState.order[index + 1];
+          const isCorrect = task.answer.indexOf(second) === task.answer.indexOf(first) + 1;
+          return { first, second, index, isCorrect, explanation: task.links[`${first}-${second}`] };
+        });
+      }
+
+      function renderFeedback() {
+        const taskState = currentState();
+        if (!taskState.checked) {
+          hideResults();
+          return;
+        }
+
+        const results = evaluateLinks();
+        const correctCount = results.filter(result => result.isCorrect).length;
+        const complete = correctCount === results.length;
+        pairList.replaceChildren();
+
+        results.forEach(result => {
+          const item = document.createElement("li");
+          item.className = `pair ${result.isCorrect ? "correct" : "try-again"}`;
+
+          const mark = document.createElement("span");
+          mark.className = "pair-mark";
+          mark.textContent = result.isCorrect ? "✓" : "↺";
+          mark.setAttribute("aria-hidden", "true");
+
+          const copy = document.createElement("div");
+          const heading = document.createElement("strong");
+          heading.textContent = `Link ${result.index + 1}: ${result.first} → ${result.second}`;
+          const explanation = document.createElement("span");
+          explanation.textContent = result.isCorrect
+            ? result.explanation
+            : "These boxes are not neighbours in the source chain. Move one box, then check again.";
+          copy.append(heading, explanation);
+          item.append(mark, copy);
+          pairList.append(item);
+        });
+
+        feedback.hidden = false;
+        status.textContent = complete
+          ? "Every adjacent link works."
+          : `${correctCount} of ${results.length} adjacent links work. Revise the amber links.`;
+
+        continueWrap.hidden = taskIndex === tasks.length - 1;
+        if (taskIndex < tasks.length - 1) {
+          continueButton.textContent = `Continue to exercise ${taskIndex + 2}`;
+        }
+
+        completion.hidden = taskIndex !== tasks.length - 1;
+        if (taskIndex === tasks.length - 1) {
+          completionTitle.textContent = complete ? "Independent transfer complete" : "All three exercises checked";
+          completionCopy.textContent = complete
+            ? "Every adjacent link works in the independent paragraph."
+            : "Revise any amber links, then check the independent paragraph again.";
+        }
+      }
+
+      function render() {
+        const task = currentTask();
+        const modeInstruction = task.mode === "guided"
+          ? "Use the questions to test each link. The answer and link feedback stay hidden until you check."
+          : task.mode === "hint"
+            ? "Order the paragraph independently, or open the one optional hint. Link feedback stays hidden until you check."
+            : "Order the paragraph without hints. No link feedback appears until you check.";
+        taskTitle.textContent = task.title;
+        taskInstruction.textContent = modeInstruction;
+        stepCount.textContent = `${taskIndex + 1} of ${tasks.length}`;
+        renderProgress();
+        renderSupport();
+        renderOrder();
+        renderFeedback();
+      }
+
+      function openTask(index, moveFocus = false) {
+        if (index > unlockedIndex) return;
+        taskIndex = index;
+        render();
+        if (moveFocus) taskTitle.focus();
+        taskTitle.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      resetButton.addEventListener("click", () => {
+        const taskState = currentState();
+        taskState.order = [...currentTask().initial];
+        taskState.checked = false;
+        taskState.hintOpen = false;
+        render();
+        status.textContent = "The starting order is restored.";
+        list.querySelector("button:not(:disabled)")?.focus();
+      });
+
+      checkButton.addEventListener("click", () => {
+        currentState().checked = true;
+        if (taskIndex < tasks.length - 1) unlockedIndex = Math.max(unlockedIndex, taskIndex + 1);
+        renderProgress();
+        renderFeedback();
+        feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+
+      continueButton.addEventListener("click", () => openTask(taskIndex + 1, true));
+
+      render();
+    })();
+  </script>
+</body>
+</html>
+
