@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v4">
+  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v5">
   <title>William — PTE Reorder Paragraph Homework</title>
   <style>
     :root {
@@ -68,7 +68,7 @@
       padding: 22px 28px; display: grid; align-content: start; gap: 16px;
     }
     .screen-inner.centre { align-content: center; }
-    .task-screen .screen-inner { grid-template-rows: auto auto minmax(0,1fr) auto auto; }
+    .task-screen .screen-inner { grid-template-rows: auto auto minmax(0,1fr) auto; }
     [data-screen="5"] .screen-inner { grid-template-rows: auto minmax(0,1fr); align-content: start; }
 
     .screen-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
@@ -144,6 +144,7 @@
     .action.secondary { background: var(--surface-low); color: var(--primary-strong); box-shadow: inset 0 0 0 1px var(--line); }
     .status { flex: 1 1 250px; min-height: 22px; color: var(--muted); font-weight: 690; }
     .feedback { padding: 11px 14px; border-radius: 14px; background: var(--gold-soft); color: var(--ink); }
+    .box-list > .feedback { margin-top: 10px; }
     .feedback.success { background: var(--success-soft); color: var(--success); }
     .feedback strong { display: block; margin-bottom: 2px; }
 
@@ -467,6 +468,8 @@
         const screen = document.querySelector(`[data-exercise="${taskIndex}"]`), task = tasks[taskIndex], taskState = state.tasks[taskIndex];
         supportContent(taskIndex, screen.querySelector("[data-support]"));
         const workspace = screen.querySelector("[data-workspace]");
+        const feedback = screen.querySelector("[data-feedback]");
+        if (workspace.contains(feedback)) screen.querySelector(".task-actions").after(feedback);
         workspace.innerHTML = `<section class="pte-panel"><div class="panel-head"><h3>Random order</h3><span>Left panel</span></div><div class="box-list" data-panel="source" aria-label="Random-order boxes"></div></section><div class="transfer-controls" aria-label="Move selected box"><button class="move-button" type="button" data-move="left"><span class="symbol">←</span><span class="label">Move left</span></button><button class="move-button" type="button" data-move="right"><span class="symbol">→</span><span class="label">Move right</span></button></div><section class="pte-panel"><div class="panel-head"><h3>Your order</h3><div class="order-controls"><button class="move-button" type="button" data-move="up" aria-label="Move selected box up"><span class="symbol">↑</span><span class="label">Up</span></button><button class="move-button" type="button" data-move="down" aria-label="Move selected box down"><span class="symbol">↓</span><span class="label">Down</span></button></div></div><div class="box-list" data-panel="answer" aria-label="Your ordered boxes"></div></section>`;
         renderList(taskIndex,"source",workspace.querySelector('[data-panel="source"]'));
         renderList(taskIndex,"answer",workspace.querySelector('[data-panel="answer"]'));
@@ -478,12 +481,16 @@
         workspace.querySelector('[data-move="down"]').disabled = taskState.complete || !inAnswer || locked || answerIndex < 0 || answerIndex >= taskState.answer.length - 1;
         workspace.querySelectorAll("[data-move]").forEach(button => button.addEventListener("click", () => moveSelected(taskIndex,button.dataset.move)));
 
-        const check = screen.querySelector("[data-check]"), reset = screen.querySelector("[data-reset]"), status = screen.querySelector("[data-status]"), feedback = screen.querySelector("[data-feedback]");
+        const check = screen.querySelector("[data-check]"), reset = screen.querySelector("[data-reset]"), status = screen.querySelector("[data-status]");
         check.disabled = taskState.complete; reset.textContent = taskState.complete ? "Try this exercise again" : "Reset exercise";
         if (taskState.complete) status.textContent = "Correct — use Next when you are ready.";
+        else if (taskState.checked) status.textContent = "Revise the order, then check again.";
         else if (taskState.source.length) status.textContent = `${taskState.source.length} box${taskState.source.length === 1 ? "" : "es"} still on the left.`;
         else status.textContent = "All boxes are on the right. Check the order.";
-        if (!taskState.checked) feedback.hidden = true;
+        if (taskState.checked && taskState.source.length === 0) {
+          const sourceList = workspace.querySelector('[data-panel="source"]');
+          sourceList.classList.remove("empty"); sourceList.append(feedback); feedback.hidden = false;
+        } else feedback.hidden = true;
         if (focusId) requestAnimationFrame(() => screen.querySelector(`[data-id="${focusId}"]`)?.focus());
         updateNavigation();
       }
@@ -503,7 +510,7 @@
           const first = taskState.answer[brokenIndex], clue = task.wrongClue[first];
           feedback.className = "feedback"; feedback.innerHTML = `<strong>${score} of ${task.answer.length-1} adjacent pairs work.</strong>${clue} Revise the order and check again.`;
         }
-        feedback.hidden = false; save(); renderTask(taskIndex); feedback.hidden = false; feedback.scrollIntoView({behavior:"smooth",block:"nearest"});
+        feedback.hidden = false; save(); renderTask(taskIndex);
       }
 
       function resetTask(taskIndex) {
