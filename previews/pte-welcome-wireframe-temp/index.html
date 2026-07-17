@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to PTE Academic — student guide wireframe</title>
+  <meta name="color-scheme" content="only light">
+  <meta name="darkreader-lock">
+  <title>Welcome to PTE Academic — quick guide</title>
   <style>
     :root {
+      color-scheme: only light;
       --ink: #17202a;
       --muted: #5e6875;
       --paper: #ffffff;
@@ -18,11 +21,40 @@
       --amber-soft: #fff0d8;
       --line: #d9e2e5;
       --charcoal: #29343d;
+      --page-gradient: linear-gradient(90deg, #0b756f, #2b9890 64%, #a9ded9);
+      --shadow-border:
+        0 0 0 1px rgba(0, 0, 0, .06),
+        0 1px 2px -1px rgba(0, 0, 0, .06),
+        0 2px 4px rgba(0, 0, 0, .04);
+    }
+
+    :root[data-theme="cobalt"] {
+      --teal: #2859a6;
+      --teal-soft: #e8eefb;
+      --blue: #08766e;
+      --blue-soft: #e1f2ef;
+      --amber: #985609;
+      --amber-soft: #fff0d9;
+      --page-gradient: linear-gradient(90deg, #214b8d, #3c72c6 64%, #b9d3ff);
+    }
+
+    :root[data-theme="plum"] {
+      --teal: #74416f;
+      --teal-soft: #f3e8f1;
+      --blue: #315f8f;
+      --blue-soft: #e6eef8;
+      --amber: #98520e;
+      --amber-soft: #ffeed9;
+      --page-gradient: linear-gradient(90deg, #64385f, #95618f 64%, #ddbdd8);
     }
 
     * { box-sizing: border-box; }
 
-    html { background: #dce5e7; }
+    html {
+      background: #dce5e7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       margin: 0;
@@ -30,7 +62,11 @@
       font-family: Inter, Aptos, "Segoe UI", Arial, sans-serif;
       font-size: 14px;
       line-height: 1.35;
+      forced-color-adjust: none;
     }
+
+    h1, h2, h3 { text-wrap: balance; }
+    p, li, .task-action, .stat span { text-wrap: pretty; }
 
     .document {
       display: grid;
@@ -54,7 +90,7 @@
       position: absolute;
       inset: 0 0 auto;
       height: 7mm;
-      background: linear-gradient(90deg, var(--teal), #2b9890 64%, #a9ded9);
+      background: var(--page-gradient);
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -91,9 +127,10 @@
     .step-grid { grid-template-columns: repeat(3, 1fr); margin-top: 4mm; }
 
     .stat, .part-card, .mechanic, .next-step {
-      border: 1px solid var(--line);
+      border: 0;
       border-radius: 10px;
       background: var(--paper);
+      box-shadow: var(--shadow-border);
     }
 
     .stat { min-height: 31mm; padding: 4mm; }
@@ -262,12 +299,26 @@
       font-size: 9.4px;
     }
 
+    .task-columns {
+      display: grid;
+      grid-template-columns: 9mm 43mm 1fr 30mm 25mm;
+      gap: 2mm;
+      padding: 0 2.5mm 1.2mm;
+      color: #6a747d;
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .task-columns span:last-child { text-align: right; }
+
     .task-row:nth-child(even) { background: #f8fafb; }
     .task-number { color: var(--teal); font-weight: 900; }
     .task-name { font-weight: 800; }
     .task-action { color: var(--muted); }
     .task-score { color: var(--blue); font-weight: 800; }
-    .task-count { text-align: right; font-weight: 800; }
+    .task-count { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; }
 
     .part-divider {
       display: flex;
@@ -304,6 +355,56 @@
 
     .small-note { margin-top: 3mm; color: var(--muted); font-size: 9.5px; }
 
+    .knowledge-check {
+      margin-top: 4mm;
+      padding: 4mm;
+      border-radius: 12px;
+      background: var(--charcoal);
+      color: white;
+    }
+
+    .knowledge-check h3 { margin-bottom: 1mm; }
+    .knowledge-check > p { margin-bottom: 3mm; color: #dce3e7; font-size: 10px; }
+    .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; }
+    .check-item { padding: 2.5mm; border-radius: 7px; background: rgba(255,255,255,.08); font-size: 9.5px; }
+    .check-item strong { display: block; margin-bottom: 1mm; color: #a9ded9; }
+    .answer-strip { margin: 2.5mm 0 0; color: #dce3e7; font-size: 8.8px; }
+
+    .palette-switcher {
+      position: fixed;
+      z-index: 10;
+      top: 18px;
+      right: 18px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 8px 24px rgba(23,32,42,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .palette-switcher > span { margin: 0 6px; color: #46515c; font-size: 11px; font-weight: 800; }
+    .palette-button {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 12px;
+      color: #3d4650;
+      background: transparent;
+      cursor: pointer;
+      font: 700 11px/1 Inter, Aptos, "Segoe UI", Arial, sans-serif;
+      transition-property: scale, background-color, box-shadow;
+      transition-duration: 150ms;
+      transition-timing-function: ease-out;
+    }
+
+    .palette-button:hover { background: #eef2f3; }
+    .palette-button:active { scale: .96; }
+    .palette-button[aria-pressed="true"] { background: white; box-shadow: var(--shadow-border); }
+
     .footer {
       position: absolute;
       right: 16mm;
@@ -324,6 +425,7 @@
       .part-grid, .mechanic-grid, .step-grid { grid-template-columns: 1fr; }
       .sequence { grid-template-columns: repeat(2, 1fr); }
       .task-row { grid-template-columns: 8mm 1fr; }
+      .task-columns { display: none; }
       .task-action, .task-score, .task-count { grid-column: 2; text-align: left; }
       .section-head { display: block; }
       .section-head p { text-align: left; }
@@ -336,10 +438,17 @@
       .document { display: block; padding: 0; }
       .page { page-break-after: always; box-shadow: none; }
       .page:last-child { page-break-after: auto; }
+      .palette-switcher { display: none; }
     }
   </style>
 </head>
 <body>
+  <nav class="palette-switcher" aria-label="Colour versions">
+    <span>Colour</span>
+    <button class="palette-button" type="button" data-set-theme="ocean" aria-pressed="true">Ocean</button>
+    <button class="palette-button" type="button" data-set-theme="cobalt" aria-pressed="false">Cobalt</button>
+    <button class="palette-button" type="button" data-set-theme="plum" aria-pressed="false">Plum</button>
+  </nav>
   <main class="document">
     <section class="page" aria-labelledby="page-1-title">
       <p class="eyebrow">Your quick guide to the test</p>
@@ -348,7 +457,7 @@
 
       <div class="stat-grid" aria-label="PTE Academic at a glance">
         <div class="stat"><strong>≈ 2 hrs</strong><span>Plan for one continuous test session.</span></div>
-        <div class="stat"><strong>3</strong><span>Parts: Speaking &amp; Writing, Reading, Listening.</span></div>
+        <div class="stat"><strong>3</strong><span>Speaking &amp; Writing, Reading and Listening.</span></div>
         <div class="stat"><strong>22</strong><span>Scored task types across the whole test.</span></div>
         <div class="stat"><strong>10–90</strong><span>Overall and communicative-skill score scale.</span></div>
       </div>
@@ -385,7 +494,7 @@
         </div>
       </div>
 
-      <div class="footer"><span>Student guide wireframe v1 · facts checked 17 July 2026</span><span>1 / 4</span></div>
+      <div class="footer"><span>PTE Academic quick guide · July 2026</span><span>1 / 4</span></div>
     </section>
 
     <section class="page" aria-labelledby="page-2-title">
@@ -445,9 +554,9 @@
         <div>For penalty tasks, select only what you can justify.</div>
       </div>
 
-      <div class="plain-callout"><strong>Best rule:</strong> trust the instruction on the screen. It tells you what to do, what is playing, and how much time you have.</div>
+      <div class="plain-callout"><strong>Trust the instruction on the screen.</strong> It tells you what to do, what is playing and how much time you have.</div>
 
-      <div class="footer"><span>Mechanics first: understand the interface before learning strategies</span><span>2 / 4</span></div>
+      <div class="footer"><span>PTE Academic quick guide · How the test works</span><span>2 / 4</span></div>
     </section>
 
     <section class="page" aria-labelledby="page-3-title">
@@ -464,6 +573,7 @@
       </div>
 
       <div class="part-divider">Part 1 · Speaking &amp; Writing · 76–84 min</div>
+      <div class="task-columns" aria-hidden="true"><span>No.</span><span>Task</span><span>What you do</span><span>Score route</span><span>Questions</span></div>
       <div class="task-table" aria-label="Part 1 tasks">
         <div class="task-row" data-task="read-aloud"><span class="task-number">01</span><span class="task-name">Read Aloud</span><span class="task-action">Read on-screen text aloud</span><span class="task-score">Speaking</span><span class="task-count">6–7 · <span class="tag">One</span></span></div>
         <div class="task-row" data-task="repeat-sentence"><span class="task-number">02</span><span class="task-name">Repeat Sentence</span><span class="task-action">Hear and repeat a sentence</span><span class="task-score">Listening + Speaking</span><span class="task-count">10–12 · <span class="tag two">Two</span></span></div>
@@ -477,6 +587,7 @@
       </div>
 
       <div class="part-divider">Part 2 · Reading · 22–30 min shared clock</div>
+      <div class="task-columns" aria-hidden="true"><span>No.</span><span>Task</span><span>What you do</span><span>Score route</span><span>Questions</span></div>
       <div class="task-table" aria-label="Part 2 tasks">
         <div class="task-row" data-task="reading-fill-dropdown"><span class="task-number">10</span><span class="task-name">Fill Blanks · Dropdown</span><span class="task-action">Choose a word for each gap</span><span class="task-score">Reading</span><span class="task-count">5–6 · <span class="tag">One</span></span></div>
         <div class="task-row" data-task="reading-mc-multiple"><span class="task-number">11</span><span class="task-name">MC · Multiple Answers</span><span class="task-action">Choose more than one answer</span><span class="task-score">Reading</span><span class="task-count">2–3 · <span class="tag risk">Risk</span></span></div>
@@ -497,6 +608,7 @@
       <div class="key"><span class="tag">One skill</span><span class="tag two">Two skills</span><span class="tag risk">Penalty risk</span></div>
 
       <div class="part-divider">Part 3 · Listening · 31–39 min</div>
+      <div class="task-columns" aria-hidden="true"><span>No.</span><span>Task</span><span>What you do</span><span>Score route</span><span>Questions</span></div>
       <div class="task-table listening-table" aria-label="Part 3 tasks">
         <div class="task-row" data-task="summarize-spoken-text"><span class="task-number">15</span><span class="task-name">Summarize Spoken Text</span><span class="task-action">Write a 50–70 word summary</span><span class="task-score">Listening + Writing</span><span class="task-count">1 · <span class="tag two">Two</span></span></div>
         <div class="task-row" data-task="listening-mc-multiple"><span class="task-number">16</span><span class="task-name">MC · Multiple Answers</span><span class="task-action">Choose more than one answer</span><span class="task-score">Listening</span><span class="task-count">2–3 · <span class="tag risk">Risk</span></span></div>
@@ -517,11 +629,43 @@
         <article class="next-step"><span class="step-number">03</span><strong>Build from evidence</strong><p>Use your actual errors and score profile to decide what to practise first. Do not guess from internet “weight” charts.</p></article>
       </div>
 
-      <div class="plain-callout"><strong>You do not need to master 22 separate tricks.</strong> First learn what each task asks you to do. Then build the English and test habits that repeat across tasks.</div>
+      <div class="knowledge-check">
+        <h3>30-second check</h3>
+        <p>Answer these before you read the line underneath.</p>
+        <div class="check-grid">
+          <div class="check-item"><strong>1</strong>Which parts use a shared section clock?</div>
+          <div class="check-item"><strong>2</strong>What happens to recorded audio and video?</div>
+          <div class="check-item"><strong>3</strong>Which tasks use penalty marking?</div>
+        </div>
+        <p class="answer-strip"><strong>Answers</strong> Reading and most of Listening · recorded media plays once · both multiple-answer tasks and Highlight Incorrect Words</p>
+      </div>
 
-      <p class="small-note"><strong>Primary sources:</strong> Pearson PTE Academic Test Taker Score Guide and Pearson’s current PTE Academic test-format pages. This is a structural wireframe, not yet final release copy.</p>
-      <div class="footer"><span>Provisional wireframe · source-traced matrix supplied separately</span><span>4 / 4</span></div>
+      <p class="small-note"><strong>Primary sources</strong> Pearson’s PTE Academic Test Taker Score Guide and current PTE Academic test-format pages.</p>
+      <div class="footer"><span>PTE Academic quick guide · Start with the task, then practise</span><span>4 / 4</span></div>
     </section>
   </main>
+  <script>
+    (() => {
+      const allowed = new Set(["ocean", "cobalt", "plum"]);
+      const params = new URLSearchParams(window.location.search);
+      const initial = allowed.has(params.get("theme")) ? params.get("theme") : "ocean";
+
+      function setTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        document.querySelectorAll("[data-set-theme]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.setTheme === theme));
+        });
+        const url = new URL(window.location.href);
+        url.searchParams.set("theme", theme);
+        history.replaceState(null, "", url);
+      }
+
+      document.querySelectorAll("[data-set-theme]").forEach((button) => {
+        button.addEventListener("click", () => setTheme(button.dataset.setTheme));
+      });
+
+      setTheme(initial);
+    })();
+  </script>
 </body>
 </html>
