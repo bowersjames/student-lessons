@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v8">
+  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v9">
   <title>William — PTE Reorder Paragraph Homework</title>
   <style>
     :root {
@@ -472,7 +472,7 @@
       function supportContent(taskIndex, element) {
         const taskState = state.tasks[taskIndex]; element.replaceChildren();
         if (taskIndex === 0) {
-          element.innerHTML = "<strong>Guided practice:</strong> B is the opening sentence here. In the real PTE test, all boxes start in random order.";
+          element.textContent = "B is the opening sentence here. In the real PTE test, all boxes start in random order.";
         } else if (taskIndex === 1) {
           const button = document.createElement("button"); button.className = "hint-button"; button.type = "button"; button.textContent = taskState.hintOpen ? "Hide hint" : "Show hint"; button.setAttribute("aria-expanded",String(taskState.hintOpen));
           button.addEventListener("click", () => { taskState.hintOpen = !taskState.hintOpen; save(); renderTask(taskIndex); });
@@ -480,7 +480,7 @@
           if (taskState.hintOpen) {
             const copy = document.createElement("span"); copy.textContent = "Start with B. Then follow: however → these compact devices → as a result → today."; element.append(copy);
           }
-        } else element.innerHTML = "<strong>Independent practice:</strong> Find the topic sentence and test each link.";
+        } else element.textContent = "Find the topic sentence and test each link.";
       }
 
       function feedbackContent(taskIndex, element) {
