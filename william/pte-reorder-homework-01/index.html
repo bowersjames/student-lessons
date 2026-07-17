@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v2">
+  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v3">
   <title>William — PTE Reorder Paragraph Homework</title>
   <style>
     :root {
@@ -214,7 +214,7 @@
             </div>
             <aside class="cover-card">
               <h2>Your route</h2>
-              <div class="cover-stat"><span class="stat-number">1</span><span><strong>Lots of help</strong>The first box is already placed.</span></div>
+              <div class="cover-stat"><span class="stat-number">1</span><span><strong>Lots of help</strong>Practice 1 gives you the opening sentence. The real test will not.</span></div>
               <div class="cover-stat"><span class="stat-number">2</span><span><strong>One optional hint</strong>Open it only if needed.</span></div>
               <div class="cover-stat"><span class="stat-number">3</span><span><strong>Independent</strong>Complete the PTE-style task alone.</span></div>
             </aside>
@@ -234,7 +234,7 @@
         </div>
       </section>
 
-      <section class="screen task-screen" data-screen="2" data-exercise="0" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">1</span><div><h2>Lots of help</h2><p>The opening box is already on the right.</p></div></div><span class="step-chip">Exercise 1 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="2" data-exercise="0" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">1</span><div><h2>Lots of help</h2><p>Practice help: sentence B has been put first for you.</p></div></div><span class="step-chip">Exercise 1 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
       <section class="screen task-screen" data-screen="3" data-exercise="1" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">2</span><div><h2>One optional hint</h2><p>Build the PTE-style answer, using one hint only if needed.</p></div></div><span class="step-chip">Exercise 2 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
       <section class="screen task-screen" data-screen="4" data-exercise="2" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">3</span><div><h2>Independent</h2><p>No hints before you check.</p></div></div><span class="step-chip">Exercise 3 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
 
@@ -423,7 +423,7 @@
         button.setAttribute("aria-pressed", String(taskState.selected === id));
         button.draggable = !taskState.complete && id !== task.locked;
         button.disabled = taskState.complete;
-        button.innerHTML = `<span class="box-label">${id}</span><span class="box-copy">${task.sentences[id]}${id === task.locked ? '<span class="locked-note">Opening box — already placed</span>' : ''}</span>`;
+        button.innerHTML = `<span class="box-label">${id}</span><span class="box-copy">${task.sentences[id]}${id === task.locked ? '<span class="locked-note">Practice help: this is the opening sentence</span>' : ''}</span>`;
         button.addEventListener("click", () => { taskState.selected = taskState.selected === id ? null : id; save(); renderTask(taskIndex,id); });
         button.addEventListener("dragstart", event => { drag = { taskIndex, id, panel, index: taskState[panel].indexOf(id) }; button.classList.add("dragging"); document.body.classList.add("is-dragging"); event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData("text/plain",id); });
         button.addEventListener("dragend", () => { drag = null; button.classList.remove("dragging"); document.body.classList.remove("is-dragging"); document.querySelectorAll(".drop-zone").forEach(zone => zone.classList.remove("drag-over")); });
@@ -450,7 +450,7 @@
       function supportContent(taskIndex, element) {
         const taskState = state.tasks[taskIndex]; element.replaceChildren();
         if (taskIndex === 0) {
-          element.innerHTML = "<strong>Box B is already placed.</strong> Follow the chain from the problem to the discovery and then the result.";
+          element.innerHTML = "<strong>Practice 1 only:</strong> I have put sentence B first to help you. In the real PTE test, every box starts in random order and you place them all yourself. Now follow the chain from the problem to the discovery and then the result.";
         } else if (taskIndex === 1) {
           const button = document.createElement("button"); button.className = "hint-button"; button.type = "button"; button.textContent = taskState.hintOpen ? "Hide hint" : "Show one hint"; button.setAttribute("aria-expanded",String(taskState.hintOpen));
           button.addEventListener("click", () => { taskState.hintOpen = !taskState.hintOpen; save(); renderTask(taskIndex); });
