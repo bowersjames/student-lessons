@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v5">
+  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v6">
   <title>William — PTE Reorder Paragraph Homework</title>
   <style>
     :root {
@@ -73,6 +73,7 @@
 
     .screen-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .screen-title { min-width: 0; display: grid; grid-template-columns: 54px minmax(0,1fr); gap: 15px; align-items: center; }
+    .task-screen .screen-title { display: block; }
     .title-icon, .task-mark {
       width: 54px; height: 54px; display: grid; place-items: center;
       border-radius: 50%; background: var(--primary); color: white;
@@ -80,7 +81,7 @@
     }
     .screen-head h2 { font-size: clamp(28px,3.5vw,42px); line-height: 1.04; letter-spacing: -.025em; }
     .screen-head p { margin-top: 4px; color: var(--muted); font-size: 16px; }
-    .step-chip, .pill {
+    .pill {
       min-height: 38px; padding: 8px 13px; display: inline-flex; align-items: center;
       border-radius: 999px; background: var(--primary-soft); color: var(--primary-strong);
       font-weight: 760; white-space: nowrap;
@@ -157,17 +158,22 @@
     .return-card { display: grid; align-content: start; gap: 12px; }
     .copy-status { min-height: 22px; color: var(--secondary); font-weight: 720; }
 
-    footer { min-width: 0; display: grid; grid-template-columns: 112px minmax(0,1fr) 112px; gap: 12px; align-items: center; padding: 9px 12px; border-top: 1px solid var(--line); background: var(--surface); }
-    .nav-button { min-height: 44px; padding: 8px 12px; border: 0; border-radius: 13px; background: var(--surface-low); color: var(--primary-strong); font-weight: 780; }
+    footer { min-width: 0; display: grid; grid-template-columns: 56px minmax(0,1fr) 56px; gap: 12px; align-items: center; padding: 6px 12px; border-top: 1px solid var(--line); background: var(--surface); }
+    .nav-button { width: 44px; min-height: 44px; justify-self: center; padding: 0; border: 0; border-radius: 50%; background: var(--surface-low); color: var(--primary-strong); font-size: 23px; font-weight: 780; }
     .nav-button#next { background: var(--primary); color: white; }
-    .progress-wrap { min-width: 0; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; }
-    .progress-wrap span { color: var(--muted); font-size: 13px; font-weight: 720; white-space: nowrap; }
-    .progress-track { height: 8px; border-radius: 999px; background: var(--surface-high); overflow: hidden; }
-    .progress-bar { height: 100%; width: 0; border-radius: inherit; background: var(--secondary); transition: width .18s ease; }
-    .nav-hint { min-height: 16px; grid-column: 1 / -1; color: var(--muted); font-size: 12px; text-align: center; }
+    .nav-button#back { grid-column: 1; }
+    .nav-button#next { grid-column: 3; }
 
     @media (min-width: 821px) and (max-height: 760px) {
-      .screen-inner { padding-top: 14px; padding-bottom: 14px; gap: 10px; }
+      .page { grid-template-rows: minmax(0,1fr) 56px; }
+      .screen-inner { padding: 10px 28px; gap: 8px; }
+      .screen-title { grid-template-columns: 46px minmax(0,1fr); gap: 12px; }
+      .title-icon, .task-mark { width: 46px; height: 46px; }
+      .screen-head h2 { font-size: 34px; }
+      .panel-head { min-height: 44px; }
+      .text-box { min-height: 54px; padding-top: 8px; padding-bottom: 8px; }
+      .box-copy { line-height: 1.38; }
+      .locked-note { margin-top: 2px; }
     }
 
     @media (max-width: 820px) {
@@ -189,18 +195,14 @@
       .transfer-controls .move-button { width: 100%; border-radius: 12px; grid-auto-flow: column; justify-content: center; gap: 7px; }
       .transfer-controls .move-button .label { position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; font-size: 12px; }
       .order-controls { grid-column: 1 / -1; }
-      footer { position: sticky; bottom: 0; z-index: 10; grid-template-columns: 86px minmax(0,1fr) 86px; }
-      .progress-wrap span { display: none; }
-      .nav-hint { display: none; }
+      footer { position: sticky; bottom: 0; z-index: 10; grid-template-columns: 56px minmax(0,1fr) 56px; }
     }
 
     @media (max-width: 420px) {
       .screen-title { grid-template-columns: 44px minmax(0,1fr); gap: 10px; }
       .title-icon { width: 44px; height: 44px; }
       .screen-head h2 { font-size: 27px; }
-      .step-chip { display: none; }
-      footer { grid-template-columns: 74px minmax(0,1fr) 74px; gap: 6px; padding: 8px 6px; }
-      .nav-button { padding: 6px; font-size: 14px; }
+      footer { grid-template-columns: 50px minmax(0,1fr) 50px; gap: 6px; padding: 8px 4px; }
     }
   </style>
 </head>
@@ -211,7 +213,6 @@
         <div class="screen-inner centre">
           <div class="cover-grid">
             <div class="cover-copy">
-              <p class="eyebrow">William · PTE Academic homework</p>
               <h1>Reorder Paragraph</h1>
               <p>Practise the same two-panel movement used in PTE, then check the links between neighbouring boxes.</p>
               <div class="task-pills"><span class="pill">3 exercises</span><span class="pill">Help → hint → solo</span><span class="pill">About 12–18 minutes</span></div>
@@ -239,9 +240,9 @@
         </div>
       </section>
 
-      <section class="screen task-screen" data-screen="2" data-exercise="0" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">1</span><div><h2>Lots of help</h2><p>Practice help: sentence B has been put first for you.</p></div></div><span class="step-chip">Exercise 1 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
-      <section class="screen task-screen" data-screen="3" data-exercise="1" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">2</span><div><h2>One optional hint</h2><p>Build the PTE-style answer, using one hint only if needed.</p></div></div><span class="step-chip">Exercise 2 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
-      <section class="screen task-screen" data-screen="4" data-exercise="2" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">3</span><div><h2>Independent</h2><p>No hints before you check.</p></div></div><span class="step-chip">Exercise 3 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="2" data-exercise="0" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><h2>Lots of help</h2></div></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="3" data-exercise="1" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><h2>One optional hint</h2></div></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="4" data-exercise="2" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><h2>Independent</h2></div></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
 
       <section class="screen" data-screen="5" hidden>
         <div class="screen-inner centre">
@@ -255,9 +256,8 @@
     </div>
 
     <footer>
-      <button class="nav-button" id="back" type="button">← Back</button>
-      <div class="progress-wrap"><span id="progress-label">1 of 6</span><div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"><div class="progress-bar" id="progress-bar"></div></div><span id="screen-name">Introduction</span><p class="nav-hint" id="nav-hint"></p></div>
-      <button class="nav-button" id="next" type="button">Start →</button>
+      <button class="nav-button" id="back" type="button" aria-label="Back">←</button>
+      <button class="nav-button" id="next" type="button" aria-label="Continue">→</button>
     </footer>
   </main>
 
@@ -385,7 +385,6 @@
       }
       function taskIndexForScreen(screenIndex) { return screenIndex >= 2 && screenIndex <= 4 ? screenIndex - 2 : null; }
       function canAdvance(index) { const taskIndex = taskIndexForScreen(index); return taskIndex === null ? index < 5 : state.tasks[taskIndex].complete; }
-      function screenHint(index) { const taskIndex = taskIndexForScreen(index); if (taskIndex === null) return ""; return state.tasks[taskIndex].complete ? "Correct — continue when ready." : "Complete this order correctly before continuing."; }
 
       function moveSelected(taskIndex, direction) {
         const task = tasks[taskIndex], taskState = state.tasks[taskIndex], id = taskState.selected;
@@ -428,7 +427,7 @@
         button.setAttribute("aria-pressed", String(taskState.selected === id));
         button.draggable = !taskState.complete && id !== task.locked;
         button.disabled = taskState.complete;
-        button.innerHTML = `<span class="box-label">${id}</span><span class="box-copy">${task.sentences[id]}${id === task.locked ? '<span class="locked-note">Practice help: this is the opening sentence</span>' : ''}</span>`;
+        button.innerHTML = `<span class="box-label">${id}</span><span class="box-copy">${task.sentences[id]}</span>`;
         button.addEventListener("click", () => { taskState.selected = taskState.selected === id ? null : id; save(); renderTask(taskIndex,id); });
         button.addEventListener("dragstart", event => { drag = { taskIndex, id, panel, index: taskState[panel].indexOf(id) }; button.classList.add("dragging"); document.body.classList.add("is-dragging"); event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData("text/plain",id); });
         button.addEventListener("dragend", () => { drag = null; button.classList.remove("dragging"); document.body.classList.remove("is-dragging"); document.querySelectorAll(".drop-zone").forEach(zone => zone.classList.remove("drag-over")); });
@@ -455,7 +454,7 @@
       function supportContent(taskIndex, element) {
         const taskState = state.tasks[taskIndex]; element.replaceChildren();
         if (taskIndex === 0) {
-          element.innerHTML = "<strong>Practice 1 only:</strong> I have put sentence B first to help you. In the real PTE test, every box starts in random order and you place them all yourself. Now follow the chain from the problem to the discovery and then the result.";
+          element.innerHTML = "<strong>Practice 1 only:</strong> I placed B first as the opening sentence. In the real PTE test, all boxes start in random order. Order the remaining sentences.";
         } else if (taskIndex === 1) {
           const button = document.createElement("button"); button.className = "hint-button"; button.type = "button"; button.textContent = taskState.hintOpen ? "Hide hint" : "Show one hint"; button.setAttribute("aria-expanded",String(taskState.hintOpen));
           button.addEventListener("click", () => { taskState.hintOpen = !taskState.hintOpen; save(); renderTask(taskIndex); });
@@ -464,13 +463,30 @@
         } else element.innerHTML = "<strong>Independent practice.</strong> Read every box, find the topic sentence, and test each adjacent link.";
       }
 
+      function feedbackContent(taskIndex, element) {
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], score = pairScore(taskState.answer,task.answer);
+        if (taskState.complete) {
+          element.className = "feedback success";
+          element.innerHTML = `<strong>Correct — every adjacent pair works.</strong>${taskState.attempts === 1 ? "You completed this on the first check." : `You corrected it after ${taskState.attempts} checks.`}`;
+          return;
+        }
+        let brokenIndex = 0;
+        for (let i=0;i<taskState.answer.length-1;i++) {
+          const correctIndex = task.answer.indexOf(taskState.answer[i]);
+          if (task.answer[correctIndex+1] !== taskState.answer[i+1]) { brokenIndex = i; break; }
+        }
+        const clue = task.wrongClue[taskState.answer[brokenIndex]];
+        element.className = "feedback";
+        element.innerHTML = `<strong>${score} of ${task.answer.length-1} adjacent pairs work.</strong>${clue} Revise the order and check again.`;
+      }
+
       function renderTask(taskIndex, focusId = null) {
         const screen = document.querySelector(`[data-exercise="${taskIndex}"]`), task = tasks[taskIndex], taskState = state.tasks[taskIndex];
         supportContent(taskIndex, screen.querySelector("[data-support]"));
         const workspace = screen.querySelector("[data-workspace]");
         const feedback = screen.querySelector("[data-feedback]");
         if (workspace.contains(feedback)) screen.querySelector(".task-actions").after(feedback);
-        workspace.innerHTML = `<section class="pte-panel"><div class="panel-head"><h3>Random order</h3><span>Left panel</span></div><div class="box-list" data-panel="source" aria-label="Random-order boxes"></div></section><div class="transfer-controls" aria-label="Move selected box"><button class="move-button" type="button" data-move="left"><span class="symbol">←</span><span class="label">Move left</span></button><button class="move-button" type="button" data-move="right"><span class="symbol">→</span><span class="label">Move right</span></button></div><section class="pte-panel"><div class="panel-head"><h3>Your order</h3><div class="order-controls"><button class="move-button" type="button" data-move="up" aria-label="Move selected box up"><span class="symbol">↑</span><span class="label">Up</span></button><button class="move-button" type="button" data-move="down" aria-label="Move selected box down"><span class="symbol">↓</span><span class="label">Down</span></button></div></div><div class="box-list" data-panel="answer" aria-label="Your ordered boxes"></div></section>`;
+        workspace.innerHTML = `<section class="pte-panel"><div class="panel-head"><h3>Random order</h3></div><div class="box-list" data-panel="source" aria-label="Random-order boxes"></div></section><div class="transfer-controls" aria-label="Move selected box"><button class="move-button" type="button" data-move="left"><span class="symbol">←</span><span class="label">Move left</span></button><button class="move-button" type="button" data-move="right"><span class="symbol">→</span><span class="label">Move right</span></button></div><section class="pte-panel"><div class="panel-head"><h3>Your order</h3><div class="order-controls"><button class="move-button" type="button" data-move="up" aria-label="Move selected box up"><span class="symbol">↑</span><span class="label">Up</span></button><button class="move-button" type="button" data-move="down" aria-label="Move selected box down"><span class="symbol">↓</span><span class="label">Down</span></button></div></div><div class="box-list" data-panel="answer" aria-label="Your ordered boxes"></div></section>`;
         renderList(taskIndex,"source",workspace.querySelector('[data-panel="source"]'));
         renderList(taskIndex,"answer",workspace.querySelector('[data-panel="answer"]'));
         const selected = taskState.selected, inSource = taskState.source.includes(selected), inAnswer = taskState.answer.includes(selected), locked = selected === task.locked;
@@ -483,12 +499,12 @@
 
         const check = screen.querySelector("[data-check]"), reset = screen.querySelector("[data-reset]"), status = screen.querySelector("[data-status]");
         check.disabled = taskState.complete; reset.textContent = taskState.complete ? "Try this exercise again" : "Reset exercise";
-        if (taskState.complete) status.textContent = "Correct — use Next when you are ready.";
-        else if (taskState.checked) status.textContent = "Revise the order, then check again.";
+        if (taskState.complete || taskState.checked) status.textContent = "";
         else if (taskState.source.length) status.textContent = `${taskState.source.length} box${taskState.source.length === 1 ? "" : "es"} still on the left.`;
         else status.textContent = "All boxes are on the right. Check the order.";
         if (taskState.checked && taskState.source.length === 0) {
           const sourceList = workspace.querySelector('[data-panel="source"]');
+          feedbackContent(taskIndex,feedback);
           sourceList.classList.remove("empty"); sourceList.append(feedback); feedback.hidden = false;
         } else feedback.hidden = true;
         if (focusId) requestAnimationFrame(() => screen.querySelector(`[data-id="${focusId}"]`)?.focus());
@@ -496,21 +512,17 @@
       }
 
       function checkTask(taskIndex) {
-        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], screen = document.querySelector(`[data-exercise="${taskIndex}"]`), feedback = screen.querySelector("[data-feedback]");
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], screen = document.querySelector(`[data-exercise="${taskIndex}"]`);
         if (taskState.source.length) { screen.querySelector("[data-status]").textContent = "Move every box to the right before checking."; return; }
         taskState.attempts += 1; const score = pairScore(taskState.answer,task.answer);
         if (!taskState.firstOrder) { taskState.firstOrder = [...taskState.answer]; taskState.firstScore = score; }
         taskState.checked = true;
         if (score === task.answer.length - 1) {
           taskState.complete = true; taskState.selected = null;
-          feedback.className = "feedback success"; feedback.innerHTML = `<strong>Correct — every adjacent pair works.</strong>${taskState.attempts === 1 ? "You completed this on the first check." : `You corrected it after ${taskState.attempts} checks.`}`;
         } else {
           taskState.complete = false;
-          let brokenIndex = 0; for (let i=0;i<taskState.answer.length-1;i++) { const correctIndex = task.answer.indexOf(taskState.answer[i]); if (task.answer[correctIndex+1] !== taskState.answer[i+1]) { brokenIndex = i; break; } }
-          const first = taskState.answer[brokenIndex], clue = task.wrongClue[first];
-          feedback.className = "feedback"; feedback.innerHTML = `<strong>${score} of ${task.answer.length-1} adjacent pairs work.</strong>${clue} Revise the order and check again.`;
         }
-        feedback.hidden = false; save(); renderTask(taskIndex);
+        save(); renderTask(taskIndex);
       }
 
       function resetTask(taskIndex) {
@@ -558,16 +570,11 @@
       });
 
       function updateNavigation() {
-        const names = ["Introduction","How PTE works","Help","Hint","Solo","Results"];
         screens.forEach((screen,index) => { screen.hidden = index !== state.current; });
-        document.querySelector("#back").disabled = state.current === 0;
+        const back = document.querySelector("#back"); back.disabled = state.current === 0; back.textContent = "←"; back.setAttribute("aria-label","Back");
         const next = document.querySelector("#next"); next.disabled = !canAdvance(state.current);
-        next.textContent = state.current === 0 ? "Start →" : state.current === 1 ? "Exercise 1 →" : state.current === 4 ? "Results →" : state.current === 5 ? "Done" : "Next →";
-        document.querySelector("#progress-label").textContent = `${state.current+1} of ${screens.length}`;
-        document.querySelector("#screen-name").textContent = names[state.current];
-        document.querySelector("#progress-bar").style.width = `${((state.current+1)/screens.length)*100}%`;
-        const track = document.querySelector("#progress-track"); track.setAttribute("aria-valuenow",String(state.current+1)); track.setAttribute("aria-valuetext",names[state.current]);
-        document.querySelector("#nav-hint").textContent = screenHint(state.current);
+        next.textContent = state.current === 5 ? "✓" : "→";
+        next.setAttribute("aria-label", state.current === 0 ? "Start" : state.current === 1 ? "Go to exercise 1" : state.current === 4 ? "Show results" : state.current === 5 ? "Finished" : "Next");
       }
       function showScreen(index) {
         state.current = Math.min(Math.max(index,0),screens.length-1); save();
