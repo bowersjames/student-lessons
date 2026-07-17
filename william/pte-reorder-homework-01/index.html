@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="release-version" content="2026-07-17-pte-reorder-homework-v1">
+  <title>William — PTE Reorder Paragraph Homework</title>
+  <style>
+    :root {
+      --primary: oklch(0.43 0.075 235);
+      --primary-strong: oklch(0.36 0.075 235);
+      --primary-soft: oklch(0.92 0.032 235);
+      --secondary: oklch(0.46 0.045 155);
+      --secondary-soft: oklch(0.92 0.032 155);
+      --gold: oklch(0.62 0.11 82);
+      --gold-soft: oklch(0.95 0.045 88);
+      --surface: oklch(0.986 0.005 90);
+      --surface-low: oklch(0.966 0.008 90);
+      --surface-high: oklch(0.935 0.009 90);
+      --ink: oklch(0.23 0.015 145);
+      --muted: oklch(0.43 0.018 145);
+      --line: oklch(0.80 0.012 145);
+      --success: oklch(0.48 0.105 150);
+      --success-soft: oklch(0.94 0.035 150);
+      --error: oklch(0.48 0.17 28);
+      --error-soft: oklch(0.95 0.035 28);
+      --shadow: 0 1px 2px rgba(24,43,55,.06), 0 14px 38px rgba(24,43,55,.10);
+      font-family: "Segoe UI", Aptos, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--surface-high);
+    }
+
+    * { box-sizing: border-box; }
+    html { width: 100%; height: 100%; min-width: 0; }
+    body {
+      width: 100%; height: 100%; min-width: 0; margin: 0;
+      display: grid; place-items: center; overflow: hidden;
+      background: var(--surface-high);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, a { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: .48; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    [hidden] { display: none !important; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { text-wrap: balance; }
+    p { line-height: 1.5; text-wrap: pretty; }
+
+    .page {
+      width: min(1280px, calc(100% - 20px));
+      height: min(840px, calc(100dvh - 20px));
+      min-height: 0; margin: 0;
+      display: grid; grid-template-rows: minmax(0,1fr) 64px;
+      overflow: hidden; border-radius: 28px;
+      background: var(--surface); box-shadow: var(--shadow);
+    }
+    .stage, .screen { min-width: 0; min-height: 0; overflow: hidden; }
+    .screen { width: 100%; height: 100%; }
+    .screen-inner {
+      width: 100%; height: 100%; min-width: 0; min-height: 0;
+      padding: 22px 28px; display: grid; align-content: start; gap: 16px;
+    }
+    .screen-inner.centre { align-content: center; }
+    .task-screen .screen-inner { grid-template-rows: auto auto minmax(0,1fr) auto auto; }
+    [data-screen="5"] .screen-inner { grid-template-rows: auto minmax(0,1fr); align-content: start; }
+
+    .screen-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .screen-title { min-width: 0; display: grid; grid-template-columns: 54px minmax(0,1fr); gap: 15px; align-items: center; }
+    .title-icon, .task-mark {
+      width: 54px; height: 54px; display: grid; place-items: center;
+      border-radius: 50%; background: var(--primary); color: white;
+      font-weight: 820; box-shadow: 0 10px 24px rgba(20,72,101,.18);
+    }
+    .screen-head h2 { font-size: clamp(28px,3.5vw,42px); line-height: 1.04; letter-spacing: -.025em; }
+    .screen-head p { margin-top: 4px; color: var(--muted); font-size: 16px; }
+    .step-chip, .pill {
+      min-height: 38px; padding: 8px 13px; display: inline-flex; align-items: center;
+      border-radius: 999px; background: var(--primary-soft); color: var(--primary-strong);
+      font-weight: 760; white-space: nowrap;
+    }
+    .eyebrow { color: var(--primary); font-size: 13px; font-weight: 820; letter-spacing: .11em; text-transform: uppercase; }
+
+    .cover-grid { display: grid; grid-template-columns: minmax(0,1.18fr) minmax(300px,.82fr); gap: clamp(28px,5vw,60px); align-items: center; }
+    .cover-copy { display: grid; gap: 20px; }
+    .cover-copy h1 { max-width: 760px; font-size: clamp(44px,7vw,76px); line-height: .98; letter-spacing: -.045em; }
+    .cover-copy > p { max-width: 670px; color: var(--muted); font-size: clamp(18px,2vw,22px); }
+    .task-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+    .cover-card { padding: 30px; display: grid; gap: 20px; border-radius: 24px; background: var(--primary); color: white; box-shadow: 0 18px 38px rgba(18,66,93,.20); }
+    .cover-card h2 { font-size: 25px; }
+    .cover-stat { display: grid; grid-template-columns: 46px 1fr; gap: 13px; align-items: center; }
+    .cover-stat strong { display: block; font-size: 18px; }
+    .cover-stat span:last-child { color: oklch(0.91 0.018 235); }
+    .stat-number { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: rgba(255,255,255,.12); font-weight: 850; }
+    .reset-notice { padding: 11px 13px; border-radius: 12px; background: var(--success-soft); color: var(--success); font-weight: 700; }
+
+    .orientation-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+    .orientation-card { padding: 22px; display: grid; gap: 10px; border-radius: 20px; background: var(--surface-low); box-shadow: inset 0 0 0 1px var(--line); }
+    .orientation-card h3 { font-size: 20px; }
+    .orientation-card p { color: var(--muted); }
+    .arrow-demo { display: flex; gap: 8px; align-items: center; color: var(--primary); font-size: 24px; font-weight: 850; }
+    .fallback-line { padding: 14px 16px; border-radius: 16px; background: var(--gold-soft); color: var(--ink); }
+    .fallback-line a { color: var(--primary-strong); font-weight: 760; }
+
+    .support-strip { min-width: 0; padding: 11px 14px; border-radius: 15px; background: var(--primary-soft); color: var(--primary-strong); }
+    .support-strip strong { font-weight: 820; }
+    .support-strip ul { margin: 5px 0 0; padding-left: 20px; display: flex; flex-wrap: wrap; gap: 4px 28px; }
+    .hint-button { min-height: 40px; margin-right: 10px; padding: 8px 13px; border: 0; border-radius: 12px; background: white; color: var(--primary-strong); box-shadow: inset 0 0 0 1px var(--line); font-weight: 760; }
+
+    .pte-workspace { min-width: 0; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr) 82px minmax(0,1fr); gap: 12px; overflow: hidden; }
+    .pte-panel { min-width: 0; min-height: 0; padding: 12px; display: grid; grid-template-rows: auto minmax(0,1fr); gap: 9px; border-radius: 18px; background: var(--surface-low); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel-head h3 { font-size: 17px; }
+    .panel-head span { color: var(--muted); font-size: 13px; }
+    .box-list { min-width: 0; min-height: 0; overflow: auto; display: grid; align-content: start; gap: 7px; padding: 2px; }
+    .box-list.empty::after { content: "Move a box here"; min-height: 74px; display: grid; place-items: center; border: 2px dashed var(--line); border-radius: 14px; color: var(--muted); font-weight: 720; }
+    .text-box { width: 100%; min-width: 0; min-height: 58px; padding: 9px 11px; display: grid; grid-template-columns: 32px minmax(0,1fr); gap: 10px; align-items: start; border: 0; border-radius: 14px; background: white; color: var(--ink); text-align: left; box-shadow: inset 0 0 0 1px var(--line); }
+    .text-box:hover:not(:disabled) { box-shadow: inset 0 0 0 2px var(--primary); }
+    .text-box[aria-pressed="true"] { background: var(--primary-soft); box-shadow: inset 0 0 0 3px var(--primary); }
+    .text-box.dragging { opacity: .55; }
+    .box-label { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 10px; background: var(--primary-soft); color: var(--primary-strong); font-weight: 850; }
+    .box-copy { font-size: 14.5px; line-height: 1.34; }
+    .locked-note { display: block; margin-top: 3px; color: var(--secondary); font-size: 12px; font-weight: 780; }
+    .drop-zone { min-height: 0; height: 0; border-radius: 10px; transition: height .12s ease, background .12s ease; }
+    .is-dragging .drop-zone { height: 18px; border: 2px dashed var(--primary); background: var(--primary-soft); }
+    .drop-zone.drag-over { height: 28px; background: var(--gold-soft); border-color: var(--gold); }
+
+    .transfer-controls { min-width: 0; display: grid; align-content: center; gap: 10px; }
+    .move-button { min-width: 0; min-height: 46px; padding: 7px; display: grid; place-items: center; gap: 1px; border: 0; border-radius: 13px; background: white; color: var(--primary-strong); box-shadow: inset 0 0 0 1px var(--line); font-weight: 790; }
+    .move-button .symbol { font-size: 22px; line-height: 1; }
+    .move-button .label { font-size: 11px; }
+    .order-controls { display: flex; gap: 6px; }
+    .order-controls .move-button { flex: 1; min-height: 40px; grid-auto-flow: column; }
+
+    .task-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .action { min-height: 43px; padding: 9px 16px; border: 0; border-radius: 13px; font-weight: 780; }
+    .action.primary { background: var(--primary); color: white; box-shadow: 0 8px 18px rgba(20,72,101,.16); }
+    .action.secondary { background: var(--surface-low); color: var(--primary-strong); box-shadow: inset 0 0 0 1px var(--line); }
+    .status { flex: 1 1 250px; min-height: 22px; color: var(--muted); font-weight: 690; }
+    .feedback { padding: 11px 14px; border-radius: 14px; background: var(--gold-soft); color: var(--ink); }
+    .feedback.success { background: var(--success-soft); color: var(--success); }
+    .feedback strong { display: block; margin-bottom: 2px; }
+
+    .completion-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(300px,.9fr); gap: 20px; min-height: 0; overflow: hidden; }
+    .summary-card, .return-card { min-height: 0; padding: 22px; overflow: auto; border-radius: 20px; background: var(--surface-low); box-shadow: inset 0 0 0 1px var(--line); }
+    .summary-card h3, .return-card h3 { margin-bottom: 12px; }
+    .result-row { padding: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 12px; border-bottom: 1px solid var(--line); }
+    .result-row:last-child { border-bottom: 0; }
+    .result-full { margin: 14px 0 0; padding: 13px; overflow: auto; border-radius: 13px; background: white; color: var(--ink); font: 13px/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; user-select: text; }
+    .return-card { display: grid; align-content: start; gap: 12px; }
+    .copy-status { min-height: 22px; color: var(--secondary); font-weight: 720; }
+
+    footer { min-width: 0; display: grid; grid-template-columns: 112px minmax(0,1fr) 112px; gap: 12px; align-items: center; padding: 9px 12px; border-top: 1px solid var(--line); background: var(--surface); }
+    .nav-button { min-height: 44px; padding: 8px 12px; border: 0; border-radius: 13px; background: var(--surface-low); color: var(--primary-strong); font-weight: 780; }
+    .nav-button#next { background: var(--primary); color: white; }
+    .progress-wrap { min-width: 0; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; }
+    .progress-wrap span { color: var(--muted); font-size: 13px; font-weight: 720; white-space: nowrap; }
+    .progress-track { height: 8px; border-radius: 999px; background: var(--surface-high); overflow: hidden; }
+    .progress-bar { height: 100%; width: 0; border-radius: inherit; background: var(--secondary); transition: width .18s ease; }
+    .nav-hint { min-height: 16px; grid-column: 1 / -1; color: var(--muted); font-size: 12px; text-align: center; }
+
+    @media (max-width: 820px) {
+      body { height: auto; min-height: 100%; display: block; overflow: auto; }
+      .page { width: 100%; height: auto; min-height: 100dvh; border-radius: 0; grid-template-rows: minmax(calc(100dvh - 64px),auto) 64px; }
+      .stage, .screen { overflow: visible; }
+      .screen { height: auto; min-height: calc(100dvh - 64px); }
+      .screen-inner { height: auto; min-height: calc(100dvh - 64px); padding: 20px 16px 24px; }
+      .task-screen .screen-inner { grid-template-rows: auto; }
+      .cover-grid, .completion-grid { grid-template-columns: 1fr; }
+      .completion-grid { overflow: visible; }
+      .summary-card, .return-card { overflow: visible; }
+      .cover-copy h1 { font-size: clamp(42px,13vw,62px); }
+      .orientation-grid { grid-template-columns: 1fr; }
+      .pte-workspace { grid-template-columns: 1fr; overflow: visible; }
+      .pte-panel { min-height: 230px; overflow: visible; }
+      .box-list { overflow: visible; }
+      .transfer-controls { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .move-button { grid-auto-flow: column; justify-content: center; gap: 7px; }
+      .order-controls { grid-column: 1 / -1; }
+      footer { position: sticky; bottom: 0; z-index: 10; grid-template-columns: 86px minmax(0,1fr) 86px; }
+      .progress-wrap span { display: none; }
+      .nav-hint { display: none; }
+    }
+
+    @media (max-width: 420px) {
+      .screen-title { grid-template-columns: 44px minmax(0,1fr); gap: 10px; }
+      .title-icon { width: 44px; height: 44px; }
+      .screen-head h2 { font-size: 27px; }
+      .step-chip { display: none; }
+      .support-strip ul { display: block; }
+      footer { grid-template-columns: 74px minmax(0,1fr) 74px; gap: 6px; padding: 8px 6px; }
+      .nav-button { padding: 6px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="stage">
+      <section class="screen" data-screen="0">
+        <div class="screen-inner centre">
+          <div class="cover-grid">
+            <div class="cover-copy">
+              <p class="eyebrow">William · PTE Academic homework</p>
+              <h1>Reorder Paragraph</h1>
+              <p>Practise the same two-panel movement used in PTE, then check the links between neighbouring boxes.</p>
+              <div class="task-pills"><span class="pill">3 exercises</span><span class="pill">Help → hint → solo</span><span class="pill">About 12–18 minutes</span></div>
+              <p class="reset-notice" id="reset-notice" hidden>This homework was reset on this browser.</p>
+            </div>
+            <aside class="cover-card">
+              <h2>Your route</h2>
+              <div class="cover-stat"><span class="stat-number">1</span><span><strong>Lots of help</strong>The first box is already placed.</span></div>
+              <div class="cover-stat"><span class="stat-number">2</span><span><strong>One optional hint</strong>Open it only if needed.</span></div>
+              <div class="cover-stat"><span class="stat-number">3</span><span><strong>Independent</strong>Complete the PTE-style task alone.</span></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" hidden>
+        <div class="screen-inner centre">
+          <header class="screen-head"><div class="screen-title"><span class="title-icon">R</span><div><h2>How PTE moves the boxes</h2><p>Use either method. Both are available in the test.</p></div></div></header>
+          <div class="orientation-grid">
+            <article class="orientation-card"><span class="task-mark">1</span><h3>Select a box</h3><p>Click a box. A blue outline shows the selected box.</p></article>
+            <article class="orientation-card"><div class="arrow-demo">← → ↑ ↓</div><h3>Use the arrows</h3><p>Move the selected box between panels, then move it up or down on the right.</p></article>
+            <article class="orientation-card"><span class="task-mark">↕</span><h3>Or drag it</h3><p>Drag a box to a visible space. The highlighted line shows exactly where it will go.</p></article>
+          </div>
+          <p class="fallback-line">If the controls do not work, use the <a href="fallback.html">plain A–E version</a> and type each order in Preply chat.</p>
+        </div>
+      </section>
+
+      <section class="screen task-screen" data-screen="2" data-exercise="0" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">1</span><div><h2>Lots of help</h2><p>The opening box is already on the right.</p></div></div><span class="step-chip">Exercise 1 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="3" data-exercise="1" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">2</span><div><h2>One optional hint</h2><p>Build the PTE-style answer, using one hint only if needed.</p></div></div><span class="step-chip">Exercise 2 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+      <section class="screen task-screen" data-screen="4" data-exercise="2" hidden><div class="screen-inner"><header class="screen-head"><div class="screen-title"><span class="title-icon">3</span><div><h2>Independent</h2><p>No hints before you check.</p></div></div><span class="step-chip">Exercise 3 of 3</span></header><div class="support-strip" data-support></div><div class="pte-workspace" data-workspace></div><div class="task-actions"><button class="action secondary" type="button" data-reset>Reset exercise</button><button class="action primary" type="button" data-check>Check order</button><p class="status" data-status aria-live="polite"></p></div><div class="feedback" data-feedback aria-live="polite" hidden></div></div></section>
+
+      <section class="screen" data-screen="5" hidden>
+        <div class="screen-inner centre">
+          <header class="screen-head"><div class="screen-title"><span class="title-icon">✓</span><div><h2>Homework complete</h2><p>Copy the Reorder result and paste it into the normal Preply lesson chat.</p></div></div></header>
+          <div class="completion-grid">
+            <section class="summary-card"><h3>Your Reorder record</h3><div id="result-summary"></div><pre class="result-full" id="result-full"></pre></section>
+            <aside class="return-card"><h3>Return this work</h3><p>Leave your rewritten essay in the shared Google Doc. Then copy this Reorder record and paste it into Preply chat.</p><button class="action primary" type="button" id="copy-results">Copy Reorder result</button><p class="copy-status" id="copy-status" aria-live="polite"></p><button class="action secondary" type="button" id="start-again">Start all three again</button><p>These are practice results, not predicted PTE scores.</p></aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <button class="nav-button" id="back" type="button">← Back</button>
+      <div class="progress-wrap"><span id="progress-label">1 of 6</span><div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"><div class="progress-bar" id="progress-bar"></div></div><span id="screen-name">Introduction</span><p class="nav-hint" id="nav-hint"></p></div>
+      <button class="nav-button" id="next" type="button">Start →</button>
+    </footer>
+  </main>
+
+  <noscript><p style="padding:24px;font-family:Segoe UI,Arial,sans-serif">JavaScript is unavailable. Open <a href="fallback.html">the plain A–E version</a>.</p></noscript>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "william-pte-reorder-homework-01-v1";
+      const tasks = [
+        {
+          ids: ["A","B","C","D"],
+          initialSource: ["C","A","D"], initialAnswer: ["B"], locked: "B",
+          answer: ["B","A","D","C"],
+          sentences: {
+            A: "The first readings were inconsistent, so the team checked the equipment.",
+            B: "A research team installed sensors beside a busy road.",
+            C: "After one faulty sensor was replaced, the measurements became stable.",
+            D: "They discovered that one device had been damaged during installation."
+          },
+          nextReason: {
+            B: "describes the first problem that appeared after the sensors were installed",
+            A: "explains what the team discovered when it checked the equipment",
+            D: "describes the result after the faulty device was replaced"
+          },
+          wrongClue: {
+            B: "After Box B, look for the first problem that appeared after installation.",
+            A: "After Box A, look for what the team discovered when it checked the equipment.",
+            D: "After Box D, look for the result after the faulty device was replaced.",
+            C: "Box C gives the stable final result, so it should end the paragraph."
+          }
+        },
+        {
+          ids: ["A","B","C","D","E"],
+          initialSource: ["C","E","B","D","A"], initialAnswer: [], locked: null,
+          answer: ["B","A","D","C","E"],
+          sentences: {
+            A: "By the 1980s, however, smaller sensors made continuous monitoring practical in ordinary hospitals.",
+            B: "Early heart monitors were large machines used mainly in specialist wards.",
+            C: "As a result, nurses could notice dangerous changes sooner, even when they were caring for several patients.",
+            D: "Once these compact devices became reliable, hospitals began attaching them to more patients.",
+            E: "Today, the same principle supports portable monitors that can send alerts while patients are at home."
+          },
+          nextReason: {
+            B: "moves the history forward to the contrast introduced by ‘however’",
+            A: "explains what hospitals did once the compact devices became reliable",
+            D: "states the result for nurses",
+            C: "moves from the hospital benefit to the present-day development"
+          },
+          wrongClue: {
+            B: "After Box B, move the history forward to the contrast introduced by ‘however’.",
+            A: "After Box A, look for what hospitals did once compact devices became reliable.",
+            D: "After Box D, look for the result for nurses.",
+            C: "After Box C, move from the hospital benefit to the present-day development.",
+            E: "Box E begins with ‘Today’, so it should end the sequence rather than lead back to earlier history."
+          }
+        },
+        {
+          ids: ["A","B","C","D","E"],
+          initialSource: ["A","D","E","C","B"], initialAnswer: [], locked: null,
+          answer: ["B","C","D","A","E"],
+          sentences: {
+            A: "This shared catalogue allowed libraries to see which books other institutions already held.",
+            B: "Before digital databases, librarians recorded book details on paper cards.",
+            C: "As university collections expanded, maintaining separate card systems became increasingly difficult.",
+            D: "In the 1970s, several libraries began entering these records into a common computer network.",
+            E: "The network later supported faster borrowing between institutions."
+          },
+          nextReason: {
+            B: "explains why separate paper-card systems became difficult",
+            C: "introduces the computer response to that difficulty and clarifies ‘these records’",
+            D: "explains what the shared catalogue allowed libraries to do",
+            A: "continues the same network and advances the sequence with ‘later’"
+          },
+          wrongClue: {
+            B: "After Box B, look for why separate paper-card systems became difficult.",
+            C: "After Box C, look for the computer response and the sentence explained by ‘these records’.",
+            D: "After Box D, look for what the shared catalogue allowed libraries to do.",
+            A: "After Box A, continue the same network and advance the sequence with ‘later’.",
+            E: "Box E gives the later borrowing result, so it should end the paragraph."
+          }
+        }
+      ];
+
+      function freshTask(index) {
+        return {
+          source: [...tasks[index].initialSource], answer: [...tasks[index].initialAnswer],
+          selected: null, hintOpen: false, checked: false, complete: false,
+          attempts: 0, firstOrder: null, firstScore: null
+        };
+      }
+      function defaults() { return { version: 1, current: 0, tasks: tasks.map((_,i) => freshTask(i)) }; }
+
+      let resetByLink = false;
+      const params = new URLSearchParams(location.search);
+      if (params.get("reset") === "1") {
+        localStorage.removeItem(STORAGE_KEY); resetByLink = true;
+        params.delete("reset");
+        history.replaceState(null, "", `${location.pathname}${params.size ? `?${params}` : ""}${location.hash}`);
+      }
+
+      function loadState() {
+        const base = defaults();
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || saved.version !== 1 || !Array.isArray(saved.tasks) || saved.tasks.length !== tasks.length) return base;
+          const merged = saved.tasks.map((item,index) => ({ ...freshTask(index), ...item }));
+          const valid = merged.every((item,index) => {
+            const all = [...item.source, ...item.answer];
+            return all.length === tasks[index].ids.length && new Set(all).size === all.length && all.every(id => tasks[index].ids.includes(id));
+          });
+          return valid ? { version: 1, current: Math.min(Math.max(Number(saved.current)||0,0),5), tasks: merged } : base;
+        } catch { return base; }
+      }
+      const state = loadState();
+      const screens = [...document.querySelectorAll(".screen")];
+      let drag = null;
+
+      function save() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {} }
+      function pairScore(order, correct) {
+        return order.reduce((sum,id,index) => {
+          if (index >= order.length - 1) return sum;
+          const correctIndex = correct.indexOf(id);
+          return sum + (correctIndex >= 0 && correct[correctIndex+1] === order[index+1] ? 1 : 0);
+        },0);
+      }
+      function taskIndexForScreen(screenIndex) { return screenIndex >= 2 && screenIndex <= 4 ? screenIndex - 2 : null; }
+      function canAdvance(index) { const taskIndex = taskIndexForScreen(index); return taskIndex === null ? index < 5 : state.tasks[taskIndex].complete; }
+      function screenHint(index) { const taskIndex = taskIndexForScreen(index); if (taskIndex === null) return ""; return state.tasks[taskIndex].complete ? "Correct — continue when ready." : "Complete this order correctly before continuing."; }
+
+      function moveSelected(taskIndex, direction) {
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], id = taskState.selected;
+        if (!id || taskState.complete || id === task.locked) return;
+        const inSource = taskState.source.includes(id), inAnswer = taskState.answer.includes(id);
+        if (direction === "right" && inSource) {
+          taskState.source = taskState.source.filter(value => value !== id); taskState.answer.push(id);
+        } else if (direction === "left" && inAnswer) {
+          taskState.answer = taskState.answer.filter(value => value !== id); taskState.source.push(id);
+        } else if ((direction === "up" || direction === "down") && inAnswer) {
+          const index = taskState.answer.indexOf(id), delta = direction === "up" ? -1 : 1, target = index + delta;
+          const minimum = task.locked ? 1 : 0;
+          if (target < minimum || target >= taskState.answer.length) return;
+          [taskState.answer[index],taskState.answer[target]] = [taskState.answer[target],taskState.answer[index]];
+        } else return;
+        taskState.checked = false; save(); renderTask(taskIndex, id);
+      }
+
+      function placeDragged(taskIndex, targetPanel, targetIndex = null) {
+        if (!drag || drag.taskIndex !== taskIndex) return;
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], id = drag.id;
+        if (taskState.complete || id === task.locked) return;
+        taskState.source = taskState.source.filter(value => value !== id);
+        taskState.answer = taskState.answer.filter(value => value !== id);
+        if (targetPanel === "source") taskState.source.push(id);
+        else {
+          const minimum = task.locked ? 1 : 0;
+          let adjustedIndex = Number(targetIndex);
+          if (drag.panel === "answer" && drag.index < adjustedIndex) adjustedIndex -= 1;
+          const safeIndex = Math.max(minimum, Math.min(adjustedIndex, taskState.answer.length));
+          taskState.answer.splice(safeIndex,0,id);
+        }
+        taskState.selected = id; taskState.checked = false; save(); renderTask(taskIndex,id);
+      }
+
+      function card(taskIndex, id, panel) {
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex];
+        const button = document.createElement("button");
+        button.className = "text-box"; button.type = "button"; button.dataset.id = id; button.dataset.panel = panel;
+        button.setAttribute("aria-pressed", String(taskState.selected === id));
+        button.draggable = !taskState.complete && id !== task.locked;
+        button.disabled = taskState.complete;
+        button.innerHTML = `<span class="box-label">${id}</span><span class="box-copy">${task.sentences[id]}${id === task.locked ? '<span class="locked-note">Opening box — already placed</span>' : ''}</span>`;
+        button.addEventListener("click", () => { taskState.selected = taskState.selected === id ? null : id; save(); renderTask(taskIndex,id); });
+        button.addEventListener("dragstart", event => { drag = { taskIndex, id, panel, index: taskState[panel].indexOf(id) }; button.classList.add("dragging"); document.body.classList.add("is-dragging"); event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData("text/plain",id); });
+        button.addEventListener("dragend", () => { drag = null; button.classList.remove("dragging"); document.body.classList.remove("is-dragging"); document.querySelectorAll(".drop-zone").forEach(zone => zone.classList.remove("drag-over")); });
+        return button;
+      }
+
+      function dropZone(taskIndex, panel, index) {
+        const zone = document.createElement("div"); zone.className = "drop-zone"; zone.setAttribute("aria-hidden","true");
+        zone.addEventListener("dragover", event => { event.preventDefault(); zone.classList.add("drag-over"); event.dataTransfer.dropEffect = "move"; });
+        zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+        zone.addEventListener("drop", event => { event.preventDefault(); zone.classList.remove("drag-over"); placeDragged(taskIndex,panel,index); });
+        return zone;
+      }
+
+      function renderList(taskIndex, panel, element) {
+        const taskState = state.tasks[taskIndex], ids = taskState[panel];
+        element.replaceChildren(); element.classList.toggle("empty", ids.length === 0);
+        if (panel === "answer") element.append(dropZone(taskIndex,panel,0));
+        ids.forEach((id,index) => { element.append(card(taskIndex,id,panel)); if (panel === "answer") element.append(dropZone(taskIndex,panel,index+1)); });
+        element.addEventListener("dragover", event => { if (panel === "source") event.preventDefault(); });
+        element.addEventListener("drop", event => { if (panel !== "source") return; event.preventDefault(); placeDragged(taskIndex,"source"); });
+      }
+
+      function supportContent(taskIndex, element) {
+        const taskState = state.tasks[taskIndex]; element.replaceChildren();
+        if (taskIndex === 0) {
+          element.innerHTML = "<strong>Box B starts the paragraph.</strong><ul><li>What problem appeared after installation?</li><li>What did ‘They’ discover?</li><li>What happened after replacement?</li></ul>";
+        } else if (taskIndex === 1) {
+          const button = document.createElement("button"); button.className = "hint-button"; button.type = "button"; button.textContent = taskState.hintOpen ? "Hide hint" : "Show one hint"; button.setAttribute("aria-expanded",String(taskState.hintOpen));
+          button.addEventListener("click", () => { taskState.hintOpen = !taskState.hintOpen; save(); renderTask(taskIndex); });
+          element.append(button);
+          const copy = document.createElement("span"); copy.textContent = taskState.hintOpen ? "Start with the sentence that introduces early heart monitors. Then track: however → these compact devices → as a result → today." : "Try the task first. Open the hint only if you need it."; element.append(copy);
+        } else element.innerHTML = "<strong>Independent practice.</strong> Read every box, find the topic sentence, and test each adjacent link.";
+      }
+
+      function renderTask(taskIndex, focusId = null) {
+        const screen = document.querySelector(`[data-exercise="${taskIndex}"]`), task = tasks[taskIndex], taskState = state.tasks[taskIndex];
+        supportContent(taskIndex, screen.querySelector("[data-support]"));
+        const workspace = screen.querySelector("[data-workspace]");
+        workspace.innerHTML = `<section class="pte-panel"><div class="panel-head"><h3>Random order</h3><span>Left panel</span></div><div class="box-list" data-panel="source" aria-label="Random-order boxes"></div></section><div class="transfer-controls" aria-label="Move selected box"><button class="move-button" type="button" data-move="left"><span class="symbol">←</span><span class="label">Move left</span></button><button class="move-button" type="button" data-move="right"><span class="symbol">→</span><span class="label">Move right</span></button></div><section class="pte-panel"><div class="panel-head"><h3>Your order</h3><div class="order-controls"><button class="move-button" type="button" data-move="up" aria-label="Move selected box up"><span class="symbol">↑</span><span class="label">Up</span></button><button class="move-button" type="button" data-move="down" aria-label="Move selected box down"><span class="symbol">↓</span><span class="label">Down</span></button></div></div><div class="box-list" data-panel="answer" aria-label="Your ordered boxes"></div></section>`;
+        renderList(taskIndex,"source",workspace.querySelector('[data-panel="source"]'));
+        renderList(taskIndex,"answer",workspace.querySelector('[data-panel="answer"]'));
+        const selected = taskState.selected, inSource = taskState.source.includes(selected), inAnswer = taskState.answer.includes(selected), locked = selected === task.locked;
+        workspace.querySelector('[data-move="left"]').disabled = taskState.complete || !inAnswer || locked;
+        workspace.querySelector('[data-move="right"]').disabled = taskState.complete || !inSource;
+        const answerIndex = taskState.answer.indexOf(selected), minimum = task.locked ? 1 : 0;
+        workspace.querySelector('[data-move="up"]').disabled = taskState.complete || !inAnswer || locked || answerIndex <= minimum;
+        workspace.querySelector('[data-move="down"]').disabled = taskState.complete || !inAnswer || locked || answerIndex < 0 || answerIndex >= taskState.answer.length - 1;
+        workspace.querySelectorAll("[data-move]").forEach(button => button.addEventListener("click", () => moveSelected(taskIndex,button.dataset.move)));
+
+        const check = screen.querySelector("[data-check]"), reset = screen.querySelector("[data-reset]"), status = screen.querySelector("[data-status]"), feedback = screen.querySelector("[data-feedback]");
+        check.disabled = taskState.complete; reset.textContent = taskState.complete ? "Try this exercise again" : "Reset exercise";
+        if (taskState.complete) status.textContent = "Correct — use Next when you are ready.";
+        else if (taskState.source.length) status.textContent = `${taskState.source.length} box${taskState.source.length === 1 ? "" : "es"} still on the left.`;
+        else status.textContent = "All boxes are on the right. Check the order.";
+        if (!taskState.checked) feedback.hidden = true;
+        if (focusId) requestAnimationFrame(() => screen.querySelector(`[data-id="${focusId}"]`)?.focus());
+        updateNavigation();
+      }
+
+      function checkTask(taskIndex) {
+        const task = tasks[taskIndex], taskState = state.tasks[taskIndex], screen = document.querySelector(`[data-exercise="${taskIndex}"]`), feedback = screen.querySelector("[data-feedback]");
+        if (taskState.source.length) { screen.querySelector("[data-status]").textContent = "Move every box to the right before checking."; return; }
+        taskState.attempts += 1; const score = pairScore(taskState.answer,task.answer);
+        if (!taskState.firstOrder) { taskState.firstOrder = [...taskState.answer]; taskState.firstScore = score; }
+        taskState.checked = true;
+        if (score === task.answer.length - 1) {
+          taskState.complete = true; taskState.selected = null;
+          feedback.className = "feedback success"; feedback.innerHTML = `<strong>Correct — every adjacent pair works.</strong>${taskState.attempts === 1 ? "You completed this on the first check." : `You corrected it after ${taskState.attempts} checks.`}`;
+        } else {
+          taskState.complete = false;
+          let brokenIndex = 0; for (let i=0;i<taskState.answer.length-1;i++) { const correctIndex = task.answer.indexOf(taskState.answer[i]); if (task.answer[correctIndex+1] !== taskState.answer[i+1]) { brokenIndex = i; break; } }
+          const first = taskState.answer[brokenIndex], clue = task.wrongClue[first];
+          feedback.className = "feedback"; feedback.innerHTML = `<strong>${score} of ${task.answer.length-1} adjacent pairs work.</strong>${clue} Revise the order and check again.`;
+        }
+        feedback.hidden = false; save(); renderTask(taskIndex); feedback.hidden = false; feedback.scrollIntoView({behavior:"smooth",block:"nearest"});
+      }
+
+      function resetTask(taskIndex) {
+        const taskState = state.tasks[taskIndex];
+        if ((taskState.attempts || taskState.complete) && !confirm("Reset this exercise and erase its saved result?")) return;
+        state.tasks[taskIndex] = freshTask(taskIndex); save(); renderTask(taskIndex);
+      }
+
+      document.querySelectorAll("[data-exercise]").forEach(screen => {
+        const index = Number(screen.dataset.exercise);
+        screen.querySelector("[data-check]").addEventListener("click", () => checkTask(index));
+        screen.querySelector("[data-reset]").addEventListener("click", () => resetTask(index));
+      });
+
+      function resultText() {
+        const lines = ["William — PTE Reorder Paragraph homework",""];
+        state.tasks.forEach((item,index) => {
+          const maximum = tasks[index].answer.length - 1;
+          lines.push(`Exercise ${index+1}`);
+          lines.push(`First-check order: ${item.firstOrder ? item.firstOrder.join(" → ") : "Not checked"}`);
+          lines.push(`First-check adjacent pairs: ${item.firstScore ?? "—"} / ${maximum}`);
+          lines.push(`Checks used: ${item.attempts}`);
+          lines.push(`Later corrected: ${item.complete && item.firstScore < maximum ? "Yes" : "No — correct on first check"}`,"");
+        });
+        lines.push("These are practice results, not predicted PTE scores."); return lines.join("\n");
+      }
+      function renderCompletion() {
+        const summary = document.querySelector("#result-summary"); summary.replaceChildren();
+        state.tasks.forEach((item,index) => {
+          const row = document.createElement("div"); row.className = "result-row";
+          row.innerHTML = `<span><strong>Exercise ${index+1}</strong><br>First check ${item.firstScore} / ${tasks[index].answer.length-1}; ${item.attempts} check${item.attempts === 1 ? "" : "s"}</span><strong>${item.firstScore === tasks[index].answer.length-1 ? "First-time correct" : "Corrected"}</strong>`;
+          summary.append(row);
+        });
+        document.querySelector("#result-full").textContent = resultText();
+      }
+
+      document.querySelector("#copy-results").addEventListener("click", async () => {
+        const status = document.querySelector("#copy-status");
+        try { await navigator.clipboard.writeText(resultText()); status.textContent = "Copied. Paste it into Preply chat."; }
+        catch { status.textContent = "Copy was blocked. Select the full result shown on the left and copy it manually."; }
+      });
+      document.querySelector("#start-again").addEventListener("click", () => {
+        if (!confirm("Erase all three saved exercises and start again?")) return;
+        localStorage.removeItem(STORAGE_KEY); location.reload();
+      });
+
+      function updateNavigation() {
+        const names = ["Introduction","How PTE works","Help","Hint","Solo","Results"];
+        screens.forEach((screen,index) => { screen.hidden = index !== state.current; });
+        document.querySelector("#back").disabled = state.current === 0;
+        const next = document.querySelector("#next"); next.disabled = !canAdvance(state.current);
+        next.textContent = state.current === 0 ? "Start →" : state.current === 1 ? "Exercise 1 →" : state.current === 4 ? "Results →" : state.current === 5 ? "Done" : "Next →";
+        document.querySelector("#progress-label").textContent = `${state.current+1} of ${screens.length}`;
+        document.querySelector("#screen-name").textContent = names[state.current];
+        document.querySelector("#progress-bar").style.width = `${((state.current+1)/screens.length)*100}%`;
+        const track = document.querySelector("#progress-track"); track.setAttribute("aria-valuenow",String(state.current+1)); track.setAttribute("aria-valuetext",names[state.current]);
+        document.querySelector("#nav-hint").textContent = screenHint(state.current);
+      }
+      function showScreen(index) {
+        state.current = Math.min(Math.max(index,0),screens.length-1); save();
+        const taskIndex = taskIndexForScreen(state.current); if (taskIndex !== null) renderTask(taskIndex);
+        if (state.current === 5) renderCompletion();
+        updateNavigation(); window.scrollTo({top:0,behavior:"auto"});
+      }
+      document.querySelector("#back").addEventListener("click", () => showScreen(state.current-1));
+      document.querySelector("#next").addEventListener("click", () => { if (canAdvance(state.current) && state.current < 5) showScreen(state.current+1); });
+
+      if (resetByLink) document.querySelector("#reset-notice").hidden = false;
+      state.tasks.forEach((_,index) => renderTask(index));
+      showScreen(state.current);
+    })();
+  </script>
+</body>
+</html>
