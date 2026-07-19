@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="release-version" content="2026-07-18-ielts-listening-homework-v2">
+  <title>IELTS Listening Practice</title>
+  <style>
+    :root {
+      --primary: oklch(0.43 0.075 235);
+      --primary-strong: oklch(0.36 0.075 235);
+      --primary-soft: oklch(0.92 0.032 235);
+      --surface: oklch(0.986 0.005 90);
+      --surface-low: oklch(0.966 0.008 90);
+      --surface-high: oklch(0.935 0.009 90);
+      --ink: oklch(0.23 0.015 145);
+      --muted: oklch(0.43 0.018 145);
+      --line: oklch(0.80 0.012 145);
+      --success: oklch(0.48 0.105 150);
+      --success-soft: oklch(0.94 0.035 150);
+      --error: oklch(0.48 0.17 28);
+      --error-soft: oklch(0.95 0.035 28);
+      --gold-soft: oklch(0.95 0.045 88);
+      --shadow: 0 1px 2px rgba(24,43,55,.06), 0 14px 38px rgba(24,43,55,.10);
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--surface-high);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; min-width: 0; overflow: hidden; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--surface-high);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, select, a { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: .5; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+      outline: 3px solid oklch(0.72 0.12 82);
+      outline-offset: 3px;
+    }
+    [hidden] { display: none !important; }
+    h1, h2, h3, p { margin: 0; }
+    p { line-height: 1.48; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .page {
+      width: calc(100% - 20px);
+      height: calc(100dvh - 12px);
+      margin: 6px auto;
+      display: grid;
+      grid-template-rows: minmax(0,1fr) 56px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--surface);
+      box-shadow: none;
+    }
+    .stage, .screen { min-width: 0; width: 100%; height: 100%; overflow: hidden; }
+    .screen-inner {
+      width: 100%; min-width: 0; height: 100%; min-height: 0; overflow: hidden;
+      padding: 22px 34px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+    .screen-inner.centre { align-content: center; }
+    .task-screen { grid-template-rows: auto minmax(0,1fr); }
+
+    .cover-grid { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(300px,.72fr); gap: 54px; align-items: center; }
+    .cover-copy { display: grid; gap: 18px; }
+    .cover-copy h1 { max-width: 720px; border: 0; outline: 0; box-shadow: none; font-size: clamp(48px,6.6vw,76px); line-height: .98; letter-spacing: -.045em; }
+    .cover-copy h1:focus { border: 0; outline: 0; box-shadow: none; }
+    .cover-copy > p { max-width: 680px; color: var(--muted); font-size: clamp(18px,2vw,22px); }
+    .task-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill { min-height: 40px; padding: 9px 14px; display: inline-flex; align-items: center; border-radius: 999px; background: var(--primary-soft); color: var(--primary-strong); font-weight: 760; }
+    .cover-card { padding: 28px; display: grid; gap: 20px; border-radius: 24px; background: var(--primary); color: white; box-shadow: 0 18px 38px rgba(18,66,93,.20); }
+    .cover-stat { display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: center; }
+    .cover-stat strong { display: block; font-size: 19px; }
+    .cover-stat span:last-child { color: oklch(0.91 0.018 235); }
+    .stat-number { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 15px; background: rgba(255,255,255,.12); font-weight: 850; }
+
+    .task-copy { display: grid; gap: 4px; }
+    .task-copy p:first-of-type { color: var(--muted); font-size: 17px; }
+    .instruction { color: var(--ink) !important; font-size: 17px !important; font-weight: 800; }
+    .recovery { color: var(--primary-strong); font-size: 14px; font-weight: 680; }
+
+    .audio-strip { width: min(540px,100%); min-height: 56px; display: grid; grid-template-columns: 48px auto minmax(90px,1fr) auto; gap: 12px; align-items: center; padding: 5px 12px 5px 6px; border-radius: 999px; background: var(--primary-soft); }
+    .audio-button { width: 46px; height: 46px; border: 0; border-radius: 50%; background: var(--primary); color: white; font-size: 18px; font-weight: 850; }
+    .audio-label { color: var(--primary-strong); font-weight: 800; white-space: nowrap; }
+    .audio-track { min-width: 0; height: 7px; overflow: hidden; border-radius: 999px; background: rgba(20,72,101,.14); }
+    .audio-progress { width: 0; height: 100%; border-radius: inherit; background: var(--primary); }
+    .audio-time { min-width: 76px; color: var(--ink); font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+    .task-status { min-height: 25px; color: var(--muted); font-size: 18px; line-height: 1.4; font-weight: 760; }
+    .task-status:empty { display: none; }
+    .fallback { width: fit-content; max-width: 100%; padding: 8px 12px; border-radius: 11px; background: var(--gold-soft); font-size: 13px; }
+    .fallback a { color: var(--primary-strong); font-weight: 800; }
+
+    .task-body { min-width: 0; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr); gap: 14px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+    .task-body.diagnosing { grid-template-columns: minmax(0,1fr); }
+    .workspace { min-width: 0; min-height: max-content; height: max-content; display: grid; grid-auto-rows: max-content; align-self: start; align-content: start; gap: 12px; overflow: visible; }
+    [data-task-body="map"] .workspace { grid-template-rows: auto; align-content: start; }
+    .task-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .action { min-height: 42px; padding: 0 16px; border: 0; border-radius: 12px; background: var(--primary); color: white; font-weight: 780; box-shadow: 0 7px 18px rgba(20,72,101,.15); }
+    .action.secondary { background: white; color: var(--primary-strong); box-shadow: inset 0 0 0 1px var(--line); }
+    .action.danger { background: white; color: var(--error); box-shadow: inset 0 0 0 1px oklch(0.80 0.06 28); }
+
+    .answer-input {
+      display: block;
+      width: 100%;
+      height: 42px;
+      min-width: 0;
+      margin: 0;
+      padding: 8px 12px 8px 38px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      color: var(--ink);
+      font-weight: 700;
+      line-height: 24px;
+    }
+    .answer-input[disabled] { color: var(--ink); opacity: 1; background: var(--surface-low); }
+    .answer-input.correct { border-color: var(--success); background: var(--success-soft); }
+    .answer-input.incorrect { border-color: var(--error); background: var(--error-soft); }
+    .gap-field { position: relative; width: 100%; min-width: 0; }
+    .gap-number { position: absolute; z-index: 2; top: 50%; left: 13px; transform: translateY(-50%); color: var(--primary-strong); font-weight: 850; pointer-events: none; }
+
+    [data-task-body="table"] .workspace { overflow: visible; padding-right: 0; }
+    .table-frame { min-height: max-content; overflow: hidden; border: 1px solid var(--line); border-radius: 13px; }
+    .ielts-table { width: 100%; height: auto; border-collapse: collapse; table-layout: fixed; }
+    .ielts-table col:nth-child(1) { width: 29%; }
+    .ielts-table col:nth-child(2), .ielts-table col:nth-child(3) { width: 35.5%; }
+    .ielts-table th { height: 46px; padding: 8px 16px; background: var(--primary-soft); color: var(--primary-strong); font-size: 15px; text-align: center; }
+    .ielts-table td { height: 62px; padding: 8px 16px; border-top: 1px solid var(--line); vertical-align: middle; }
+    .ielts-table th + th, .ielts-table td + td { border-left: 1px solid var(--line); }
+    .project-name { font-weight: 780; }
+    .cell-answer { min-width: 0; display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 12px; align-items: center; }
+    .answer-prefix { white-space: nowrap; }
+    .table-answer { min-width: 0; display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 8px; align-items: center; }
+    .question-badge { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--primary-soft); color: var(--primary-strong); font-size: 14px; font-weight: 800; }
+    .table-answer .gap-field { display: block; width: auto; }
+    .table-answer .answer-input { padding-inline: 10px; }
+    [data-screen="1"] .audio-strip { border: 1px solid var(--line); border-radius: 4px; background: white; }
+    [data-screen="1"] .audio-button { border-radius: 0; background: transparent; color: #111; font-size: 21px; box-shadow: none; }
+    [data-screen="1"] .audio-label { color: var(--ink); font-weight: 500; }
+    [data-screen="1"] .audio-track { background: var(--surface-high); }
+    [data-screen="1"] .audio-progress { background: #111; }
+    [data-screen="1"] .ielts-table th { background: white; color: var(--ink); font-size: 16px; }
+    [data-screen="1"] .table-frame { border-color: oklch(0.48 0 0); border-radius: 0; }
+    [data-screen="1"] .ielts-table th,
+    [data-screen="1"] .ielts-table td { border-color: oklch(0.58 0 0); }
+    [data-screen="1"] .question-badge { border-radius: 0; background: transparent; color: #111; font-size: 16px; font-weight: 850; }
+    [data-screen="1"] .answer-input { border-color: oklch(0.55 0 0); border-radius: 0; }
+    [data-screen="1"] .action { border: 1px solid oklch(0.55 0 0); border-radius: 3px; background: white; color: #111; box-shadow: none; }
+    [data-screen="2"] .audio-strip,
+    [data-screen="3"] .audio-strip { border: 1px solid var(--line); border-radius: 4px; background: white; }
+    [data-screen="2"] .audio-button,
+    [data-screen="3"] .audio-button { border-radius: 0; background: transparent; color: #111; font-size: 21px; box-shadow: none; }
+    [data-screen="2"] .audio-label,
+    [data-screen="3"] .audio-label { color: var(--ink); font-weight: 500; }
+    [data-screen="2"] .audio-progress,
+    [data-screen="3"] .audio-progress { background: #111; }
+    [data-screen="2"] .map-frame,
+    [data-screen="3"] .notes-card,
+    [data-screen="2"] .answer-input,
+    [data-screen="3"] .answer-input { border-color: oklch(0.48 0 0); border-radius: 0; }
+    [data-screen="2"] .gap-number,
+    [data-screen="3"] .gap-number { color: #111; font-weight: 850; }
+    [data-screen="2"] .action,
+    [data-screen="3"] .action { border: 1px solid oklch(0.55 0 0); border-radius: 3px; background: white; color: #111; box-shadow: none; }
+    .map-frame { position: relative; width: min(100%,816px); min-width: 0; aspect-ratio: 3 / 2; justify-self: center; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .map-image { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .map-answer { position: absolute; }
+    .map-answer .answer-input { height: 40px; }
+    .map-answer.q10 { left: 17.3%; top: 20.3%; width: 20%; }
+    .map-answer.q11 { left: 62.8%; top: 20.3%; width: 21%; }
+    .map-answer.q8 { left: 19.8%; top: 39.0%; width: 18%; }
+    .map-answer.q9 { left: 61.8%; top: 39.0%; width: 19%; }
+    .map-answer.q7 { left: 58.2%; top: 79.1%; width: 16%; }
+    .map-linear { display: none; }
+
+    .notes-card { min-height: max-content; padding: 18px 22px; overflow: visible; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .notes-card h3 { margin-bottom: 10px; font-size: 18px; }
+    .note-list { margin: 0; padding: 0; display: grid; gap: 8px; list-style: none; }
+    .note-row { min-height: 53px; display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.15fr); gap: 18px; align-items: center; padding: 5px 0; border-bottom: 1px solid var(--line); }
+    .note-row:last-child { border-bottom: 0; }
+    .note-answer { min-width: 0; display: grid; grid-template-columns: 260px minmax(0,1fr); gap: 8px; align-items: center; }
+    .note-answer .gap-field { width: 100%; }
+    .diagnosis { min-width: 0; min-height: 0; padding: 15px; overflow: visible; border-radius: 16px; background: var(--surface-low); box-shadow: inset 0 0 0 1px var(--line); }
+    .diagnosis h3 { font-size: 18px; }
+    .diagnosis > p { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .diagnosis-list { margin-top: 10px; display: grid; gap: 8px; }
+    .diagnosis-row { min-width: 0; padding: 8px; display: grid; grid-template-columns: minmax(0,1fr) minmax(140px,.8fr); gap: 8px; align-items: center; border-radius: 10px; background: white; }
+    .diagnosis-answer { min-width: 0; font-size: 13px; }
+    .diagnosis-answer strong { color: var(--primary-strong); }
+    .cause-select { width: 100%; min-height: 40px; padding: 7px 28px 7px 9px; border: 1px solid var(--line); border-radius: 9px; background: white; color: var(--ink); font-size: 13px; }
+    .score-line { margin-top: 10px; color: var(--primary-strong); font-weight: 800; }
+
+    .completion-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(280px,.92fr); gap: 22px; }
+    .completion-card { padding: 24px; display: grid; gap: 16px; border-radius: 20px; background: white; box-shadow: 0 1px 2px rgba(24,43,55,.05),0 10px 28px rgba(24,43,55,.06); }
+    .completion-card h2, .completion-card h3 { font-size: 24px; }
+    .completion-card p { color: var(--muted); }
+    .result-summary { display: grid; gap: 9px; }
+    .result-row { min-height: 48px; padding: 10px 13px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border-radius: 13px; background: var(--surface-low); }
+    .result-row strong:last-child { color: var(--primary-strong); }
+    .done-status { min-height: 22px; color: var(--success) !important; font-weight: 760; }
+
+    footer { min-width: 0; height: 56px; padding: 5px 18px; display: grid; grid-template-columns: minmax(90px,140px) minmax(0,1fr) minmax(90px,140px); grid-template-rows: auto auto; column-gap: 18px; row-gap: 2px; align-items: center; background: white; box-shadow: inset 0 1px 0 var(--line); }
+    .nav-button { grid-row: 1 / span 2; min-height: 40px; padding: 0 16px; border: 1px solid var(--line); border-radius: 3px; background: white; color: var(--ink); box-shadow: none; font-weight: 780; }
+    #back { grid-column: 1; }
+    #next { grid-column: 3; background: white; color: var(--ink); box-shadow: none; }
+    .progress-wrap { grid-column: 2; grid-row: 1; min-width: 0; }
+    .progress-track { height: 7px; overflow: hidden; border-radius: 999px; background: var(--surface-high); }
+    .progress-bar { width: 20%; height: 100%; border-radius: inherit; background: #111; transition: width 180ms ease-out; }
+    .nav-hint { grid-column: 2; grid-row: 2; min-height: 13px; color: var(--muted); font-size: 11px; line-height: 1.1; text-align: center; }
+
+    @media (max-width: 1000px), (max-height: 700px) {
+      .screen-inner { padding: 18px 22px; }
+      .ielts-table td { padding: 8px 10px; }
+      .cell-answer { grid-template-columns: minmax(0,1fr); gap: 6px; }
+      .table-answer { width: 100%; }
+      .map-answer { width: 160px; }
+      .diagnosis-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .page { width: min(100% - 16px,720px); height: calc(100dvh - 16px); margin: 8px auto; border-radius: 22px; }
+      .screen-inner { padding: 18px 20px; gap: 12px; }
+      .screen-inner.centre { align-content: start; }
+      .cover-grid, .completion-grid, .task-body.diagnosing { grid-template-columns: minmax(0,1fr); }
+      .cover-grid { gap: 28px; }
+      .cover-copy h1 { font-size: clamp(42px,12vw,64px); }
+      .workspace { overflow: visible; }
+      .task-body { overflow-x: hidden; overflow-y: auto; }
+      .table-frame { overflow: hidden; border: 0; }
+      .ielts-table, .ielts-table tbody, .ielts-table tr { display: block; width: 100%; height: auto; }
+      .ielts-table thead { display: none; }
+      .ielts-table tbody { display: grid; gap: 8px; }
+      .ielts-table tr { overflow: hidden; border: 1px solid var(--line); border-radius: 13px; background: white; }
+      .ielts-table td {
+        width: 100%; height: auto; min-height: 58px; padding: 9px 12px;
+        display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 10px; align-items: center;
+        border: 0;
+      }
+      .ielts-table td + td { border-top: 1px solid var(--line); border-left: 0; }
+      .ielts-table td::before { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+      .ielts-table td:nth-child(1)::before { content: "Project"; }
+      .ielts-table td:nth-child(2)::before { content: "Main job"; }
+      .ielts-table td:nth-child(3)::before { content: "Practical detail"; }
+      .map-frame { height: auto; }
+      .map-frame { width: 100%; aspect-ratio: 3 / 2; }
+      .map-answer { display: none; }
+      .map-linear { margin-top: 12px; display: grid; gap: 8px; }
+      .map-linear-row { display: grid; grid-template-columns: 145px minmax(0,1fr); gap: 10px; align-items: center; }
+      .note-row { grid-template-columns: minmax(0,1fr); gap: 7px; padding: 9px 0; }
+      .note-answer { grid-template-columns: minmax(0,1fr); gap: 6px; }
+      footer { grid-template-columns: 92px minmax(0,1fr) 92px; padding: 8px 10px; }
+    }
+
+    @media (max-width: 520px) {
+      .page { width: 100%; height: 100dvh; margin: 0; border-radius: 0; box-shadow: none; }
+      .screen-inner { padding: 14px; }
+      .cover-card, .completion-card { padding: 20px 16px; }
+      .audio-strip { grid-template-columns: 46px auto minmax(40px,1fr); gap: 8px; }
+      .audio-time { display: none; }
+      .task-copy p:first-of-type, .instruction { font-size: 15px !important; }
+      .ielts-table td { grid-template-columns: 82px minmax(0,1fr); padding: 9px 10px; gap: 8px; }
+      .cell-answer { grid-template-columns: minmax(0,1fr); gap: 6px; }
+      .table-answer { width: 100%; grid-template-columns: 24px minmax(0,1fr); gap: 6px; }
+      .table-answer .question-badge { width: 24px; height: 24px; font-size: 13px; }
+      .table-answer .answer-input { padding-inline: 8px; }
+      .map-linear-row { grid-template-columns: minmax(0,1fr); }
+      .diagnosis-row { grid-template-columns: minmax(0,1fr); }
+      .task-actions .action { flex: 1 1 100%; }
+      footer { grid-template-columns: 82px minmax(0,1fr) 82px; gap: 7px; padding: 8px 6px; }
+      .nav-button { min-height: 44px; padding: 0 7px; }
+      .nav-hint { font-size: 10px; }
+    }
+
+    @media (max-height: 420px), (max-width: 360px) {
+      .page { height: 100dvh; margin-block: 0; grid-template-rows: minmax(0,1fr) 44px; border-radius: 0; }
+      .screen-inner { padding: 6px 12px; gap: 6px; }
+      footer { height: 44px; padding-block: 2px; }
+      .nav-button { min-height: 38px; }
+      .audio-strip { min-height: 44px; grid-template-columns: 40px auto minmax(30px,1fr); padding: 2px 8px 2px 2px; gap: 7px; }
+      .audio-button { width: 40px; height: 40px; }
+      .audio-time { display: none; }
+      [data-task-body="table"] .workspace { gap: 4px; }
+      .ielts-table tr { border: 0; }
+      .ielts-table td { min-height: 44px; padding: 2px 0; display: block; border: 0; }
+      .ielts-table td::before { display: none; }
+      .cell-answer { grid-template-columns: auto minmax(0,1fr); gap: 8px; }
+      .answer-input { height: 40px; }
+      .task-actions .action { min-height: 38px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-label="IELTS Listening homework">
+    <div class="stage">
+      <section class="screen" data-screen="0">
+        <div class="screen-inner centre">
+          <div class="cover-grid">
+            <div class="cover-copy">
+              <h1 tabindex="-1">Three listening tasks</h1>
+              <p>Make one natural first attempt, then use one replay to check what changed.</p>
+              <div class="task-pills" aria-label="Tasks in this homework">
+                <span class="pill">Table</span><span class="pill">Map</span><span class="pill">Notes</span>
+              </div>
+            </div>
+            <aside class="cover-card" aria-label="Homework summary">
+              <div class="cover-stat"><span class="stat-number">25</span><span><strong>About 25 minutes</strong>Complete the tasks in order.</span></div>
+              <div class="cover-stat"><span class="stat-number">1</span><span><strong>First play</strong>Listen once without stopping.</span></div>
+              <div class="cover-stat"><span class="stat-number">1</span><span><strong>Review replay</strong>It unlocks after your first answers are saved.</span></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" hidden>
+        <div class="screen-inner task-screen">
+          <div data-table-audio>
+            <div class="audio-strip" data-audio-strip="table">
+              <button class="audio-button" type="button" data-audio-play="table" aria-label="Start first play">▶</button>
+              <span class="audio-label" data-audio-label="table">First play</span>
+              <span class="audio-track" aria-hidden="true"><span class="audio-progress" data-audio-progress="table"></span></span>
+              <span class="audio-time" data-audio-time="table">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="task-body" data-task-body="table" data-table-body data-task-scroll tabindex="0" aria-label="Scrollable table task content">
+            <div class="workspace">
+              <div class="task-copy" data-table-copy>
+                <h2 class="sr-only" tabindex="-1">Community project briefing</h2>
+                <p>You will hear a community centre manager giving a briefing about four upcoming projects.</p>
+                <p class="instruction">Complete the table. Write NO MORE THAN TWO WORDS for each answer.</p>
+              </div>
+              <p class="task-status" data-status="table" aria-live="polite"></p>
+              <p class="fallback" data-fallback="table" hidden>Audio did not start. <a data-backup="table" href="../audio/table-community-projects-v4.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+              <div class="table-frame">
+                <table class="ielts-table">
+                  <colgroup><col><col><col></colgroup>
+                  <thead><tr><th scope="col">Project</th><th scope="col">Main job</th><th scope="col">Practical detail</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td class="project-name">1. Riverside clean-up</td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Remove</span><span class="table-answer"><span class="question-badge" aria-hidden="true">1</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="0" aria-label="Table answer 1, riverside clean-up main job, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Meet at the</span><span class="table-answer"><span class="question-badge" aria-hidden="true">2</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="1" aria-label="Table answer 2, riverside clean-up meeting place, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                    </tr>
+                    <tr>
+                      <td class="project-name">2. Community garden</td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Plant</span><span class="table-answer"><span class="question-badge" aria-hidden="true">3</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="2" aria-label="Table answer 3, community garden main job, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Bring</span><span class="table-answer"><span class="question-badge" aria-hidden="true">4</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="3" aria-label="Table answer 4, community garden equipment, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                    </tr>
+                    <tr>
+                      <td class="project-name">3. Museum archive</td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Scan</span><span class="table-answer"><span class="question-badge" aria-hidden="true">5</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="4" aria-label="Table answer 5, museum archive main job, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                      <td><div class="cell-answer"><span class="answer-prefix">Every</span><span class="table-answer"><span class="question-badge" aria-hidden="true">6</span><label class="gap-field"><input class="answer-input" data-entry="table" data-answer-index="5" aria-label="Table answer 6, museum archive day, no more than two words" autocomplete="off" spellcheck="false"></label></span></div></td>
+                    </tr>
+                    <tr><td class="project-name">4. Food bank drive</td><td>Check address labels</td><td>Arrive ten minutes early</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="task-actions" data-actions="table"></div>
+            </div>
+            <aside class="diagnosis" data-diagnosis="table" hidden></aside>
+          </div>
+          <audio data-audio="table" preload="metadata" src="../audio/table-community-projects-v4.mp3"></audio>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="2" hidden>
+        <div class="screen-inner task-screen">
+          <div>
+            <div class="audio-strip" data-audio-strip="map">
+              <button class="audio-button" type="button" data-audio-play="map" aria-label="Start first play">▶</button>
+              <span class="audio-label" data-audio-label="map">First play</span>
+              <span class="audio-track" aria-hidden="true"><span class="audio-progress" data-audio-progress="map"></span></span>
+              <span class="audio-time" data-audio-time="map">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="task-body" data-task-body="map" data-task-scroll tabindex="0" aria-label="Scrollable map task content">
+            <div class="workspace">
+              <div class="task-copy">
+                <h2 class="sr-only" tabindex="-1">Riverside Arts Festival</h2>
+                <p>You will hear a briefing about the layout of an arts festival.</p>
+                <p class="instruction">Label the map. Write NO MORE THAN TWO WORDS for each answer.</p>
+              </div>
+              <p class="recovery">If you lose the route, release that answer and restart from the next fixed landmark.</p>
+              <p class="task-status" data-status="map" aria-live="polite">Find the Main Entrance, North arrow and fixed landmarks first.</p>
+              <p class="fallback" data-fallback="map" hidden>Audio did not start. <a data-backup="map" href="../audio/map-riverside-arts-festival-v2.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+              <div class="map-frame">
+                <img class="map-image" src="assets/riverside-arts-festival-map-imagegen-v3.png" width="1536" height="1024" alt="Riverside Arts Festival site map showing the river, viewing deck, café, main hall, main entrance, north arrow and five answer areas.">
+                <label class="gap-field map-answer q7"><span class="gap-number">7</span><input class="answer-input" data-entry="map" data-answer-index="0" aria-label="Map answer 7, first place on the right of the main entrance, no more than two words" autocomplete="off" spellcheck="false"></label>
+                <label class="gap-field map-answer q8"><span class="gap-number">8</span><input class="answer-input" data-entry="map" data-answer-index="1" aria-label="Map answer 8, west side beyond the café, no more than two words" autocomplete="off" spellcheck="false"></label>
+                <label class="gap-field map-answer q9"><span class="gap-number">9</span><input class="answer-input" data-entry="map" data-answer-index="2" aria-label="Map answer 9, east side opposite answer 8, no more than two words" autocomplete="off" spellcheck="false"></label>
+                <label class="gap-field map-answer q10"><span class="gap-number">10</span><input class="answer-input" data-entry="map" data-answer-index="3" aria-label="Map answer 10, west of the viewing deck, no more than two words" autocomplete="off" spellcheck="false"></label>
+                <label class="gap-field map-answer q11"><span class="gap-number">11</span><input class="answer-input" data-entry="map" data-answer-index="4" aria-label="Map answer 11, east of the main hall near the river, no more than two words" autocomplete="off" spellcheck="false"></label>
+              </div>
+              <div class="map-linear" aria-label="Map answers in route order">
+                <div class="map-linear-row"><span>7 · By the entrance</span><label class="gap-field"><span class="gap-number">7</span><input class="answer-input" data-mobile-entry="map" data-answer-index="0" aria-label="Map answer 7, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+                <div class="map-linear-row"><span>8 · Beyond the café</span><label class="gap-field"><span class="gap-number">8</span><input class="answer-input" data-mobile-entry="map" data-answer-index="1" aria-label="Map answer 8, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+                <div class="map-linear-row"><span>9 · Opposite answer 8</span><label class="gap-field"><span class="gap-number">9</span><input class="answer-input" data-mobile-entry="map" data-answer-index="2" aria-label="Map answer 9, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+                <div class="map-linear-row"><span>10 · Beside the river</span><label class="gap-field"><span class="gap-number">10</span><input class="answer-input" data-mobile-entry="map" data-answer-index="3" aria-label="Map answer 10, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+                <div class="map-linear-row"><span>11 · Beyond the hall</span><label class="gap-field"><span class="gap-number">11</span><input class="answer-input" data-mobile-entry="map" data-answer-index="4" aria-label="Map answer 11, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+              </div>
+              <div class="task-actions" data-actions="map"></div>
+            </div>
+            <aside class="diagnosis" data-diagnosis="map" hidden></aside>
+          </div>
+          <audio data-audio="map" preload="metadata" src="../audio/map-riverside-arts-festival-v2.mp3"></audio>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="3" hidden>
+        <div class="screen-inner task-screen">
+          <div>
+            <div class="audio-strip" data-audio-strip="notes">
+              <button class="audio-button" type="button" data-audio-play="notes" aria-label="Start first play">▶</button>
+              <span class="audio-label" data-audio-label="notes">First play</span>
+              <span class="audio-track" aria-hidden="true"><span class="audio-progress" data-audio-progress="notes"></span></span>
+              <span class="audio-time" data-audio-time="notes">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="task-body" data-task-body="notes" data-task-scroll tabindex="0" aria-label="Scrollable note task content">
+            <div class="workspace">
+              <div class="task-copy">
+                <h2 class="sr-only" tabindex="-1">Protecting museum objects</h2>
+                <p>You will hear a short talk about protecting objects in museums.</p>
+                <p class="instruction">Complete the notes. Write ONE WORD ONLY for each answer.</p>
+              </div>
+              <p class="recovery">Keep moving. One missed word should not cost the next answer.</p>
+              <p class="task-status" data-status="notes" aria-live="polite">Predict the kind of word each gap needs.</p>
+              <p class="fallback" data-fallback="notes" hidden>Audio did not start. <a data-backup="notes" href="../audio/notes-protecting-museum-objects-v2.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+              <section class="notes-card" aria-label="Note completion task">
+                <h3>Light and museum collections</h3>
+                <ol class="note-list">
+                  <li class="note-row"><span>Strong light slowly removes an object’s</span><span class="note-answer"><label class="gap-field"><span class="gap-number">12</span><input class="answer-input" data-entry="notes" data-answer-index="0" aria-label="Note answer 12, one word only" autocomplete="off" spellcheck="false"></label></span></li>
+                  <li class="note-row"><span>One simple method is to fit</span><span class="note-answer"><label class="gap-field"><span class="gap-number">13</span><input class="answer-input" data-entry="notes" data-answer-index="1" aria-label="Note answer 13, one word only" autocomplete="off" spellcheck="false"></label><span>over nearby windows.</span></span></li>
+                  <li class="note-row"><span>Modern displays may use</span><span class="note-answer"><label class="gap-field"><span class="gap-number">14</span><input class="answer-input" data-entry="notes" data-answer-index="2" aria-label="Note answer 14, one word only" autocomplete="off" spellcheck="false"></label><span>to switch lights on.</span></span></li>
+                  <li class="note-row"><span>Some lamps produce</span><span class="note-answer"><label class="gap-field"><span class="gap-number">15</span><input class="answer-input" data-entry="notes" data-answer-index="3" aria-label="Note answer 15, one word only" autocomplete="off" spellcheck="false"></label><span>and can dry out delicate materials.</span></span></li>
+                  <li class="note-row"><span>Museums limit display time by using a system of</span><span class="note-answer"><label class="gap-field"><span class="gap-number">16</span><input class="answer-input" data-entry="notes" data-answer-index="4" aria-label="Note answer 16, one word only" autocomplete="off" spellcheck="false"></label></span></li>
+                </ol>
+              </section>
+              <div class="task-actions" data-actions="notes"></div>
+            </div>
+            <aside class="diagnosis" data-diagnosis="notes" hidden></aside>
+          </div>
+          <audio data-audio="notes" preload="metadata" src="../audio/notes-protecting-museum-objects-v2.mp3"></audio>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="4" hidden>
+        <div class="screen-inner centre">
+          <div class="completion-grid">
+            <section class="completion-card">
+              <h2 tabindex="-1">Homework complete</h2>
+              <p>Copy or save your results, then send them in your normal Preply lesson chat.</p>
+              <div class="task-actions"><button class="action" id="copy-results">Copy my results</button><button class="action secondary" id="download-results">Save results as a file</button></div>
+              <p class="done-status" id="done-status" aria-live="polite"></p>
+              <button class="action danger" id="reset-homework">Reset this homework</button>
+            </section>
+            <aside class="completion-card">
+              <h3>Your first attempts</h3>
+              <div class="result-summary">
+                <div class="result-row"><strong>Table</strong><strong id="summary-table">—</strong></div>
+                <div class="result-row"><strong>Map</strong><strong id="summary-map">—</strong></div>
+                <div class="result-row"><strong>Notes</strong><strong id="summary-notes">—</strong></div>
+              </div>
+              <p>The scores record these practice items. They are not an IELTS band score.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <button class="nav-button" id="back" type="button">← Back</button>
+      <div class="progress-wrap" aria-label="Homework progress"><div class="progress-track" id="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-valuetext="Introduction"><div class="progress-bar" id="progress-bar"></div></div></div>
+      <button class="nav-button" id="next" type="button">Next →</button>
+      <p class="nav-hint" id="nav-hint" aria-live="polite"></p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "ielts-listening-homework-2026-07-18-v2";
+      const VERSION = 1;
+      const taskOrder = ["table", "map", "notes"];
+      const taskConfig = {
+        table: { start: 1, limit: 2, answers: ["plastic waste", "old bridge", "seedlings", "gardening gloves", "photographs", "friday"] },
+        map: { start: 7, limit: 2, answers: ["information desk", "workshop tent", "first aid", "sculpture garden", "picnic area"] },
+        notes: { start: 12, limit: 1, answers: ["colour", "curtains", "sensors", "heat", "rotation"] },
+      };
+      const causeOptions = ["didn't hear it", "lost my place", "direction language", "missed the paraphrase", "followed a distractor", "spelling/word limit", "overthought it"];
+      const screens = [...document.querySelectorAll("[data-screen]")];
+
+      function blankTask(count) {
+        return { entries: Array(count).fill(""), firstEntries: null, reviewEntries: null, firstStarted: false, firstEnded: false, firstPosition: 0, replayUsed: false, replayEnded: false, replayPosition: 0, replaySkipped: false, revealed: false, causes: Array(count).fill(""), complete: false, score: null };
+      }
+      function defaults() {
+        return { version: VERSION, current: 0, tasks: { table: blankTask(6), map: blankTask(5), notes: blankTask(5) } };
+      }
+      function loadState() {
+        const base = defaults();
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || saved.version !== VERSION || !saved.tasks) return base;
+          taskOrder.forEach(name => {
+            const candidate = saved.tasks[name];
+            if (!candidate || !Array.isArray(candidate.entries) || candidate.entries.length !== taskConfig[name].answers.length) throw new Error("Invalid saved task");
+          });
+          return { ...base, ...saved, tasks: Object.fromEntries(taskOrder.map(name => [name, { ...base.tasks[name], ...saved.tasks[name] }])) };
+        } catch { return base; }
+      }
+
+      const resetQuery = new URLSearchParams(location.search);
+      if (resetQuery.get("reset") === "1") {
+        try { localStorage.removeItem(STORAGE_KEY); } catch { /* The current session still works. */ }
+        resetQuery.delete("reset");
+        const clean = `${location.pathname}${resetQuery.size ? `?${resetQuery}` : ""}${location.hash}`;
+        history.replaceState(null, "", clean);
+      }
+
+      const state = loadState();
+      let current = Math.min(Math.max(Number(state.current) || 0, 0), screens.length - 1);
+      let activeTask = null;
+
+      function saveState() {
+        state.current = current;
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* Inputs remain usable for this session. */ }
+      }
+      function normalise(value) { return value.trim().toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " "); }
+      function wordCount(value) { return normalise(value).split(/\s+/).filter(Boolean).length; }
+      function isCorrect(name, value, index) {
+        const entered = normalise(value);
+        const accepted = name === "notes" && index === 0 ? ["colour", "color"] : [taskConfig[name].answers[index]];
+        return wordCount(value) <= taskConfig[name].limit && accepted.includes(entered);
+      }
+      function score(name, entries) { return entries.reduce((sum, value, index) => sum + (isCorrect(name, value, index) ? 1 : 0), 0); }
+      function missedIndexes(name) { const task = state.tasks[name]; return task.firstEntries ? task.firstEntries.map((value,index) => isCorrect(name,value,index) ? -1 : index).filter(index => index >= 0) : []; }
+
+      function stopAudio() {
+        document.querySelectorAll("[data-audio]").forEach(audio => {
+          if (!audio.paused) {
+            const name = audio.dataset.audio;
+            const task = state.tasks[name];
+            if (task.firstEntries) task.replayPosition = audio.currentTime;
+            else task.firstPosition = audio.currentTime;
+            audio.pause();
+          }
+        });
+        activeTask = null;
+        saveState();
+      }
+      function firstPlayActive() {
+        return activeTask !== null && !state.tasks[activeTask].firstEntries;
+      }
+      function canAdvance(index) {
+        if (index >= 1 && index <= 3) return state.tasks[taskOrder[index - 1]].complete;
+        return true;
+      }
+      function advanceHint(index) {
+        if (firstPlayActive()) return "First play is running. Stay on this task until it finishes.";
+        if (index >= 1 && index <= 3 && !canAdvance(index)) return "Finish the review and diagnosis before continuing.";
+        return "";
+      }
+      function updateNavigation() {
+        const names = ["Introduction", "Table completion", "Map labelling", "Note completion", "Homework complete"];
+        screens.forEach((screen,index) => { screen.hidden = index !== current; });
+        document.querySelector("#back").disabled = current === 0 || firstPlayActive();
+        document.querySelector("#next").disabled = current === screens.length - 1 || !canAdvance(current) || firstPlayActive();
+        document.querySelector("#next").textContent = current === screens.length - 2 ? "Finish →" : "Next →";
+        document.querySelector("#progress-bar").style.width = `${((current + 1) / screens.length) * 100}%`;
+        const track = document.querySelector("#progress-track");
+        track.setAttribute("aria-valuenow", String(current + 1));
+        track.setAttribute("aria-valuetext", names[current]);
+        document.querySelector("#nav-hint").textContent = advanceHint(current);
+        if (current === 4) renderCompletion();
+        saveState();
+      }
+      function showScreen(index) {
+        const target = Math.min(Math.max(index,0), screens.length - 1);
+        if (target !== current && firstPlayActive()) return;
+        if (target !== current) stopAudio();
+        current = target;
+        updateNavigation();
+        if (current >= 1 && current <= 3) renderTask(taskOrder[current - 1]);
+        screens[current].querySelector("[data-task-scroll]")?.scrollTo({ top: 0, behavior: "auto" });
+        requestAnimationFrame(() => screens[current].querySelector("h1, h2")?.focus({ preventScroll: true }));
+      }
+
+      function visibleInputs(name) { return [...document.querySelectorAll(`[data-entry="${name}"]`)]; }
+      function allInputs(name) { return [...document.querySelectorAll(`[data-entry="${name}"], [data-mobile-entry="${name}"]`)]; }
+      taskOrder.forEach(name => {
+        allInputs(name).forEach(input => {
+          const index = Number(input.dataset.answerIndex);
+          input.value = state.tasks[name].entries[index] || "";
+          input.addEventListener("input", () => {
+            state.tasks[name].entries[index] = input.value;
+            allInputs(name).filter(peer => Number(peer.dataset.answerIndex) === index && peer !== input).forEach(peer => { peer.value = input.value; });
+            saveState();
+          });
+        });
+      });
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds)) return "0:00";
+        return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2,"0")}`;
+      }
+      function updateAudioUI(name) {
+        const audio = document.querySelector(`[data-audio="${name}"]`);
+        const task = state.tasks[name];
+        const button = document.querySelector(`[data-audio-play="${name}"]`);
+        const label = document.querySelector(`[data-audio-label="${name}"]`);
+        const progress = document.querySelector(`[data-audio-progress="${name}"]`);
+        const time = document.querySelector(`[data-audio-time="${name}"]`);
+        const reviewReady = Boolean(task.firstEntries) && !task.replayUsed && !task.replaySkipped;
+        const firstPaused = !task.firstEntries && task.firstStarted && !task.firstEnded;
+        const reviewPaused = Boolean(task.firstEntries) && task.replayUsed && !task.replayEnded;
+        button.disabled = activeTask !== null || task.complete || task.revealed || (task.firstStarted && !reviewReady && !firstPaused && !reviewPaused);
+        button.textContent = activeTask === name ? "❚❚" : "▶";
+        button.setAttribute("aria-label", reviewReady ? "Start review replay" : reviewPaused ? "Continue review replay" : firstPaused ? "Continue first play" : "Start first play");
+        label.textContent = reviewReady ? "Review replay" : reviewPaused ? "Continue replay" : firstPaused ? "Continue first play" : task.firstStarted ? "First play used" : "First play";
+        progress.style.width = audio.duration ? `${(audio.currentTime / audio.duration) * 100}%` : "0%";
+        time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+      }
+
+      async function playTask(name) {
+        const task = state.tasks[name];
+        if (activeTask !== null || task.complete || task.revealed) return;
+        const review = Boolean(task.firstEntries);
+        const resumeFirst = !review && task.firstStarted && !task.firstEnded;
+        const resumeReview = review && task.replayUsed && !task.replayEnded;
+        if ((!review && task.firstStarted && !resumeFirst) || (review && (task.replaySkipped || (task.replayUsed && !resumeReview)))) return;
+        const audio = document.querySelector(`[data-audio="${name}"]`);
+        const status = document.querySelector(`[data-status="${name}"]`);
+        document.querySelector(`[data-fallback="${name}"]`).hidden = true;
+        activeTask = name;
+        updateNavigation();
+        try {
+          audio.currentTime = review ? (resumeReview ? task.replayPosition : 0) : (resumeFirst ? task.firstPosition : 0);
+          await audio.play();
+          if (review) {
+            if (!resumeReview) {
+              task.replayUsed = true;
+              task.reviewEntries = [...task.entries];
+            }
+            status.textContent = "Review replay playing. You may change the review answers.";
+          } else {
+            task.firstStarted = true;
+            status.textContent = "First play running. Keep moving with the recording.";
+          }
+          saveState();
+          renderTask(name);
+        } catch {
+          activeTask = null;
+          document.querySelector(`[data-fallback="${name}"]`).hidden = false;
+          status.textContent = "The recording did not start inside the page.";
+          updateAudioUI(name);
+          updateNavigation();
+        }
+      }
+
+      function lockFirst(name) {
+        const task = state.tasks[name];
+        if (!task.firstEnded || task.firstEntries) return;
+        task.firstEntries = [...task.entries];
+        task.reviewEntries = [...task.entries];
+        task.score = score(name, task.firstEntries);
+        document.querySelector(`[data-status="${name}"]`).textContent = "First answers saved. You can now use your review replay.";
+        saveState();
+        renderTask(name);
+      }
+      function skipReplay(name) {
+        const task = state.tasks[name];
+        if (!task.firstEntries || task.replayUsed || task.replaySkipped) return;
+        task.replaySkipped = true;
+        task.reviewEntries = [...task.entries];
+        document.querySelector(`[data-status="${name}"]`).textContent = "Replay skipped. Check your answers when ready.";
+        saveState();
+        renderTask(name);
+      }
+      function reveal(name) {
+        const task = state.tasks[name];
+        if (!task.firstEntries || (!task.replayEnded && !task.replaySkipped)) return;
+        task.reviewEntries = [...task.entries];
+        task.revealed = true;
+        document.querySelector(`[data-status="${name}"]`).textContent = "Answers shown. Choose one cause for each first-attempt miss.";
+        saveState();
+        renderTask(name);
+      }
+      function finishDiagnosis(name) {
+        const task = state.tasks[name];
+        if (missedIndexes(name).some(index => !task.causes[index])) return;
+        task.complete = true;
+        document.querySelector(`[data-status="${name}"]`).textContent = "Task complete. Your first attempt and review are saved.";
+        saveState();
+        renderTask(name);
+      }
+
+      function renderActions(name) {
+        const task = state.tasks[name];
+        const box = document.querySelector(`[data-actions="${name}"]`);
+        box.replaceChildren();
+        if (!task.firstEntries) {
+          const button = makeButton("Submit first attempt", () => lockFirst(name));
+          button.disabled = !task.firstEnded;
+          box.append(button);
+        } else if (!task.replayEnded && !task.replaySkipped) {
+          if (!task.replayUsed) box.append(makeButton("Skip replay", () => skipReplay(name), "secondary"));
+          const note = document.createElement("span");
+          note.className = "task-status";
+          note.textContent = task.replayUsed ? "Replay in progress." : "Use Review replay above, or skip it.";
+          box.append(note);
+        } else if (!task.revealed) {
+          box.append(makeButton("Check and diagnose", () => reveal(name)));
+        } else if (!task.complete) {
+          const button = makeButton("Finish task", () => finishDiagnosis(name));
+          button.disabled = missedIndexes(name).some(index => !task.causes[index]);
+          box.append(button);
+        } else {
+          const done = document.createElement("strong");
+          done.textContent = "Task complete";
+          done.style.color = "var(--success)";
+          box.append(done);
+        }
+      }
+      function makeButton(text, action, kind = "") {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `action ${kind}`.trim();
+        button.textContent = text;
+        button.addEventListener("click", action);
+        return button;
+      }
+
+      function renderDiagnosis(name) {
+        const task = state.tasks[name];
+        const panel = document.querySelector(`[data-diagnosis="${name}"]`);
+        const body = document.querySelector(`[data-task-body="${name}"]`);
+        panel.hidden = !task.revealed;
+        body.classList.toggle("diagnosing", task.revealed);
+        if (!task.revealed) return;
+        panel.replaceChildren();
+        const heading = document.createElement("h3");
+        heading.textContent = `${task.score} / ${taskConfig[name].answers.length} on the first attempt`;
+        const intro = document.createElement("p");
+        intro.textContent = "Compare the saved first answer with the review. For each miss, choose the main cause.";
+        const list = document.createElement("div");
+        list.className = "diagnosis-list";
+        taskConfig[name].answers.forEach((answer,index) => {
+          const correct = isCorrect(name, task.firstEntries[index], index);
+          const row = document.createElement("div");
+          row.className = "diagnosis-row";
+          const copy = document.createElement("div");
+          copy.className = "diagnosis-answer";
+          const number = taskConfig[name].start + index;
+          copy.innerHTML = `<strong>${number}. ${correct ? "Correct" : answer}</strong><br>First answer ${escapeHtml(task.firstEntries[index] || "[blank]")} · Review answer ${escapeHtml(task.reviewEntries[index] || "[blank]")}`;
+          row.append(copy);
+          if (!correct) {
+            const select = document.createElement("select");
+            select.className = "cause-select";
+            select.setAttribute("aria-label", `Main cause for answer ${number}`);
+            select.innerHTML = `<option value="">Choose the cause</option>${causeOptions.map(cause => `<option value="${cause}">${cause}</option>`).join("")}`;
+            select.value = task.causes[index] || "";
+            select.addEventListener("change", () => { task.causes[index] = select.value; saveState(); renderActions(name); });
+            row.append(select);
+          }
+          list.append(row);
+        });
+        panel.append(heading,intro,list);
+      }
+      function escapeHtml(value) { const div = document.createElement("div"); div.textContent = value; return div.innerHTML; }
+
+      function renderTask(name) {
+        const task = state.tasks[name];
+        allInputs(name).forEach(input => {
+          const index = Number(input.dataset.answerIndex);
+          input.value = task.entries[index] || "";
+          input.disabled = task.revealed || task.complete;
+          input.classList.remove("correct","incorrect");
+          if (task.revealed) input.classList.add(isCorrect(name, task.firstEntries[index], index) ? "correct" : "incorrect");
+        });
+        renderActions(name);
+        renderDiagnosis(name);
+        updateAudioUI(name);
+        if (current === taskOrder.indexOf(name) + 1) updateNavigation();
+      }
+
+      taskOrder.forEach(name => {
+        const audio = document.querySelector(`[data-audio="${name}"]`);
+        document.querySelector(`[data-audio-play="${name}"]`).addEventListener("click", () => playTask(name));
+        audio.addEventListener("timeupdate", () => {
+          const task = state.tasks[name];
+          if (task.firstEntries) task.replayPosition = audio.currentTime;
+          else task.firstPosition = audio.currentTime;
+          updateAudioUI(name);
+        });
+        audio.addEventListener("loadedmetadata", () => updateAudioUI(name));
+        audio.addEventListener("ended", () => {
+          const task = state.tasks[name];
+          activeTask = null;
+          if (task.firstEntries) {
+            task.replayEnded = true;
+            task.reviewEntries = [...task.entries];
+            document.querySelector(`[data-status="${name}"]`).textContent = "Review replay finished. Check and diagnose when ready.";
+          } else {
+            task.firstEnded = true;
+            document.querySelector(`[data-status="${name}"]`).textContent = "First play finished. Check the table, then save your first attempt.";
+          }
+          saveState();
+          renderTask(name);
+        });
+        audio.addEventListener("error", () => {
+          activeTask = null;
+          document.querySelector(`[data-fallback="${name}"]`).hidden = false;
+          document.querySelector(`[data-status="${name}"]`).textContent = "The recording could not load inside the page.";
+          updateAudioUI(name);
+          updateNavigation();
+        });
+        document.querySelector(`[data-backup="${name}"]`).addEventListener("click", () => {
+          const task = state.tasks[name];
+          if (task.firstEntries) { task.replayUsed = true; task.replayEnded = true; task.reviewEntries = [...task.entries]; }
+          else { task.firstStarted = true; task.firstEnded = true; }
+          saveState();
+          renderTask(name);
+        });
+      });
+
+      function resultText() {
+        const lines = ["IELTS Listening Practice", ""];
+        taskOrder.forEach((name,taskIndex) => {
+          const task = state.tasks[name];
+          const title = ["Community project briefing — table", "Riverside Arts Festival — map", "Protecting museum objects — notes"][taskIndex];
+          lines.push(`${taskIndex + 1}. ${title}`);
+          taskConfig[name].answers.forEach((answer,index) => {
+            const number = taskConfig[name].start + index;
+            const cause = task.causes[index] ? ` · cause: ${task.causes[index]}` : "";
+          lines.push(`${number}. first answer ${task.firstEntries[index] || "[blank]"} · review answer ${task.reviewEntries[index] || "[blank]"} · correct answer ${answer}${cause}`);
+          });
+        lines.push(`First-attempt score ${task.score} / ${taskConfig[name].answers.length}`);
+        lines.push(`Review replay ${task.replaySkipped ? "skipped" : task.replayUsed ? "used" : "not used"}`, "");
+        });
+        lines.push("These are practice-item results, not an IELTS band score.");
+        return lines.join("\n");
+      }
+      function renderCompletion() {
+        taskOrder.forEach(name => { document.querySelector(`#summary-${name}`).textContent = `${state.tasks[name].score ?? "—"} / ${taskConfig[name].answers.length}`; });
+      }
+      document.querySelector("#copy-results").addEventListener("click", async () => {
+        const status = document.querySelector("#done-status");
+        try { await navigator.clipboard.writeText(resultText()); status.textContent = "Results copied. Paste them into your normal Preply chat."; }
+        catch { status.textContent = "Copy was blocked. Use Save results as a file instead."; }
+      });
+      document.querySelector("#download-results").addEventListener("click", () => {
+        const blob = new Blob([resultText()], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = "IELTS-listening-homework-results.txt";
+        document.body.append(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url),1000);
+        document.querySelector("#done-status").textContent = "Results saved as a text file.";
+      });
+      document.querySelector("#reset-homework").addEventListener("click", () => {
+        if (!confirm("Clear all saved answers on this device and start again?")) return;
+        try { localStorage.removeItem(STORAGE_KEY); } catch { /* Reload resets the in-memory state. */ }
+        location.reload();
+      });
+      document.querySelector("#back").addEventListener("click", () => showScreen(current - 1));
+      document.querySelector("#next").addEventListener("click", () => { if (canAdvance(current)) showScreen(current + 1); });
+      document.addEventListener("keydown", event => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (event.target.closest("input, select, textarea, button, a")) return;
+        if (event.key === "ArrowLeft" && current > 0) showScreen(current - 1);
+        if (event.key === "ArrowRight" && current < screens.length - 1 && canAdvance(current)) showScreen(current + 1);
+      });
+      window.addEventListener("pagehide", saveState);
+
+      taskOrder.forEach(renderTask);
+      showScreen(current);
+    })();
+  </script>
+</body>
+</html>
