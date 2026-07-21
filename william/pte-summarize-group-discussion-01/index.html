@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>William — PTE Summarize Group Discussion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    /* === THEME === */
+    :root {
+      --stage-bg:#f5f2ea; --paper:#fffefa; --panel:#fffdf8; --ink:#181b19;
+      --muted:#5e625f; --line:#dedbd2; --green:#2f6758; --green-dark:#27594d;
+      --green-soft:#dce8e2; --terracotta:#bb6748; --terracotta-soft:#f4e3da;
+      --shadow:0 18px 50px rgba(37,38,34,.10),0 2px 7px rgba(37,38,34,.06);
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--stage-bg);font-family:"Atkinson Hyperlegible Next",sans-serif;color:var(--ink);font-smoothing:antialiased}
+    button,textarea{font:inherit}
+    button{min-width:44px;min-height:44px}
+
+    /* === FIXED 16:9 STAGE === */
+    .viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg)}
+    .stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--stage-bg)}
+    .slide{position:absolute;inset:0;width:1920px;height:1080px;visibility:hidden;opacity:0;pointer-events:none;background:var(--stage-bg);transition:opacity .28s var(--ease)}
+    .slide.active{visibility:visible;opacity:1;pointer-events:auto}
+    .sheet{position:absolute;inset:42px;border-radius:32px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden;padding:44px}
+    .content{height:100%;display:flex;flex-direction:column}
+
+    /* === SHARED TYPOGRAPHY AND CONTROLS === */
+    .eyebrow{font-size:28px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+    h1{font-size:64px;line-height:1.02;letter-spacing:-.035em;font-weight:800}
+    .sub{margin-top:8px;font-size:34px;line-height:1.25;color:var(--muted)}
+    .task-head{display:flex;gap:18px;align-items:flex-start;margin:0 0 28px}
+    .task-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:28px;flex:none}
+    .button{border:0;border-radius:999px;padding:18px 34px;font-size:29px;font-weight:800;cursor:pointer;transition:transform .16s var(--ease),background .16s var(--ease),opacity .16s}
+    .button:active{transform:scale(.96)}
+    .button.primary{background:var(--green);color:#fff;box-shadow:0 9px 20px rgba(47,103,88,.18)}
+    .button.primary:hover{background:var(--green-dark)}
+    .button.secondary{background:var(--green-soft);color:var(--green-dark)}
+    .button:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
+    .nav{position:fixed;z-index:20;bottom:26px;width:76px;height:76px;border:1px solid #ebe7dc;border-radius:50%;background:#fffefa;color:var(--green);font-size:44px;box-shadow:var(--shadow);cursor:pointer}
+    .nav.prev{left:22px}.nav.next{right:22px}
+    .status{min-height:36px;font-size:24px;color:var(--muted)}
+    textarea{resize:none;border:2px solid var(--line);border-radius:18px;background:#fff;outline:none;color:var(--ink);padding:18px 20px;line-height:1.35;font-size:28px;transition:border-color .16s,box-shadow .16s}
+    textarea:focus{border-color:var(--green);box-shadow:0 0 0 5px rgba(47,103,88,.10)}
+
+    /* === COVER === */
+    .cover .sheet{display:grid;place-items:center;padding:90px}
+    .cover-inner{width:100%;max-width:1540px}
+    .cover h1{font-size:112px;max-width:1350px;margin:24px 0 28px}
+    .cover .sub{font-size:44px;max-width:1150px;color:var(--green)}
+    .pill-row{display:flex;gap:22px;margin-top:60px}
+    .pill{padding:20px 30px;border-left:2px solid #cbd9d3;font-size:30px;font-weight:700}
+    .pill:first-child{border-left:0;padding-left:0}
+
+    /* === ORIENTATION === */
+    .format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;flex:1;align-items:stretch}
+    .format-card{border:2px solid var(--line);border-radius:26px;background:var(--panel);padding:38px;display:flex;flex-direction:column;justify-content:space-between}
+    .format-card strong{font-size:84px;line-height:1;color:var(--green)}
+    .format-card h2{font-size:40px;margin:18px 0 12px}
+    .format-card p{font-size:29px;line-height:1.35;color:var(--muted)}
+
+    /* === LISTEN AND NOTES: APPROVED MASTER STATE === */
+    .listen-grid{display:grid;grid-template-columns:570px 1fr;gap:28px;flex:1;min-height:0}
+    .audio-panel,.notes-panel{border:2px solid var(--line);border-radius:26px;background:var(--panel)}
+    .audio-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+    .wave{width:310px;height:170px;color:var(--green)}
+    .people{display:flex;gap:34px;color:var(--green)}
+    .person{width:64px;height:78px;position:relative}
+    .person::before{content:"";position:absolute;left:18px;top:0;width:28px;height:28px;border:4px solid currentColor;border-radius:50%}
+    .person::after{content:"";position:absolute;left:4px;bottom:0;width:52px;height:34px;border:4px solid currentColor;border-bottom:0;border-radius:30px 30px 0 0}
+    .notes-panel{padding:28px;display:flex;flex-direction:column;gap:18px}
+    .tag-row{display:flex;gap:16px;flex-wrap:wrap}
+    .tag{border:2px solid var(--line);border-radius:999px;background:#faf9f4;color:var(--green-dark);padding:10px 22px;font-size:25px;font-weight:700}
+    .note-field{display:flex;flex-direction:column;min-height:0;flex:1}
+    .note-field label{margin:0 0 10px;font-size:27px;font-weight:800;letter-spacing:.08em;color:var(--terracotta)}
+    .note-field textarea{flex:1;min-height:0}
+    .notes-actions{display:flex;align-items:center;justify-content:flex-end;gap:24px}
+
+    /* === PREP AND SPEAK === */
+    .prep-grid,.speak-grid{display:grid;grid-template-columns:1fr 560px;gap:28px;flex:1;min-height:0}
+    .recap{border:2px solid var(--line);border-radius:26px;background:var(--panel);padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .recap article{border-bottom:2px solid #ebe7df;padding:12px 10px}
+    .recap strong{display:block;font-size:24px;color:var(--terracotta);letter-spacing:.06em;margin-bottom:8px}
+    .recap p{font-size:27px;line-height:1.32;color:var(--muted);white-space:pre-wrap}
+    .timer-panel{border:2px solid var(--line);border-radius:26px;background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;text-align:center;padding:30px}
+    .timer{font-variant-numeric:tabular-nums;font-size:150px;font-weight:800;letter-spacing:-.06em;color:var(--green)}
+    .timer-label{font-size:30px;color:var(--muted)}
+    .prompt-list{font-size:31px;line-height:1.55;text-align:left;color:var(--ink)}
+    .prompt-list li{margin-left:34px;padding-left:8px}
+
+    /* === REVIEW AND REPAIR === */
+    .map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;flex:1;min-height:0}
+    .map-card{border:2px solid var(--line);border-radius:24px;background:var(--panel);padding:28px}
+    .map-card h2{font-size:33px;color:var(--terracotta);margin-bottom:14px}
+    .map-card p{font-size:27px;line-height:1.4;color:var(--muted)}
+    .map-card.shared{grid-column:1/-1;background:var(--green-soft);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .map-card.shared h2{color:var(--green-dark)}
+    .reveal-wrap{display:flex;justify-content:flex-end;align-items:center;gap:22px;margin-bottom:18px}
+    .repair-grid{display:grid;grid-template-columns:560px 1fr;gap:28px;flex:1;min-height:0}
+    .repair-prompts{border:2px solid var(--line);border-radius:26px;background:var(--panel);padding:34px}
+    .repair-prompts h2{font-size:40px;margin-bottom:24px}
+    .repair-prompts p{font-size:29px;line-height:1.45;margin:16px 0;padding-left:22px;border-left:5px solid var(--terracotta)}
+    .repair-panel{display:flex;flex-direction:column;border:2px solid var(--line);border-radius:26px;background:var(--panel);padding:28px}
+    .repair-panel label{font-size:30px;font-weight:800;color:var(--terracotta);margin-bottom:12px}
+    .repair-panel textarea{flex:1}
+    .repair-actions{display:flex;justify-content:flex-end;gap:20px;align-items:center;margin-top:18px}
+
+    /* === CLOSE === */
+    .close-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;flex:1;align-items:stretch}
+    .close-card{border:2px solid var(--line);border-radius:28px;background:var(--panel);padding:42px;display:flex;flex-direction:column}
+    .close-card h2{font-size:44px;margin-bottom:24px}
+    .close-card textarea{flex:1}
+    .close-card p{font-size:32px;line-height:1.45;color:var(--muted)}
+
+    /* === TRANSITIONS AND ACCESSIBILITY === */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+    .slide.active .reveal{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <div class="viewport"><main class="stage" id="stage" aria-label="William PTE lesson">
+    <section class="slide cover active" data-title="Cover">
+      <div class="sheet"><div class="cover-inner reveal">
+        <p class="eyebrow">PTE Academic · Listening and Speaking</p>
+        <h1>Summarize Group Discussion</h1>
+        <p class="sub">Track each speaker. Connect the views. Speak clearly.</p>
+        <div class="pill-row"><span class="pill">Three speakers</span><span class="pill">One listening</span><span class="pill">One spoken summary</span></div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Task format">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">1</span><div><h1>One new task</h1><p class="sub">Know the sequence before the audio begins.</p></div></header>
+        <div class="format-grid reveal">
+          <article class="format-card"><strong>01</strong><div><h2>Listen once</h2><p>Use one scratchpad. Tag the speakers and the links.</p></div></article>
+          <article class="format-card"><strong>10s</strong><div><h2>Prepare</h2><p>Choose the main topic, viewpoints and important links.</p></div></article>
+          <article class="format-card"><strong>2:00</strong><div><h2>Speak</h2><p>Summarize the discussion in your own words.</p></div></article>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Listen and take notes">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">◖</span><div><h1>Summarize Group Discussion</h1><p class="sub">Listen once. Use short speaker tags, not complete sentences.</p></div></header>
+        <div class="listen-grid reveal">
+          <section class="audio-panel">
+            <svg class="wave" viewBox="0 0 320 180" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"><path d="M26 100v-20M48 116V64M70 138V42M92 112V68M114 128V52M136 154V26M158 124V56M180 108V72M202 128V52M224 116V64M246 100V80M268 92V88"/></g></svg>
+            <button class="button primary" id="playOnce">▶ Play once</button>
+            <p class="status" id="audioStatus" aria-live="polite"></p>
+            <audio id="discussionAudio" preload="metadata" src="audio/william-sgd-project-studios-v1.mp3"></audio>
+            <div class="people" aria-label="Three speakers"><span class="person"></span><span class="person"></span><span class="person"></span></div>
+          </section>
+          <section class="notes-panel">
+            <div class="tag-row" aria-label="Suggested note tags"><span class="tag">A: view</span><span class="tag">B: view</span><span class="tag">C: view</span><span class="tag">↔ link</span></div>
+            <div class="note-field"><label for="quickNotes">QUICK NOTES</label><textarea id="quickNotes"></textarea></div>
+            <div class="notes-actions"><p class="status" id="notesStatus" aria-live="polite"></p><button class="button secondary" id="saveNotes">Save notes</button></div>
+          </section>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Prepare">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">2</span><div><h1>Prepare your summary</h1><p class="sub">You have 10 seconds.</p></div></header>
+        <div class="prep-grid reveal">
+          <section class="recap" data-recap></section>
+          <section class="timer-panel"><div class="timer" id="prepTimer">0:10</div><p class="timer-label">Preparation time</p><button class="button primary" id="startPrep">Start 10 seconds</button></section>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Speak">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">3</span><div><h1>Give your spoken summary</h1><p class="sub">Use your own words. Keep moving after a small mistake.</p></div></header>
+        <div class="speak-grid reveal">
+          <section class="recap" data-recap></section>
+          <section class="timer-panel"><div class="timer" id="speakTimer">2:00</div><ul class="prompt-list"><li>Main topic</li><li>Each speaker’s view</li><li>Agreement or difference</li><li>Overall outcome</li></ul><button class="button primary" id="startSpeak">Start speaking time</button></section>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Review the discussion">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">✓</span><div><h1>Check the content map</h1><p class="sub">What did you preserve? What changed?</p></div></header>
+        <div class="reveal-wrap reveal"><p class="status" id="mapStatus">Reveal only after the first response.</p><button class="button secondary" id="showMap">Show map</button></div>
+        <div class="map-grid reveal" id="answerMap" hidden>
+          <article class="map-card"><h2>Speaker A</h2><p>Replace some lectures with project studios so students apply knowledge, make decisions and explain choices.</p></article>
+          <article class="map-card"><h2>Speaker B</h2><p>Protect theoretical foundations and prevent unfair group assessment or hidden individual gaps.</p></article>
+          <article class="map-card"><h2>Speaker C</h2><p>Combine short instruction, practical projects and an individual explanation.</p></article>
+          <article class="map-card shared"><div><h2>Shared ground</h2><p>Practical work is valuable and students should apply knowledge.</p></div><div><h2>Outcome</h2><p>A blended course with structured roles and individual accountability.</p></div></article>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="One repair">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">↻</span><div><h1>Make one useful repair</h1><p class="sub">Improve the content before repeating part of the response.</p></div></header>
+        <div class="repair-grid reveal">
+          <section class="repair-prompts"><h2>Choose one</h2><p>Name each speaker accurately.</p><p>Make one agreement or difference clear.</p><p>State the final shared position.</p><p>Replace a vague or repeated phrase.</p></section>
+          <section class="repair-panel"><label for="repairText">My improved opening or key section</label><textarea id="repairText"></textarea><div class="repair-actions"><p class="status" id="repairStatus"></p><button class="button secondary" id="saveRepair">Save repair</button></div></section>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="slide" data-title="Close">
+      <div class="sheet"><div class="content">
+        <header class="task-head reveal"><span class="task-icon">★</span><div><h1>Keep one rule</h1><p class="sub">Make the next attempt easier to control.</p></div></header>
+        <div class="close-grid reveal">
+          <section class="close-card"><h2>Before I speak, I will…</h2><textarea id="takeaway"></textarea><div class="repair-actions"><p class="status" id="takeawayStatus"></p><button class="button secondary" id="saveTakeaway">Save my rule</button></div></section>
+          <section class="close-card"><h2>Today’s task</h2><p>Listen for people, not isolated details.<br><br>Track the relationship between their views.<br><br>Then speak from the map, not from a memorised script.</p></section>
+        </div>
+      </div></div>
+    </section>
+  </main></div>
+  <button class="nav prev" id="prev" aria-label="Previous slide">‹</button>
+  <button class="nav next" id="next" aria-label="Next slide">›</button>
+
+  <script>
+    /* === STAGE SCALING AND NAVIGATION === */
+    const stage=document.getElementById('stage');
+    const slides=[...document.querySelectorAll('.slide')];
+    let index=0;
+    function scale(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${s})`;stage.style.left=`${(innerWidth-1920*s)/2}px`;stage.style.top=`${(innerHeight-1080*s)/2}px`}
+    function show(i){discussionAudio.pause();index=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,n)=>s.classList.toggle('active',n===index));prev.disabled=index===0;next.disabled=index===slides.length-1;updateRecaps()}
+    window.setSlide=show;
+    addEventListener('resize',scale);scale();
+    prev.onclick=()=>show(index-1);next.onclick=()=>show(index+1);
+    addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')show(index-1);if(['ArrowRight',' '].includes(e.key)){e.preventDefault();show(index+1)}});
+
+    /* === PERSISTENT LEARNER STATE === */
+    const key='william-sgd-v1';
+    const params=new URLSearchParams(location.search);
+    if(params.get('preview')==='1'){localStorage.removeItem(key);history.replaceState({},'',location.pathname)}
+    const state=JSON.parse(localStorage.getItem(key)||'{}');
+    const ids=['quickNotes','repairText','takeaway'];
+    ids.forEach(id=>{const el=document.getElementById(id);el.value=state[id]||'';el.addEventListener('input',()=>{state[id]=el.value;persist()})});
+    function persist(){localStorage.setItem(key,JSON.stringify(state))}
+    function updateRecaps(){document.querySelectorAll('[data-recap]').forEach(box=>{box.innerHTML=`<article style="grid-column:1/-1"><strong>YOUR QUICK NOTES</strong><p>${escapeHtml(state.quickNotes)||'Not saved yet.'}</p></article><article><strong>BUILD YOUR RESPONSE</strong><p>Topic → A → B → C</p></article><article><strong>CONNECT THE VIEWS</strong><p>Agreement, difference or shared outcome</p></article>`})}
+    function escapeHtml(v){return String(v||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+    updateRecaps();
+
+    /* === ONE-PLAY AUDIO === */
+    const discussionAudio=document.getElementById('discussionAudio');
+    const playOnce=document.getElementById('playOnce');
+    const audioStatus=document.getElementById('audioStatus');
+    if(state.played){playOnce.disabled=true;audioStatus.textContent='First listening completed.'}
+    playOnce.onclick=async()=>{try{state.played=true;persist();playOnce.disabled=true;audioStatus.textContent='Listening…';discussionAudio.currentTime=0;await discussionAudio.play()}catch(err){state.played=false;persist();playOnce.disabled=false;audioStatus.textContent='Audio could not start. Try once more.'}};
+    discussionAudio.addEventListener('ended',()=>audioStatus.textContent='Listening completed. Save your notes.');
+
+    /* === SAVE ACTIONS === */
+    document.getElementById('saveNotes').onclick=()=>{state.quickNotes=quickNotes.value.trim();state.notesSaved=true;persist();document.getElementById('notesStatus').textContent='Notes saved.';updateRecaps()};
+    document.getElementById('saveRepair').onclick=()=>{state.repairText=repairText.value.trim();persist();repairStatus.textContent='Repair saved.'};
+    document.getElementById('saveTakeaway').onclick=()=>{state.takeaway=takeaway.value.trim();persist();takeawayStatus.textContent='Rule saved.'};
+
+    /* === TIMERS === */
+    function timer(button,display,total,label){let running=false,t=total,handle;button.onclick=()=>{if(running)return;running=true;button.disabled=true;handle=setInterval(()=>{t-=1;display.textContent=`${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`;if(t<=0){clearInterval(handle);display.textContent='0:00';button.textContent=label;running=false}},1000)}}
+    timer(startPrep,prepTimer,10,'Preparation finished');
+    timer(startSpeak,speakTimer,120,'Speaking time finished');
+
+    /* === PROTECTED REVEAL === */
+    showMap.onclick=()=>{answerMap.hidden=false;showMap.disabled=true;mapStatus.textContent='Compare this map with your response.'};
+    show(0);
+  </script>
+</body>
+</html>
