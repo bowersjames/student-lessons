@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>PTE Group Discussion Homework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="viewport">
+    <main class="stage" id="stage" aria-live="polite">
+      <section class="screen active" id="screenIntro">
+        <div class="sheet cover">
+          <p class="eyebrow">PTE Academic homework</p>
+          <h1>Follow the discussion, not a speaker pattern.</h1>
+          <p class="lead">Two new discussions. One listening each. One recorded summary each.</p>
+          <div class="sequence" aria-label="Task sequence">
+            <article><strong>1</strong><span>Listen and take notes</span></article>
+            <article><strong>10</strong><span>Seconds to prepare</span></article>
+            <article><strong>2:00</strong><span>Maximum recording time</span></article>
+          </div>
+          <p class="privacy">Your recordings and note photos are private. They are kept for 30 days so James can give feedback.</p>
+          <div class="actions"><button class="button primary" id="checkMic">Check microphone</button></div>
+          <p class="status" id="introStatus"></p>
+        </div>
+      </section>
+
+      <section class="screen" id="screenReady">
+        <div class="sheet">
+          <header class="header">
+            <div><p class="eyebrow" id="taskNumber">Task 1 of 2</p><h1 id="taskTopic">Discussion topic</h1></div>
+            <div class="step-chip">Ready</div>
+          </header>
+          <div class="ready-grid">
+            <section class="panel">
+              <h2>Choose your notes</h2>
+              <div class="choice-list">
+                <label class="choice"><input type="radio" name="noteMode" value="typed" checked><span><b>Type on this page</b><small>The note box stays visible while you listen.</small></span></label>
+                <label class="choice"><input type="radio" name="noteMode" value="photo"><span><b>Write by hand</b><small>Take a clear photo after your recording.</small></span></label>
+              </div>
+            </section>
+            <section class="panel focus-panel">
+              <h2>Listen for changing functions</h2>
+              <ul class="clean-list">
+                <li>What is each speaker's view?</li>
+                <li>Which reason supports it?</li>
+                <li>Who agrees, challenges or qualifies?</li>
+                <li>What outcome is reached?</li>
+              </ul>
+              <p class="rule">Do not decide in advance what A, B or C will do.</p>
+            </section>
+          </div>
+          <div class="actions"><button class="button primary" id="beginTask">Begin once</button></div>
+          <p class="status" id="readyStatus"></p>
+        </div>
+      </section>
+
+      <section class="screen" id="screenRun">
+        <div class="sheet">
+          <header class="header">
+            <div><p class="eyebrow" id="runTaskNumber">Task 1 of 2</p><h1 id="phaseTitle">Listening</h1></div>
+            <div class="timer" id="timer">Audio</div>
+          </header>
+          <div class="run-grid">
+            <section class="panel audio-panel">
+              <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <p class="phase-copy" id="phaseCopy">The recording is playing once.</p>
+              <div class="people" aria-label="Three speakers"><span>A</span><span>B</span><span>C</span></div>
+              <button class="button stop" id="finishEarly" hidden>Finish recording</button>
+              <p class="status" id="runStatus"></p>
+            </section>
+            <section class="panel notes-panel" id="typedPanel">
+              <label for="notesBox">Quick notes</label>
+              <p class="hint">Use short lines. Keep the view, reason and link.</p>
+              <textarea id="notesBox" placeholder="A  view / reason&#10;B  agrees or challenges / reason&#10;C  view / outcome"></textarea>
+              <p class="save-state" id="saveState">Saved on this device</p>
+            </section>
+            <section class="panel paper-panel" id="paperPanel" hidden>
+              <div class="paper-icon" aria-hidden="true"></div>
+              <h2>Use paper for your notes</h2>
+              <p>Keep a new line for each speaker. You will photograph the page after you speak.</p>
+            </section>
+          </div>
+          <audio id="discussionAudio" preload="auto"></audio>
+        </div>
+      </section>
+
+      <section class="screen" id="screenSubmit">
+        <div class="sheet">
+          <header class="header">
+            <div><p class="eyebrow" id="submitTaskNumber">Task 1 of 2</p><h1>Your recording is safe.</h1></div>
+            <div class="step-chip success">Uploaded</div>
+          </header>
+          <div class="submit-grid">
+            <section class="panel receipt-panel">
+              <span class="check" aria-hidden="true">✓</span>
+              <h2>Recording received</h2>
+              <p id="receiptText">Submission receipt</p>
+            </section>
+            <section class="panel" id="typedSubmitPanel">
+              <h2>Send your typed notes</h2>
+              <p class="hint">These help James see what you heard before you spoke.</p>
+              <textarea id="submitNotesBox" placeholder="Paste or finish your notes here"></textarea>
+              <button class="button primary" id="sendTypedNotes">Send notes</button>
+            </section>
+            <section class="panel" id="photoSubmitPanel" hidden>
+              <h2>Photograph your notes</h2>
+              <p class="hint">Make sure the whole page is readable.</p>
+              <label class="file-button" for="notesPhoto">Choose a photo</label>
+              <input id="notesPhoto" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" capture="environment">
+              <p class="file-name" id="photoName">No photo selected</p>
+              <button class="button primary" id="sendPhotoNotes">Upload photo</button>
+            </section>
+          </div>
+          <div class="actions"><button class="button secondary" id="continueTask" hidden>Continue</button></div>
+          <p class="status" id="submitStatus"></p>
+        </div>
+      </section>
+
+      <section class="screen" id="screenComplete">
+        <div class="sheet cover complete">
+          <span class="complete-mark" aria-hidden="true">✓</span>
+          <p class="eyebrow">Homework submitted</p>
+          <h1>Both discussions are complete.</h1>
+          <p class="lead">James has your two recordings and your notes.</p>
+          <div class="final-checks"><span>Two recordings</span><span>Two sets of notes</span><span>Ready for feedback</span></div>
+          <p class="privacy">You can close this page.</p>
+        </div>
+      </section>
+
+      <section class="screen" id="screenError">
+        <div class="sheet cover">
+          <p class="eyebrow">This link needs attention</p>
+          <h1 id="errorTitle">The homework could not open.</h1>
+          <p class="lead" id="errorCopy">Ask James for a fresh private link.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js" defer></script>
+</body>
+</html>
