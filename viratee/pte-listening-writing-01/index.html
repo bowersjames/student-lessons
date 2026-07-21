@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viratee - PTE Listening and Writing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    /* ===========================================
+       THEME · adapted from the accepted Qihang learner deck
+       =========================================== */
+    :root {
+      --stage-bg: #f5f2ea;
+      --slide-bg: #f5f2ea;
+      --surface: #fffefa;
+      --panel: #fffdf8;
+      --ink: #181b19;
+      --muted: #5e625f;
+      --line: #dedbd2;
+      --green: #2f6758;
+      --green-dark: #27594d;
+      --green-soft: #dce8e2;
+      --terracotta: #bb6748;
+      --terracotta-soft: #f4e3da;
+      --shadow: 0 18px 50px rgba(37, 38, 34, .10), 0 2px 7px rgba(37, 38, 34, .06);
+      --ease: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ===========================================
+       FIXED 16:9 STAGE: MANDATORY BASE STYLES
+       Slides are authored at 1920×1080 and scaled as a whole.
+       =========================================== */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #000);
+    }
+
+    .deck-viewport {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #000);
+    }
+
+    .deck-stage {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      transform-origin: 0 0;
+      background: var(--slide-bg, #fff);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      display: block;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      background: var(--slide-bg, #fff);
+    }
+
+    .slide.active,
+    .slide.visible {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    .cover-sheet {
+      isolation: isolate;
+      background: #faf7ef;
+    }
+
+    .cover-sheet::after {
+      display: none;
+    }
+
+    .cover-art {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 2;
+      display: block;
+      padding: 0;
+    }
+
+    .cover-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 102px 96px;
+    }
+
+    .cover-copy {
+      width: 770px;
+    }
+
+    .cover-kicker {
+      margin-bottom: 24px;
+      color: var(--green);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .cover-title {
+      max-width: 770px;
+      color: var(--ink);
+      font-size: 96px;
+      font-weight: 800;
+      letter-spacing: -.045em;
+      line-height: .98;
+    }
+
+    .cover-goal {
+      max-width: 680px;
+      margin-top: 38px;
+      color: var(--green-dark);
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 1.18;
+    }
+
+    .cover-priorities {
+      display: flex;
+      align-items: center;
+      margin-top: 52px;
+      color: var(--ink);
+      font-size: 32px;
+      font-weight: 650;
+    }
+
+    .cover-priorities span {
+      padding: 0 22px;
+    }
+
+    .cover-priorities span:first-child {
+      padding-left: 0;
+    }
+
+    .cover-priorities span + span {
+      border-left: 2px solid rgba(47, 103, 88, .28);
+    }
+
+    img,
+    video,
+    canvas,
+    svg {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .deck-controls {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+      }
+
+      .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+      }
+
+      .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+      }
+
+      .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .deck-controls { display: none !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .2s !important;
+      }
+    }
+
+    /* ===========================================
+       QIHANG-DERIVED LESSON CANVAS
+       =========================================== */
+    body {
+      color: var(--ink);
+      font-family: "Atkinson Hyperlegible Next", "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, a { font: inherit; }
+
+    .lesson-sheet {
+      position: absolute;
+      inset: 34px 46px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid rgba(77, 78, 71, .16);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .slide-content {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 24px;
+      padding: 42px 44px 38px;
+    }
+
+    .task-heading {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      column-gap: 18px;
+      align-items: center;
+    }
+
+    .task-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .task-icon svg { width: 29px; height: 29px; }
+
+    h1 {
+      font-size: 68px;
+      line-height: 1.06;
+      letter-spacing: -.035em;
+      font-weight: 800;
+      text-wrap: balance;
+    }
+
+    .instruction {
+      grid-column: 1 / -1;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 39px;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    .task-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 480px;
+      gap: 30px;
+    }
+
+    .stimulus,
+    .rail {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 4px 14px rgba(42, 44, 39, .045);
+    }
+
+    .stimulus { padding: 36px; }
+
+    .rail {
+      padding: 32px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .rail-centred { align-items: center; text-align: center; }
+
+    .eyebrow {
+      color: var(--terracotta);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .rail-number {
+      font-size: 84px;
+      line-height: .95;
+      font-weight: 800;
+      letter-spacing: -.06em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rail-title {
+      font-size: 42px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -.025em;
+    }
+
+    .rail-copy {
+      color: var(--muted);
+      font-size: 36px;
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .primary,
+    .secondary,
+    .doc-link {
+      min-height: 72px;
+      border: 0;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 28px;
+      font-weight: 800;
+      font-size: 34px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s var(--ease), background .18s ease, opacity .18s ease;
+    }
+
+    .primary,
+    .doc-link {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(47, 103, 88, .17);
+    }
+
+    .secondary {
+      min-height: 64px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+
+    .primary:hover,
+    .doc-link:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+    .secondary:hover { background: #ccded5; }
+
+    .primary:active:not(:disabled),
+    .secondary:active:not(:disabled),
+    .doc-link:active { transform: scale(.96); }
+
+    .primary:focus-visible,
+    .secondary:focus-visible,
+    .doc-link:focus-visible,
+    .nav-arrow:focus-visible {
+      outline: 4px solid rgba(187, 103, 72, .32);
+      outline-offset: 4px;
+    }
+
+    .primary:disabled,
+    .secondary:disabled {
+      cursor: default;
+      opacity: .58;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .button-icon { width: 25px; height: 25px; }
+
+    /* ===========================================
+       SST AND METHOD SLIDES
+       =========================================== */
+    .revision-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .sst-workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 30px 34px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 4px 14px rgba(42, 44, 39, .045);
+    }
+
+    .close-workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto minmax(170px, .55fr) auto;
+      gap: 18px;
+      padding: 30px 34px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 4px 14px rgba(42, 44, 39, .045);
+    }
+
+    .sst-workspace .revision-grid {
+      height: auto;
+    }
+
+    .sst-workspace .revision-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-height: 94px;
+      padding: 20px 24px;
+    }
+
+    .sst-workspace .revision-card h2 { margin-top: 0; }
+
+    .response-label {
+      color: var(--terracotta);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .response-input {
+      width: 100%;
+      min-height: 0;
+      resize: none;
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      color: var(--ink);
+      background: #fffefa;
+      padding: 24px 26px;
+      font: 600 40px/1.42 "Atkinson Hyperlegible Next", "Segoe UI", sans-serif;
+      caret-color: var(--green);
+    }
+
+    .response-input:focus {
+      outline: 5px solid rgba(47, 103, 88, .16);
+      border-color: var(--green);
+    }
+
+    .response-input:disabled {
+      opacity: 1;
+      color: var(--ink);
+      background: var(--green-soft);
+    }
+
+    .save-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 18px;
+    }
+
+    .save-status {
+      min-width: 110px;
+      color: var(--green-dark);
+      font-size: 34px;
+      font-weight: 800;
+    }
+
+    .revision-card,
+    .method-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffefa;
+      padding: 30px;
+    }
+
+    .revision-card strong,
+    .method-card strong {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--green);
+      background: var(--green-soft);
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .revision-card h2,
+    .method-card h2 {
+      margin-top: 24px;
+      font-size: 40px;
+      line-height: 1.2;
+      letter-spacing: -.025em;
+    }
+
+    .revision-card p,
+    .method-card p {
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: 36px;
+      line-height: 1.36;
+      font-weight: 500;
+    }
+
+    .method-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .method-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      column-gap: 24px;
+      align-content: center;
+      align-items: center;
+      padding: 32px;
+    }
+
+    .method-card strong { width: 70px; height: 70px; font-size: 28px; }
+    .method-card h2 { margin-top: 0; font-size: 48px; }
+    .method-card p { grid-column: 2; margin-top: 8px; }
+
+    .method-slide .task-grid { grid-template-columns: 1fr; }
+
+    .mini-rule {
+      display: grid;
+      grid-template-columns: 12px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 36px;
+      line-height: 1.38;
+      text-align: left;
+    }
+
+    .mini-rule::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--terracotta);
+    }
+
+    /* ===========================================
+       WFD AUDIO SLIDES
+       =========================================== */
+    .audio-stimulus {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto auto;
+      justify-items: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .wfd-slide .task-grid {
+      position: relative;
+      display: block;
+    }
+
+    .wfd-slide .audio-stimulus {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 520px minmax(0, 1fr);
+      grid-template-rows: 1fr;
+      gap: 64px;
+      align-items: center;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 18px 70px 28px;
+    }
+
+    .audio-pane {
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 18px;
+    }
+
+    .response-pane {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      align-self: stretch;
+      gap: 16px;
+      padding: 58px 0 28px;
+    }
+
+    .wfd-input { min-height: 260px; font-size: 50px; line-height: 1.38; }
+
+    .response-pane .save-row { justify-content: flex-start; }
+
+    .wfd-slide .rail {
+      position: absolute;
+      top: 36px;
+      right: 40px;
+      width: 250px;
+      min-height: 0;
+      padding: 24px 26px;
+      gap: 8px;
+      background: rgba(255, 254, 250, .92);
+      box-shadow: 0 8px 24px rgba(42, 44, 39, .07);
+    }
+
+    .wfd-slide .rail .eyebrow,
+    .wfd-slide .rail-title,
+    .wfd-slide .rail-copy { display: none; }
+    .wfd-slide .rail-number { font-size: 64px; }
+
+    .listening-mark {
+      width: 460px;
+      height: 460px;
+      color: var(--green);
+    }
+
+    .listening-mark circle {
+      fill: none;
+      stroke: currentColor;
+      opacity: .13;
+      stroke-width: 2;
+    }
+
+    .listening-mark circle:last-of-type { opacity: .9; }
+
+    .listening-mark path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 8;
+      stroke-linecap: round;
+    }
+
+    .play-once { width: 380px; }
+
+    .status {
+      min-height: 26px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 34px;
+      font-weight: 500;
+    }
+
+    .attempt-list {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+    }
+
+    .attempt-list span {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--muted);
+      background: #fffefa;
+      font-size: 36px;
+      line-height: 1.28;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .lock-note {
+      color: var(--terracotta);
+      font-size: 36px;
+      font-weight: 700;
+    }
+
+    /* ===========================================
+       REVIEW AND PRECISION SLIDES
+       =========================================== */
+    .review-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .answer-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffefa;
+      padding: 32px;
+    }
+
+    .answer-card h2 {
+      font-size: 40px;
+      line-height: 1.15;
+    }
+
+    .attempt-recap {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffefa;
+    }
+
+    .attempt-recap span {
+      color: var(--terracotta);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .attempt-recap p {
+      font-size: 34px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .answer {
+      width: 100%;
+      padding: 22px;
+      border-left: 5px solid var(--terracotta);
+      border-radius: 0 14px 14px 0;
+      background: var(--terracotta-soft);
+      font-size: 40px;
+      line-height: 1.34;
+      font-weight: 650;
+      text-align: left;
+    }
+
+    [hidden] { display: none !important; }
+
+    .focus-line {
+      color: var(--muted);
+      font-size: 35px;
+      line-height: 1.36;
+      font-weight: 500;
+    }
+
+    .diagnostic-list {
+      width: 100%;
+      display: grid;
+      gap: 9px;
+    }
+
+    .diagnostic-list span {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: #f0ede5;
+      color: #4e524f;
+      font-size: 36px;
+      line-height: 1.25;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .precision-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .precision-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffefa;
+    }
+
+    .precision-card h2 {
+      color: var(--terracotta);
+      font-size: 36px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .precision-card .complete {
+      font-size: 48px;
+      line-height: 1.35;
+      letter-spacing: -.025em;
+    }
+
+    .precision-card .contrast {
+      color: var(--muted);
+      font-size: 36px;
+      line-height: 1.36;
+      font-weight: 500;
+    }
+
+    .target {
+      color: var(--green-dark);
+      background: var(--green-soft);
+      border-radius: 8px;
+      padding: 1px 8px 3px;
+    }
+
+    /* ===========================================
+       MIXED LISTENING AND WRITING LESSON
+       =========================================== */
+    .full-grid { grid-template-columns: minmax(0, 1fr); }
+
+    .bridge-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .bridge-card {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 22px;
+      align-content: center;
+      padding: 46px;
+      border-radius: 20px;
+      background: #fffefa;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .bridge-card h2 {
+      font-size: 52px;
+      line-height: 1.12;
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+
+    .bridge-card > p {
+      color: var(--muted);
+      font-size: 36px;
+      line-height: 1.35;
+      font-weight: 500;
+      text-wrap: pretty;
+    }
+
+    .anchor-list {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .anchor-list p {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+      font-size: 39px;
+      line-height: 1.28;
+      font-weight: 700;
+      text-wrap: pretty;
+    }
+
+    .anchor-list strong {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--green-dark);
+      background: var(--green-soft);
+      font-size: 22px;
+    }
+
+    .sst-listen-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 500px minmax(0, 1fr);
+      gap: 30px;
+    }
+
+    .sst-audio-pane {
+      min-height: 0;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 18px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .sst-audio-pane .listening-mark {
+      width: 310px;
+      height: 310px;
+    }
+
+    .sst-audio-pane .play-once { width: 330px; }
+
+    .notes-workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 24px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .note-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .note-field {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 9px;
+    }
+
+    .note-field label {
+      color: var(--terracotta);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .note-input {
+      width: 100%;
+      min-height: 0;
+      resize: none;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      color: var(--ink);
+      background: #fffefa;
+      padding: 16px 18px;
+      font: 600 31px/1.34 "Atkinson Hyperlegible Next", "Segoe UI", sans-serif;
+    }
+
+    .note-input:focus {
+      outline: 5px solid rgba(47, 103, 88, .16);
+      border-color: var(--green);
+    }
+
+    .note-input:disabled {
+      opacity: 1;
+      color: var(--ink);
+      background: var(--green-soft);
+    }
+
+    .summary-workspace,
+    .revision-workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 520px minmax(0, 1fr);
+      gap: 26px;
+    }
+
+    .note-recap,
+    .summary-recap,
+    .precision-checks {
+      min-height: 0;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 30px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .note-recap h2,
+    .summary-recap h2,
+    .precision-checks h2 {
+      font-size: 40px;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .note-recap article {
+      display: grid;
+      gap: 4px;
+      padding-top: 11px;
+      border-top: 1px solid var(--line);
+    }
+
+    .note-recap article:first-of-type { border-top: 0; padding-top: 0; }
+
+    .note-recap strong {
+      color: var(--terracotta);
+      font-size: 30px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .note-recap p,
+    .summary-recap p,
+    .precision-checks p {
+      color: var(--muted);
+      font-size: 31px;
+      line-height: 1.3;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      text-wrap: pretty;
+    }
+
+    .summary-panel,
+    .revision-panel {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      padding: 30px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .summary-input { font-size: 37px; line-height: 1.4; }
+
+    .word-count {
+      color: var(--muted);
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .word-count.in-range { color: var(--green-dark); }
+
+    .summary-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .model-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .model-card {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 34px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .model-card h2 {
+      font-size: 42px;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .model-card .summary-copy {
+      color: var(--ink);
+      font-size: 36px;
+      line-height: 1.36;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      text-wrap: pretty;
+    }
+
+    .takeaway-workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 20px;
+      padding: 30px;
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 5px rgba(0, 0, 0, .04);
+    }
+
+    .takeaway-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .takeaway-card {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 14px;
+      padding: 30px;
+      border-radius: 18px;
+      background: #fffefa;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .06);
+    }
+
+    .takeaway-card h2 {
+      font-size: 46px;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .takeaway-card p {
+      color: var(--muted);
+      font-size: 32px;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    .takeaway-card .response-input { font-size: 36px; }
+
+    .precision-checks p {
+      padding: 16px 18px;
+      border-radius: 12px;
+      color: var(--ink);
+      background: var(--green-soft);
+      font-size: 34px;
+      line-height: 1.28;
+    }
+
+    /* ===========================================
+       SUBTLE MOTION AND MINIMAL NAVIGATION
+       =========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .36s var(--ease), transform .36s var(--ease);
+    }
+
+    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+    .slide.visible .reveal:nth-child(2) { transition-delay: .05s; }
+    .slide.visible .reveal:nth-child(3) { transition-delay: .1s; }
+
+    .deck-controls {
+      inset: 0;
+      transform: none;
+      pointer-events: none;
+    }
+
+    .nav-arrow {
+      position: fixed;
+      bottom: 18px;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(77, 78, 71, .15);
+      border-radius: 50%;
+      color: var(--green-dark);
+      background: rgba(255, 254, 250, .94);
+      box-shadow: 0 7px 18px rgba(37, 38, 34, .10);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease, background .18s ease;
+    }
+
+    .nav-arrow:hover:not(:disabled) { background: var(--green-soft); transform: translateY(-1px); }
+    .nav-arrow:active:not(:disabled) { transform: scale(.96); }
+    .nav-arrow:disabled { opacity: .28; cursor: default; }
+    .nav-arrow svg { width: 23px; height: 23px; }
+    #backButton { left: 18px; }
+    #nextButton { right: 18px; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deckStage" aria-label="Viratee PTE lesson slides">
+      <section class="slide slide-v10 active visible cover-slide" data-title="PTE Listening and Writing">
+        <div class="lesson-sheet cover-sheet">
+          <div class="slide-content cover-content"><div class="task-grid cover-grid"><div class="cover-copy">
+            <p class="cover-kicker">PTE Academic</p>
+            <h1 class="cover-title">Listening and Writing</h1>
+            <p class="cover-goal">Listen precisely. Select ideas. Write clearly.</p>
+            <div class="cover-priorities"><span>Exact sentence</span><span>Selective notes</span><span>Clear summary</span></div>
+          </div></div></div>
+        </div>
+      </section>
+
+      <section class="slide slide-v10 wfd-slide" data-title="Write from Dictation · Item 1">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="1"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus1" aria-live="polite"></p><audio id="wfdAudio1" preload="metadata" src="audio/WFD2.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput1">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput1" data-response="1" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="1">Save attempt</button><p class="save-status" id="saveStatus1" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">01</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 method-slide" data-title="Four WFD moves">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Four WFD moves</h1><p class="instruction">Choose one move for the first uncertain point.</p></header>
+          <div class="task-grid full-grid reveal"><section class="stimulus"><div class="method-grid"><article class="method-card"><strong>1</strong><h2>Meaning groups</h2></article><article class="method-card"><strong>2</strong><h2>First letters or chunks</h2></article><article class="method-card"><strong>3</strong><h2>Exact order</h2></article><article class="method-card"><strong>4</strong><h2>One repair</h2></article></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 wfd-slide" data-title="Write from Dictation · Item 2">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Use the selected move once.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="2"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus2" aria-live="polite"></p><audio id="wfdAudio2" preload="metadata" src="audio/WFD4.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput2">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput2" data-response="2" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="2">Save attempt</button><p class="save-status" id="saveStatus2" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">02</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 review-slide" data-title="Review · Items 1 and 2">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare the first attempts</h1><p class="instruction">Look at the same target in both sentences.</p></header>
+          <div class="task-grid full-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 1</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="1">Not saved yet.</p></div><button class="secondary" data-answer="answer1">Show sentence</button><p class="answer" id="answer1" hidden>Students should check the timetable online.</p><p class="focus-line">should · the timetable · online</p></article><article class="answer-card"><h2>Item 2</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="2">Not saved yet.</p></div><button class="secondary" data-answer="answer2">Show sentence</button><p class="answer" id="answer2" hidden>Regular practice improves both accuracy and confidence.</p><p class="focus-line">improves · both · accuracy · confidence</p></article></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 wfd-slide" data-title="Write from Dictation · Item 3">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Fresh transfer. Less support.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="3"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus3" aria-live="polite"></p><audio id="wfdAudio3" preload="metadata" src="audio/WFD5.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput3">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput3" data-response="3" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="3">Save attempt</button><p class="save-status" id="saveStatus3" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">03</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 review-slide" data-title="WFD transfer">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>First attempt and transfer</h1><p class="instruction">Compare the selected feature.</p></header>
+          <div class="task-grid full-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Cold attempt</h2><div class="attempt-recap"><span>Item 1</span><p data-saved-attempt="1">Not saved yet.</p></div><button class="secondary" data-answer="answer1b">Show sentence</button><p class="answer" id="answer1b" hidden>Students should check the timetable online.</p></article><article class="answer-card"><h2>Fresh transfer</h2><div class="attempt-recap"><span>Item 3</span><p data-saved-attempt="3">Not saved yet.</p></div><button class="secondary" data-answer="answer3">Show sentence</button><p class="answer" id="answer3" hidden>The office will send the updated schedule tomorrow morning.</p></article></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Two listening jobs">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Two listening jobs</h1><p class="instruction">The target changes.</p></header>
+          <div class="task-grid full-grid reveal"><section class="stimulus"><div class="bridge-grid"><article class="bridge-card"><h2>Exact sentence</h2><p>Write from Dictation</p><div class="anchor-list"><p><strong>1</strong>Every word</p><p><strong>2</strong>Original order</p><p><strong>3</strong>Accurate spelling</p></div></article><article class="bridge-card"><h2>Selected meaning</h2><p>Summarize Spoken Text</p><div class="anchor-list"><p><strong>1</strong>Main claim</p><p><strong>2</strong>Essential support</p><p><strong>3</strong>Useful qualification</p></div></article></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Summarize Spoken Text · Listen">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Summarize Spoken Text</h1><p class="instruction">Listen once. Capture short notes.</p></header>
+          <div class="sst-listen-grid reveal"><section class="sst-audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-sst="1"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="sstStatus1" aria-live="polite"></p><audio id="sstAudio1" preload="metadata" src="audio/SST1-v10.mp3"></audio></section><section class="notes-workspace"><div class="note-grid"><div class="note-field"><label for="sstClaim">Main claim</label><textarea class="note-input" id="sstClaim" data-note="sstClaim"></textarea></div><div class="note-field"><label for="sstMechanism">Mechanism</label><textarea class="note-input" id="sstMechanism" data-note="sstMechanism"></textarea></div><div class="note-field"><label for="sstLimitation">Limitation</label><textarea class="note-input" id="sstLimitation" data-note="sstLimitation"></textarea></div><div class="note-field"><label for="sstRecommendation">Recommendation</label><textarea class="note-input" id="sstRecommendation" data-note="sstRecommendation"></textarea></div></div><div class="save-row"><button class="secondary" type="button" id="saveNotes">Save notes</button><p class="save-status" id="saveNotesStatus" aria-live="polite"></p></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Summarize Spoken Text · Write">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="M4 8h16M8 4v16"/></svg></span><h1>Write 50–70 words</h1><p class="instruction">Use your notes. Save the complete first attempt.</p></header>
+          <div class="summary-workspace reveal"><section class="note-recap"><h2>Your notes</h2><article><strong>Main claim</strong><p data-note-recap="sstClaim">Not saved yet.</p></article><article><strong>Mechanism</strong><p data-note-recap="sstMechanism">Not saved yet.</p></article><article><strong>Limitation</strong><p data-note-recap="sstLimitation">Not saved yet.</p></article><article><strong>Recommendation</strong><p data-note-recap="sstRecommendation">Not saved yet.</p></article></section><section class="summary-panel"><label class="response-label" for="sstSummary">Your summary</label><textarea class="response-input summary-input" id="sstSummary" data-response="sstSummary" spellcheck="true"></textarea><div class="summary-actions"><span class="word-count" id="summaryWordCount">0 words</span><div class="save-row"><button class="secondary save-attempt" type="button" data-save="sstSummary">Save summary</button><p class="save-status" id="saveStatussstSummary" aria-live="polite"></p></div></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Summarize Spoken Text · Review">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare the summary</h1><p class="instruction">One useful repair.</p></header>
+          <div class="model-grid reveal"><article class="model-card"><h2>Your first attempt</h2><p class="summary-copy" data-saved-summary>Not saved yet.</p></article><article class="model-card"><h2>Model summary</h2><button class="secondary" data-answer="sstModel" disabled>Show model</button><p class="summary-copy" id="sstModel" hidden>Sleep supports learning by strengthening new connections and integrating information with existing knowledge, which can improve flexible recall. However, it cannot compensate for material that was poorly understood, and students who sacrifice sleep for longer study may remember less. Researchers therefore recommend distributed practice, regular sleep and brief review rather than intense last-minute cramming.</p></article></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Summarize Spoken Text · Repair">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Make one useful repair</h1><p class="instruction">Keep the change small and clear.</p></header>
+          <div class="revision-workspace reveal"><section class="precision-checks"><h2>Choose one</h2><p>Consolidation mechanism</p><p>Limitation or recommendation</p><p>Sentence boundary</p></section><section class="revision-panel"><label class="response-label" for="sstRepair">Your repaired version</label><textarea class="response-input summary-input" id="sstRepair" data-response="sstRepair" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" data-save="sstRepair">Save repair</button><p class="save-status" id="saveStatussstRepair"></p></div></section></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Key takeaways">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Two useful rules</h1><p class="instruction">Keep one rule for each listening job.</p></header>
+          <div class="takeaway-workspace reveal"><div class="takeaway-grid"><article class="takeaway-card"><h2>Write from Dictation</h2><p>My useful rule</p><textarea class="response-input" data-response="wfdRule" id="wfdRule"></textarea></article><article class="takeaway-card"><h2>Summarize Spoken Text</h2><p>My useful rule</p><textarea class="response-input" data-response="sstRule" id="sstRule"></textarea></article></div><div class="save-row"><button class="secondary save-attempt" type="button" data-save="wfdRule">Save WFD rule</button><p class="save-status" id="saveStatuswfdRule"></p><button class="secondary save-attempt" type="button" data-save="sstRule">Save SST rule</button><p class="save-status" id="saveStatussstRule"></p></div></div>
+        </div></div>
+      </section>
+
+      <section class="slide slide-v10 wfd-slide" data-title="Overflow · Item 4">
+        <div class="lesson-sheet"><div class="slide-content"><header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Optional fresh item.</p></header><div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="4"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus4"></p><audio id="wfdAudio4" preload="metadata" src="audio/WFD3.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput4">Your sentence</label><textarea class="response-input" id="wfdInput4" data-response="4"></textarea><div class="save-row"><button class="secondary save-attempt" data-save="4">Save attempt</button><p class="save-status" id="saveStatus4"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">04</strong></aside></div></div></div>
+      </section>
+
+      <section class="slide slide-v10 wfd-slide" data-title="Overflow · Item 5">
+        <div class="lesson-sheet"><div class="slide-content"><header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Optional challenge item.</p></header><div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="5"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus5"></p><audio id="wfdAudio5" preload="metadata" src="audio/WFD1.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput5">Your sentence</label><textarea class="response-input" id="wfdInput5" data-response="5"></textarea><div class="save-row"><button class="secondary save-attempt" data-save="5">Save attempt</button><p class="save-status" id="saveStatus5"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">05</strong></aside></div></div></div>
+      </section>
+
+      <section class="slide slide-v10 review-slide" data-title="Overflow · WFD review">
+        <div class="lesson-sheet"><div class="slide-content"><header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare Items 4 and 5</h1><p class="instruction">Optional comparison.</p></header><div class="task-grid full-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 4</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="4">Not saved yet.</p></div><button class="secondary" data-answer="answer4">Show sentence</button><p class="answer" id="answer4" hidden>The research team published its findings in several journals.</p></article><article class="answer-card"><h2>Item 5</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="5">Not saved yet.</p></div><button class="secondary" data-answer="answer5">Show sentence</button><p class="answer" id="answer5" hidden>The field study included participants from diverse linguistic backgrounds.</p></article></div></section></div></div></div>
+      </section>
+
+      <section class="slide slide-v10" data-title="Overflow · SST revision">
+        <div class="lesson-sheet"><div class="slide-content"><header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>One stronger revision</h1><p class="instruction">Change one thing only.</p></header><div class="revision-workspace reveal"><section class="precision-checks"><h2>Choose one</h2><p>Main claim</p><p>Logical connection</p><p>Sentence control</p></section><section class="revision-panel"><label class="response-label" for="sstRevision">Revised summary</label><textarea class="response-input summary-input" id="sstRevision" data-response="sstRevision"></textarea><div class="save-row"><button class="secondary save-attempt" data-save="sstRevision">Save revision</button><p class="save-status" id="saveStatussstRevision"></p></div></section></div></div></div>
+      </section>
+
+      <div hidden aria-hidden="true" id="legacyDeck">
+      <!-- Slide 1 · lesson orientation -->
+      <section class="slide active visible cover-slide" data-title="PTE Write from Dictation">
+        <div class="lesson-sheet cover-sheet">
+          <img class="cover-art" src="assets/wfd-cover-sentence-v2.png" alt="">
+          <div class="slide-content cover-content">
+            <div class="task-grid cover-grid">
+              <div class="cover-copy">
+                <p class="cover-kicker">PTE Academic</p>
+                <h1 class="cover-title">Write from Dictation</h1>
+                <p class="cover-goal">Keep more of one sentence after one listen.</p>
+                <div class="cover-priorities" aria-label="Lesson priorities">
+                  <span>Exact words</span>
+                  <span>Correct order</span>
+                  <span>Accurate spelling</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2 · fresh cold WFD item -->
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 1">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="1"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus1" aria-live="polite"></p><audio id="wfdAudio1" preload="metadata" src="audio/WFD1.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput1">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput1" data-response="1" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="1">Save attempt</button><p class="save-status" id="saveStatus1" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">01</strong></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slide 2 · four-move method, introduced after the first attempt -->
+      <section class="slide method-slide" data-title="Write from Dictation method">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal">
+            <span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span>
+            <h1>Write from Dictation</h1>
+            <p class="instruction">Four moves for one-play dictation.</p>
+          </header>
+          <div class="task-grid reveal">
+            <section class="stimulus"><div class="method-grid">
+              <article class="method-card"><strong>1</strong><h2>Meaning groups</h2></article>
+              <article class="method-card"><strong>2</strong><h2>First letters or chunks</h2></article>
+              <article class="method-card"><strong>3</strong><h2>Exact order</h2></article>
+              <article class="method-card"><strong>4</strong><h2>One repair</h2></article>
+            </div></section>
+          </div>
+        </div></div>
+      </section>
+
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 2">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="2"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus2" aria-live="polite"></p><audio id="wfdAudio2" preload="metadata" src="audio/WFD2.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput2">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput2" data-response="2" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="2">Save attempt</button><p class="save-status" id="saveStatus2" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">02</strong></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slide 5 · review items 1–2 -->
+      <section class="slide review-slide" data-title="Review · Items 1 and 2">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare the first attempts</h1><p class="instruction">One sentence at a time.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 1</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="1">Not saved yet.</p></div><button class="secondary" data-answer="answer1">Show sentence</button><p class="answer" id="answer1" hidden>The field study included participants from diverse linguistic backgrounds.</p><p class="focus-line">Check: field study · participants · diverse · backgrounds</p></article><article class="answer-card"><h2>Item 2</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="2">Not saved yet.</p></div><button class="secondary" data-answer="answer2">Show sentence</button><p class="answer" id="answer2" hidden>Students should check the timetable online.</p><p class="focus-line">Check: should · the timetable · online</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Compare</span><p class="rail-title">What happened first?</p></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slides 6–8 · repair and fade -->
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 3">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="3"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus3" aria-live="polite"></p><audio id="wfdAudio3" preload="metadata" src="audio/WFD3.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput3">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput3" data-response="3" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="3">Save attempt</button><p class="save-status" id="saveStatus3" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">03</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 4">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="4"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus4" aria-live="polite"></p><audio id="wfdAudio4" preload="metadata" src="audio/WFD4.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput4">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput4" data-response="4" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="4">Save attempt</button><p class="save-status" id="saveStatus4" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">04</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide review-slide" data-title="Review · Items 3 and 4">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare and rebuild</h1><p class="instruction">One complete sentence again.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 3</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="3">Not saved yet.</p></div><button class="secondary" data-answer="answer3">Show sentence</button><p class="answer" id="answer3" hidden>The research team published its findings in several journals.</p><p class="focus-line">Check: research team · published · findings · journals</p></article><article class="answer-card"><h2>Item 4</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="4">Not saved yet.</p></div><button class="secondary" data-answer="answer4">Show sentence</button><p class="answer" id="answer4" hidden>Regular practice improves both accuracy and confidence.</p><p class="focus-line">Check: improves · both · accuracy · confidence</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Compare</span><p class="rail-title">Which move helped?</p></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slides 9–11 · fresh transfer -->
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 5">
+        <div class="lesson-sheet"><div class="slide-content">
+        <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="5"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus5" aria-live="polite"></p><audio id="wfdAudio5" preload="metadata" src="audio/WFD5.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput5">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput5" data-response="5" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="5">Save attempt</button><p class="save-status" id="saveStatus5" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">05</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 6">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="6"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus6" aria-live="polite"></p><audio id="wfdAudio6" preload="metadata" src="audio/WFD6.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput6">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput6" data-response="6" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="6">Save attempt</button><p class="save-status" id="saveStatus6" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">06</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide review-slide" data-title="Review · Items 5 and 6">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare the new sentences</h1><p class="instruction">Items 5 and 6.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 5</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="5">Not saved yet.</p></div><button class="secondary" data-answer="answer5">Show sentence</button><p class="answer" id="answer5" hidden>The office will send the updated schedule tomorrow morning.</p><p class="focus-line">Check: will send · updated schedule · tomorrow morning</p></article><article class="answer-card"><h2>Item 6</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="6">Not saved yet.</p></div><button class="secondary" data-answer="answer6">Show sentence</button><p class="answer" id="answer6" hidden>Several students submitted their assignments before the deadline.</p><p class="focus-line">Check: students · submitted · their assignments · before</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Compare</span><p class="rail-title">What improved?</p></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Conditional precision contrast -->
+      <section class="slide" data-title="Small words and endings">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/><circle cx="12" cy="12" r="9"/></svg></span><h1>Small words and endings</h1><p class="instruction">Two sentence contrasts.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="precision-grid"><article class="precision-card"><h2>Final verb ending</h2><p class="complete">The survey <strong class="target">includes</strong> three sections.</p><p class="contrast">Contrast: The survey <em>include</em> three sections.</p></article><article class="precision-card"><h2>Short grammatical word</h2><p class="complete">The results <strong class="target">are</strong> in the appendix.</p><p class="contrast">Contrast: The results in the appendix.</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Notice</span><strong class="rail-number">01</strong><p class="rail-title">target at a time</p></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slides 13–15 · short overflow -->
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 7">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="7"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus7" aria-live="polite"></p><audio id="wfdAudio7" preload="metadata" src="audio/WFD7.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput7">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput7" data-response="7" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="7">Save attempt</button><p class="save-status" id="saveStatus7" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">07</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 8">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="8"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus8" aria-live="polite"></p><audio id="wfdAudio8" preload="metadata" src="audio/WFD8.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput8">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput8" data-response="8" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="8">Save attempt</button><p class="save-status" id="saveStatus8" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">08</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide review-slide" data-title="Review · Items 7 and 8">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare Items 7 and 8</h1><p class="instruction">Sentence shape and endings.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 7</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="7">Not saved yet.</p></div><button class="secondary" data-answer="answer7">Show sentence</button><p class="answer" id="answer7" hidden>Our meeting starts after the lunch break.</p><p class="focus-line">Check: meeting · starts · after · lunch break</p></article><article class="answer-card"><h2>Item 8</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="8">Not saved yet.</p></div><button class="secondary" data-answer="answer8">Show sentence</button><p class="answer" id="answer8" hidden>The language centre offers tutorials on Saturday mornings.</p><p class="focus-line">Check: centre · offers · tutorials · mornings</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Compare</span><p class="rail-title">What changed?</p></aside></div>
+        </div></div>
+      </section>
+
+      <!-- Slides 16–18 · full overflow -->
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 9">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="9"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus9" aria-live="polite"></p><audio id="wfdAudio9" preload="metadata" src="audio/WFD9.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput9">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput9" data-response="9" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="9">Save attempt</button><p class="save-status" id="saveStatus9" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">09</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide wfd-slide" data-title="Write from Dictation · Item 10">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h1>Write from Dictation</h1><p class="instruction">Listen once. Write the exact sentence.</p></header>
+          <div class="task-grid reveal"><section class="stimulus audio-stimulus"><div class="audio-pane"><svg class="listening-mark" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg><button class="primary play-once" data-wfd="10"><svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Play once</button><p class="status" id="wfdStatus10" aria-live="polite"></p><audio id="wfdAudio10" preload="metadata" src="audio/WFD10.mp3"></audio></div><section class="response-pane"><label class="response-label" for="wfdInput10">Your sentence</label><textarea class="response-input wfd-input" id="wfdInput10" data-response="10" spellcheck="true"></textarea><div class="save-row"><button class="secondary save-attempt" type="button" data-save="10">Save attempt</button><p class="save-status" id="saveStatus10" aria-live="polite"></p></div></section></section><aside class="rail rail-centred"><strong class="rail-number">10</strong></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide review-slide" data-title="Review · Items 9 and 10">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Compare Items 9 and 10</h1><p class="instruction">Longer sentences.</p></header>
+          <div class="task-grid reveal"><section class="stimulus"><div class="review-grid"><article class="answer-card"><h2>Item 9</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="9">Not saved yet.</p></div><button class="secondary" data-answer="answer9">Show sentence</button><p class="answer" id="answer9" hidden>Most employees completed the safety training online.</p><p class="focus-line">Check: employees · completed · safety training · online</p></article><article class="answer-card"><h2>Item 10</h2><div class="attempt-recap"><span>Your attempt</span><p data-saved-attempt="10">Not saved yet.</p></div><button class="secondary" data-answer="answer10">Show sentence</button><p class="answer" id="answer10" hidden>The final report includes several practical recommendations.</p><p class="focus-line">Check: report · includes · several · recommendations</p></article></div></section><aside class="rail rail-centred"><span class="eyebrow">Compare</span><p class="rail-title">Which move helped?</p></aside></div>
+        </div></div>
+      </section>
+
+      <section class="slide method-slide" data-title="Your WFD routine">
+        <div class="lesson-sheet"><div class="slide-content">
+          <header class="task-heading reveal"><span class="task-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4Z"/><path d="m8 12 3 3 5-6"/></svg></span><h1>Your WFD routine</h1><p class="instruction">Which move helped most today?</p></header>
+          <div class="close-workspace reveal">
+            <div class="method-grid"><article class="method-card"><strong>1</strong><h2>Meaning groups</h2></article><article class="method-card"><strong>2</strong><h2>First letters or chunks</h2></article><article class="method-card"><strong>3</strong><h2>Exact order</h2></article><article class="method-card"><strong>4</strong><h2>One repair</h2></article></div>
+            <label class="response-label" for="takeawayInput">My useful move</label>
+            <textarea class="response-input" id="takeawayInput" data-response="takeaway" spellcheck="true"></textarea>
+            <div class="save-row"><button class="secondary save-attempt" type="button" data-save="takeaway">Save my rule</button><p class="save-status" id="saveStatusTakeaway" aria-live="polite"></p></div>
+          </div>
+        </div></div>
+      </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Navigation is deliberately minimal: no visible header, footer or page counter. -->
+  <nav class="deck-controls" aria-label="Slide navigation">
+    <button class="nav-arrow" id="backButton" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="nav-arrow" id="nextButton" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></button>
+    <output class="sr-only" id="slidePosition" aria-live="polite">1 of 17</output>
+  </nav>
+
+  <script>
+    /* ===========================================
+       FIXED-STAGE PRESENTATION CONTROLLER
+       =========================================== */
+    class SlidePresentation {
+      constructor() {
+        this.slides = [...document.querySelectorAll('.slide-v10')];
+        this.stage = document.getElementById('deckStage');
+        this.back = document.getElementById('backButton');
+        this.next = document.getElementById('nextButton');
+        this.position = document.getElementById('slidePosition');
+        this.currentSlide = 0;
+        this.touchStartX = null;
+        this.wheelLocked = false;
+        this.setupStageScale();
+        this.setupNavigation();
+        this.setupResponses();
+        this.setupAudio();
+        this.setupSst();
+        this.setupAnswers();
+        this.showSlide(0);
+        window.setSlide = index => this.showSlide(index);
+      }
+
+      setupStageScale() {
+        const scale = () => {
+          const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          const x = (window.innerWidth - 1920 * factor) / 2;
+          const y = (window.innerHeight - 1080 * factor) / 2;
+          this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+      }
+
+      setupNavigation() {
+        this.back.addEventListener('click', () => this.showSlide(this.currentSlide - 1));
+        this.next.addEventListener('click', () => this.showSlide(this.currentSlide + 1));
+        document.addEventListener('keydown', event => {
+          if (event.target.closest('button, a, input, textarea')) return;
+          if (event.key.toLowerCase() === 'k') { event.preventDefault(); this.showSlide(12); return; }
+          if (event.key.toLowerCase() === 'o') { event.preventDefault(); this.showSlide(13); return; }
+          if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); this.showSlide(this.currentSlide + 1); }
+          if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); this.showSlide(this.currentSlide - 1); }
+          if (event.key === 'Home') { event.preventDefault(); this.showSlide(0); }
+          if (event.key === 'End') { event.preventDefault(); this.showSlide(this.slides.length - 1); }
+        });
+        document.addEventListener('wheel', event => {
+          if (this.wheelLocked || Math.abs(event.deltaY) < 20) return;
+          this.wheelLocked = true;
+          this.showSlide(this.currentSlide + (event.deltaY > 0 ? 1 : -1));
+          setTimeout(() => { this.wheelLocked = false; }, 450);
+        }, { passive: true });
+        document.addEventListener('touchstart', event => { this.touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+        document.addEventListener('touchend', event => {
+          if (this.touchStartX === null) return;
+          const delta = event.changedTouches[0].clientX - this.touchStartX;
+          this.touchStartX = null;
+          if (Math.abs(delta) > 60) this.showSlide(this.currentSlide + (delta < 0 ? 1 : -1));
+        }, { passive: true });
+      }
+
+      setupAudio() {
+        document.querySelectorAll('.slide-v10 [data-wfd]').forEach(button => {
+          const item = button.dataset.wfd;
+          const audio = document.getElementById(`wfdAudio${item}`);
+          const status = document.getElementById(`wfdStatus${item}`);
+          button.addEventListener('click', async () => {
+            if (button.disabled) return;
+            button.disabled = true;
+            button.lastChild.textContent = ' Playing…';
+            status.textContent = 'The recording will play once.';
+            try {
+              await audio.play();
+            } catch {
+              button.disabled = false;
+              button.lastChild.textContent = ' Play once';
+              status.textContent = 'The audio did not start. Try once more.';
+            }
+          });
+          audio.addEventListener('ended', () => {
+            button.lastChild.textContent = ' Played';
+            status.textContent = '';
+          });
+          audio.addEventListener('error', () => {
+            button.disabled = false;
+            button.lastChild.textContent = ' Play once';
+            status.textContent = 'Audio unavailable.';
+          });
+        });
+      }
+
+      setupResponses() {
+        this.responseStorageKey = 'viratee-pte-live-responses-v3';
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('reset') === '1') {
+          localStorage.removeItem(this.responseStorageKey);
+          history.replaceState({}, '', window.location.pathname);
+        }
+        try {
+          this.responseState = JSON.parse(localStorage.getItem(this.responseStorageKey) || '{}');
+        } catch {
+          this.responseState = {};
+        }
+
+        const persist = () => localStorage.setItem(this.responseStorageKey, JSON.stringify(this.responseState));
+        const updateReview = item => {
+          if (!/^\d+$/.test(item)) return;
+          const saved = this.responseState[item];
+          document.querySelectorAll(`.slide-v10 [data-saved-attempt="${item}"]`).forEach(element => {
+            element.textContent = saved?.text?.trim() || 'Not saved yet.';
+          });
+          document.querySelectorAll(`.slide-v10 [data-answer="answer${item}"], .slide-v10 [data-answer="answer${item}b"]`).forEach(reveal => {
+            if (reveal.textContent !== 'Sentence shown') reveal.disabled = !saved?.locked;
+          });
+        };
+
+        document.querySelectorAll('.slide-v10 [data-response]').forEach(input => {
+          const item = input.dataset.response;
+          const saved = this.responseState[item];
+          if (saved?.text !== undefined) input.value = saved.text;
+          const saveButton = document.querySelector(`.slide-v10 [data-save="${item}"]`);
+          const status = document.getElementById(`saveStatus${item}`);
+
+          if (saved?.locked) {
+            input.disabled = true;
+            saveButton.disabled = true;
+            saveButton.textContent = item.includes('Rule') ? 'Rule saved' : item.startsWith('sst') ? 'Saved' : 'Attempt saved';
+            status.textContent = 'Saved';
+          }
+
+          input.addEventListener('input', () => {
+            if (input.disabled) return;
+            this.responseState[item] = { text: input.value, locked: false };
+            persist();
+          });
+
+          saveButton.addEventListener('click', () => {
+            const text = input.value.trim();
+            if (!text) {
+              status.textContent = 'Write first';
+              input.focus();
+              return;
+            }
+            this.responseState[item] = { text, locked: true };
+            persist();
+            input.value = text;
+            input.disabled = true;
+            saveButton.disabled = true;
+            saveButton.textContent = item.includes('Rule') ? 'Rule saved' : item.startsWith('sst') ? 'Saved' : 'Attempt saved';
+            status.textContent = 'Saved';
+            updateReview(item);
+          });
+
+          updateReview(item);
+        });
+      }
+
+      setupSst() {
+        const persist = () => localStorage.setItem(this.responseStorageKey, JSON.stringify(this.responseState));
+        const noteInputs = [...document.querySelectorAll('.slide-v10 [data-note]')];
+        const savedNotes = this.responseState.sstNotes || {};
+
+        const updateNoteRecaps = () => {
+          document.querySelectorAll('.slide-v10 [data-note-recap]').forEach(element => {
+            const value = (this.responseState.sstNotes || {})[element.dataset.noteRecap];
+            element.textContent = value?.trim() || 'Not saved yet.';
+          });
+        };
+
+        noteInputs.forEach(input => {
+          if (savedNotes[input.dataset.note] !== undefined) input.value = savedNotes[input.dataset.note];
+          if (this.responseState.sstNotesLocked) input.disabled = true;
+          input.addEventListener('input', () => {
+            this.responseState.sstNotes = this.responseState.sstNotes || {};
+            this.responseState.sstNotes[input.dataset.note] = input.value;
+            persist();
+            updateNoteRecaps();
+          });
+        });
+
+        const saveNotes = document.getElementById('saveNotes');
+        const saveNotesStatus = document.getElementById('saveNotesStatus');
+        if (this.responseState.sstNotesLocked) {
+          saveNotes.disabled = true;
+          saveNotes.textContent = 'Notes saved';
+          saveNotesStatus.textContent = 'Saved';
+        }
+        saveNotes.addEventListener('click', () => {
+          if (!noteInputs.some(input => input.value.trim())) {
+            saveNotesStatus.textContent = 'Write notes first';
+            noteInputs[0].focus();
+            return;
+          }
+          this.responseState.sstNotes = Object.fromEntries(noteInputs.map(input => [input.dataset.note, input.value.trim()]));
+          this.responseState.sstNotesLocked = true;
+          persist();
+          noteInputs.forEach(input => { input.disabled = true; });
+          saveNotes.disabled = true;
+          saveNotes.textContent = 'Notes saved';
+          saveNotesStatus.textContent = 'Saved';
+          updateNoteRecaps();
+        });
+        updateNoteRecaps();
+
+        const summary = document.getElementById('sstSummary');
+        const repair = document.getElementById('sstRepair');
+        const wordCount = document.getElementById('summaryWordCount');
+        const summaryModelButton = document.querySelector('.slide-v10 [data-answer="sstModel"]');
+        const updateSummary = () => {
+          const words = summary.value.trim() ? summary.value.trim().split(/\s+/).length : 0;
+          wordCount.textContent = `${words} ${words === 1 ? 'word' : 'words'}`;
+          wordCount.classList.toggle('in-range', words >= 50 && words <= 70);
+          document.querySelectorAll('.slide-v10 [data-saved-summary]').forEach(element => {
+            element.textContent = this.responseState.sstSummary?.text?.trim() || 'Not saved yet.';
+          });
+          summaryModelButton.disabled = !this.responseState.sstSummary?.locked;
+          if (this.responseState.sstSummary?.locked && repair && !this.responseState.sstRepair?.locked && !repair.value.trim()) {
+            repair.value = this.responseState.sstSummary.text;
+          }
+        };
+        summary.addEventListener('input', updateSummary);
+        document.querySelector('.slide-v10 [data-save="sstSummary"]').addEventListener('click', () => setTimeout(updateSummary, 0));
+        updateSummary();
+
+        document.querySelectorAll('.slide-v10 [data-sst]').forEach(button => {
+          const item = button.dataset.sst;
+          const audio = document.getElementById(`sstAudio${item}`);
+          const status = document.getElementById(`sstStatus${item}`);
+          button.addEventListener('click', async () => {
+            if (button.disabled) return;
+            button.disabled = true;
+            button.lastChild.textContent = ' Playing…';
+            status.textContent = 'The recording will play once.';
+            try {
+              await audio.play();
+            } catch {
+              button.disabled = false;
+              button.lastChild.textContent = ' Play once';
+              status.textContent = 'The audio did not start. Try once more.';
+            }
+          });
+          audio.addEventListener('ended', () => {
+            button.lastChild.textContent = ' Played';
+            status.textContent = '';
+          });
+          audio.addEventListener('error', () => {
+            button.disabled = false;
+            button.lastChild.textContent = ' Play once';
+            status.textContent = 'Audio unavailable.';
+          });
+        });
+      }
+
+      setupAnswers() {
+        document.querySelectorAll('.slide-v10 [data-answer]').forEach(button => {
+          button.addEventListener('click', () => {
+            const answer = document.getElementById(button.dataset.answer);
+            answer.hidden = false;
+            button.disabled = true;
+            button.textContent = 'Sentence shown';
+          });
+        });
+      }
+
+      showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((slide, slideIndex) => {
+          const current = slideIndex === this.currentSlide;
+          slide.classList.toggle('active', current);
+          slide.classList.toggle('visible', current);
+        });
+        this.back.disabled = this.currentSlide === 0;
+        this.next.disabled = this.currentSlide === this.slides.length - 1;
+        this.position.textContent = `${this.currentSlide + 1} of ${this.slides.length}`;
+        document.title = `${this.slides[this.currentSlide].dataset.title} · Viratee lesson`;
+      }
+    }
+
+    new SlidePresentation();
+  </script>
+</body>
+</html>
