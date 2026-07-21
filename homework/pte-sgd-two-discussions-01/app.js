@@ -20,7 +20,6 @@ let noteMode = 'typed';
 let currentBlob = null;
 let attemptId = '';
 let recordingStartedAt = 0;
-let receiptId = '';
 let countdownHandle = null;
 
 const storageKey = `william-sgd-homework-${token.slice(-12)}`;
@@ -49,14 +48,14 @@ async function api(path, options={}){
 function fail(title,copy){ document.getElementById('errorTitle').textContent=title; document.getElementById('errorCopy').textContent=copy; show('screenError'); }
 
 async function boot(){
-  if(token.length<20) return fail('This is not the private homework link.','Ask James for the link that contains your session code.');
+  if(token.length<20) return fail('This homework link is incomplete.','Ask James for a new homework link.');
   try{
     const status=await api('/api/v1/session');
     const remoteDone=status.tasks.map(t=>t.task_id);
     saved.completed=[...new Set([...saved.completed,...remoteDone])]; persist();
     if(saved.completed.length===2) return show('screenComplete');
     currentTaskIndex=saved.completed.includes('task-01')?1:0;
-  }catch(error){ return fail('This private link has expired or is invalid.','Ask James for a fresh homework link.'); }
+  }catch(error){ return fail('This homework link has expired.','Ask James for a new homework link.'); }
 }
 
 async function ensureMic(){
@@ -101,7 +100,7 @@ document.getElementById('beginTask').addEventListener('click',async()=>{
   setStatus('runStatus',''); show('screenRun');
   audio.src=task.audio; audio.currentTime=0;
   audio.onended=beginPreparation;
-  audio.onerror=()=>setStatus('runStatus','The audio did not load. Keep this page open and ask James for help.',true);
+  audio.onerror=()=>setStatus('runStatus','The audio did not start. Ask James for help.',true);
   try{ await audio.play(); }catch{ setStatus('runStatus','Playback was blocked. Tap the page once, then ask James for a fresh task link.',true); }
 });
 
@@ -150,27 +149,26 @@ async function finishRecording(){
   document.getElementById('finishEarly').hidden=true;
   const durationMs=Math.max(1000,Math.round(performance.now()-recordingStartedAt));
   currentBlob=new Blob(chunks,{type:recorder.mimeType||chunks[0]?.type||'audio/webm'});
-  document.getElementById('phaseTitle').textContent='Uploading';
-  document.getElementById('phaseCopy').textContent='Keep this page open while your recording is saved.';
-  document.getElementById('timer').textContent='Saving';
+  document.getElementById('phaseTitle').textContent='One moment';
+  document.getElementById('phaseCopy').textContent='Your answer is complete.';
+  document.getElementById('timer').textContent='…';
   await uploadRecording(durationMs);
 }
 
 async function uploadRecording(durationMs){
-  const task=tasks[currentTaskIndex]; setStatus('runStatus','Uploading your recording.');
+  const task=tasks[currentTaskIndex]; setStatus('runStatus','');
   try{
     const result=await api(`/api/v1/submissions/${task.id}/audio`,{method:'POST',headers:{'Content-Type':currentBlob.type,'X-Attempt-Id':attemptId,'X-Duration-Ms':String(durationMs)},body:currentBlob});
-    receiptId=result.receiptId; setStatus('runStatus','Recording uploaded.'); prepareNotesSubmission();
+    prepareNotesSubmission();
   }catch(error){
-    setStatus('runStatus',error.message==='task-already-submitted'?'This task already has a saved recording.':'Upload failed. Keep this page open and try again.',true);
-    const retry=document.createElement('button'); retry.className='button primary'; retry.textContent='Retry upload'; retry.onclick=()=>{retry.remove();uploadRecording(durationMs)}; document.querySelector('#screenRun .audio-panel').appendChild(retry);
+    setStatus('runStatus',error.message==='task-already-submitted'?'This task is already complete.':'Something went wrong. Try again.',true);
+    const retry=document.createElement('button'); retry.className='button primary'; retry.textContent='Try again'; retry.onclick=()=>{retry.remove();uploadRecording(durationMs)}; document.querySelector('#screenRun .audio-panel').appendChild(retry);
   }
 }
 
 function prepareNotesSubmission(){
   const task=tasks[currentTaskIndex];
   document.getElementById('submitTaskNumber').textContent=`Task ${currentTaskIndex+1} of 2`;
-  document.getElementById('receiptText').textContent=`Receipt ${receiptId}`;
   document.getElementById('typedSubmitPanel').hidden=noteMode!=='typed';
   document.getElementById('photoSubmitPanel').hidden=noteMode!=='photo';
   submitNotesBox.value=saved.notes[task.id]||notesBox.value||'';
@@ -181,7 +179,7 @@ function prepareNotesSubmission(){
 async function sendNotes(form){
   const task=tasks[currentTaskIndex];
   try{ await api(`/api/v1/submissions/${task.id}/notes`,{method:'POST',body:form}); completeCurrentTask(); }
-  catch(error){ setStatus('submitStatus','Your recording is safe, but the notes did not upload. Check the notes and try again.',true); }
+  catch(error){ setStatus('submitStatus','Something went wrong with the notes. Check them and try again.',true); }
 }
 
 document.getElementById('sendTypedNotes').addEventListener('click',()=>{
@@ -196,7 +194,7 @@ document.getElementById('sendPhotoNotes').addEventListener('click',()=>{
 
 function completeCurrentTask(){
   const task=tasks[currentTaskIndex]; saved.completed=[...new Set([...saved.completed,task.id])]; persist();
-  setStatus('submitStatus','Notes received. This task is complete.');
+  setStatus('submitStatus','Task complete.');
   const button=document.getElementById('continueTask'); button.hidden=false; button.textContent=currentTaskIndex===0?'Continue to task 2':'Finish homework';
 }
 

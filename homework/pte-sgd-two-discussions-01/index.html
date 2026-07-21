@@ -24,7 +24,6 @@
             <article><strong>10</strong><span>Seconds to prepare</span></article>
             <article><strong>2:00</strong><span>Maximum recording time</span></article>
           </div>
-          <p class="privacy">Your recordings and note photos are private. They are kept for 30 days so James can give feedback.</p>
           <div class="actions"><button class="button primary" id="checkMic">Check microphone</button></div>
           <p class="status" id="introStatus"></p>
         </div>
@@ -93,14 +92,14 @@
       <section class="screen" id="screenSubmit">
         <div class="sheet">
           <header class="header">
-            <div><p class="eyebrow" id="submitTaskNumber">Task 1 of 2</p><h1>Your recording is safe.</h1></div>
-            <div class="step-chip success">Uploaded</div>
+            <div><p class="eyebrow" id="submitTaskNumber">Task 1 of 2</p><h1>Add your notes</h1></div>
+            <div class="step-chip success">Next step</div>
           </header>
           <div class="submit-grid">
             <section class="panel receipt-panel">
               <span class="check" aria-hidden="true">✓</span>
-              <h2>Recording received</h2>
-              <p id="receiptText">Submission receipt</p>
+              <h2>Your speaking is finished</h2>
+              <p>Now add the notes you used.</p>
             </section>
             <section class="panel" id="typedSubmitPanel">
               <h2>Send your typed notes</h2>
@@ -114,7 +113,7 @@
               <label class="file-button" for="notesPhoto">Choose a photo</label>
               <input id="notesPhoto" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" capture="environment">
               <p class="file-name" id="photoName">No photo selected</p>
-              <button class="button primary" id="sendPhotoNotes">Upload photo</button>
+              <button class="button primary" id="sendPhotoNotes">Use this photo</button>
             </section>
           </div>
           <div class="actions"><button class="button secondary" id="continueTask" hidden>Continue</button></div>
@@ -125,9 +124,9 @@
       <section class="screen" id="screenComplete">
         <div class="sheet cover complete">
           <span class="complete-mark" aria-hidden="true">✓</span>
-          <p class="eyebrow">Homework submitted</p>
+          <p class="eyebrow">Homework complete</p>
           <h1>Both discussions are complete.</h1>
-          <p class="lead">James has your two recordings and your notes.</p>
+          <p class="lead">You have finished both speaking tasks and both sets of notes.</p>
           <div class="final-checks"><span>Two recordings</span><span>Two sets of notes</span><span>Ready for feedback</span></div>
           <p class="privacy">You can close this page.</p>
         </div>
@@ -137,7 +136,7 @@
         <div class="sheet cover">
           <p class="eyebrow">This link needs attention</p>
           <h1 id="errorTitle">The homework could not open.</h1>
-          <p class="lead" id="errorCopy">Ask James for a fresh private link.</p>
+          <p class="lead" id="errorCopy">Ask James for a new homework link.</p>
         </div>
       </section>
     </main>
