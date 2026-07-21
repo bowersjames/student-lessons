@@ -48,14 +48,14 @@ async function api(path, options={}){
 function fail(title,copy){ document.getElementById('errorTitle').textContent=title; document.getElementById('errorCopy').textContent=copy; show('screenError'); }
 
 async function boot(){
-  if(token.length<20) return fail('This homework link is incomplete.','Ask James for a new homework link.');
+  if(token.length<20) return fail('This homework link is incomplete.','Ask me for a new homework link.');
   try{
     const status=await api('/api/v1/session');
     const remoteDone=status.tasks.map(t=>t.task_id);
     saved.completed=[...new Set([...saved.completed,...remoteDone])]; persist();
     if(saved.completed.length===2) return show('screenComplete');
     currentTaskIndex=saved.completed.includes('task-01')?1:0;
-  }catch(error){ return fail('This homework link has expired.','Ask James for a new homework link.'); }
+  }catch(error){ return fail('This homework link has expired.','Ask me for a new homework link.'); }
 }
 
 async function ensureMic(){
@@ -84,7 +84,7 @@ function prepareReady(){
 document.getElementById('beginTask').addEventListener('click',async()=>{
   noteMode=document.querySelector('input[name=noteMode]:checked').value;
   const task=tasks[currentTaskIndex];
-  if(saved.played?.includes(task.id)){ setStatus('readyStatus','This discussion has already played. Ask James for help if there was a technical problem.',true); return; }
+  if(saved.played?.includes(task.id)){ setStatus('readyStatus','This discussion has already played. Ask me for help if there was a technical problem.',true); return; }
   try{ await ensureMic(); }
   catch{ setStatus('readyStatus','The microphone is no longer available. Check permission and try again.',true); return; }
   document.getElementById('beginTask').disabled=true;
@@ -100,13 +100,12 @@ document.getElementById('beginTask').addEventListener('click',async()=>{
   setStatus('runStatus',''); show('screenRun');
   audio.src=task.audio; audio.currentTime=0;
   audio.onended=beginPreparation;
-  audio.onerror=()=>setStatus('runStatus','The audio did not start. Ask James for help.',true);
-  try{ await audio.play(); }catch{ setStatus('runStatus','Playback was blocked. Tap the page once, then ask James for a fresh task link.',true); }
+  audio.onerror=()=>setStatus('runStatus','The audio did not start. Ask me for help.',true);
+  try{ await audio.play(); }catch{ setStatus('runStatus','Playback was blocked. Tap the page once, then ask me for a new task link.',true); }
 });
 
 notesBox.addEventListener('input',()=>{
   const task=tasks[currentTaskIndex]; saved.notes[task.id]=notesBox.value; persist();
-  document.getElementById('saveState').textContent='Saved on this device';
 });
 
 function countdown(seconds,onTick,onDone){
