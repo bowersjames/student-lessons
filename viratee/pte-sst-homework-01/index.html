@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+  <script>document.documentElement.classList.remove('no-js')</script>
+  <title>Viratee - Official PTE Academic Summarize Spoken Text practice</title>
+  <meta name="pte-source" content="Pearson PTE Academic Lesson Plan 13 - Summarize Spoken Text, Item 2">
+  <meta name="pte-source-url" content="https://images.ctfassets.net/yqwtwibiobs4/6w4OM15Yx2hVKnz8K4MK4Z/dc81e8b53153e0afebe6bcfbc8ec2cc1/2021_PTEA_Lesson_Plan_Ideas_Teachers_Test_Taking_Strategies.zip">
+  <meta name="pte-source-pack-sha256" content="E216BD05FAA2E98C90E2085C7AC84D634273179CA943F73F4089ABF55BFCF9A6">
+  <meta name="pte-audio-sha256" content="F3E60A863AC17046424416DA8B5C001D0F29C9C5DA1A51ABE3E16156844F0EEC">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--stage:#f5f2ea;--surface:#fffefa;--panel:#fffdf8;--ink:#181b19;--muted:#5e625f;--line:#dedbd2;--green:#2f6758;--green-dark:#27594d;--green-soft:#dce8e2;--rust:#bb6748;--rust-soft:#f4e3da;--shadow:0 18px 50px rgba(37,38,34,.10),0 2px 7px rgba(37,38,34,.06)}
+    *{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:var(--stage)}body{color:var(--ink);font-family:"Atkinson Hyperlegible Next","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,textarea,input{font:inherit}button{cursor:pointer;border:0}button:focus-visible,textarea:focus-visible{outline:5px solid rgba(47,103,88,.25);outline-offset:3px}
+    .deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage)}.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--stage);will-change:transform}
+    .slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;visibility:hidden;opacity:0;pointer-events:none;background:var(--stage)}.slide.active{visibility:visible;opacity:1;pointer-events:auto}
+    .sheet{position:absolute;inset:46px 86px 46px;background:var(--surface);border:1px solid rgba(37,38,34,.08);border-radius:34px;box-shadow:var(--shadow);padding:48px 66px;overflow:hidden}.heading{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;margin-bottom:22px}.icon{width:60px;height:60px;display:grid;place-items:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:30px}.heading h1{font-size:62px;line-height:1.02;letter-spacing:-.035em}.heading p{grid-column:2;color:var(--muted);font-size:30px;line-height:1.25;margin-top:-8px}.eyebrow{display:block;color:var(--rust);font-size:22px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+    .method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px}.method{height:330px;border:1px solid var(--line);border-radius:22px;background:#fff;padding:28px}.number{width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:25px;font-weight:800;margin-bottom:24px}.method h2{font-size:32px;line-height:1.1;margin-bottom:14px}.method p{color:var(--muted);font-size:26px;line-height:1.35}.notice{margin-top:30px;padding:22px 28px;border-radius:18px;background:var(--rust-soft);font-size:25px;color:#6f3522}
+    .listen-grid{display:grid;grid-template-columns:500px 1fr;gap:28px;height:630px}.audio-pane{border:1px solid var(--line);border-radius:24px;background:#fff;padding:34px;display:grid;align-content:center;justify-items:center;gap:28px}.wave{width:250px;height:250px;color:var(--green)}.wave circle{fill:none;stroke:currentColor;stroke-width:3;opacity:.16}.wave path{fill:none;stroke:currentColor;stroke-width:11;stroke-linecap:round}.play{min-width:330px;min-height:72px;border-radius:36px;background:var(--green);color:#fff;font-size:27px;font-weight:800;padding:0 30px}.play:disabled,.secondary:disabled,.reveal:disabled{opacity:.45;cursor:not-allowed}.status{min-height:34px;color:var(--green-dark);font-size:23px;font-weight:700;text-align:center}.note-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.note{border:1px solid var(--line);border-radius:20px;background:#fff;padding:16px 20px}.note label{display:block;color:var(--rust);font-size:24px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}.note textarea{width:100%;height:154px;resize:none;border:1px solid #cfcac0;border-radius:14px;background:#fffefa;color:var(--ink);font-size:27px;line-height:1.34;padding:16px}.save-row{display:flex;gap:18px;align-items:center;margin-top:14px}.secondary{min-height:58px;border-radius:29px;background:var(--green-soft);color:var(--green-dark);font-size:23px;font-weight:800;padding:0 27px}.save-status{color:var(--green-dark);font-size:22px;font-weight:700}
+    .support-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;height:620px}.support-list{display:grid;grid-template-columns:1fr 1fr;gap:18px}.support-card{border:1px solid var(--line);border-radius:20px;background:#fff;padding:22px}.reveal{background:transparent;color:var(--green-dark);font-size:24px;font-weight:800;text-align:left}.support-card p{font-size:24px;line-height:1.35;margin-top:18px}.support-audio{border-radius:24px;background:var(--green-soft);padding:32px;display:grid;align-content:center;justify-items:center;gap:22px}.support-audio .wave{width:200px;height:200px}.support-note{font-size:24px;color:var(--muted);line-height:1.35;text-align:center}
+    .write-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:28px;height:620px}.frame{border-radius:24px;background:#f4f3ed;padding:32px;font-size:28px;line-height:1.68}.frame strong{color:var(--green-dark)}.frame-note{font-size:22px;color:var(--muted);line-height:1.35;margin-top:20px}.response-panel{display:grid;grid-template-rows:1fr auto;min-height:0}.summary{width:100%;height:500px;resize:none;border:1px solid #cfcac0;border-radius:20px;background:#fffefa;color:var(--ink);font-size:29px;line-height:1.48;padding:24px}.counter{font-size:23px;font-weight:800;color:var(--green-dark)}.counter.bad{color:#a7452f}
+    .check-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:30px;height:620px}.checks{display:grid;align-content:start;gap:16px}.check{display:flex;gap:16px;align-items:flex-start;border-radius:16px;background:#f4f3ed;padding:20px;font-size:25px;line-height:1.3}.check input{width:28px;height:28px;accent-color:var(--green);flex:none}.model-panel{border:1px solid var(--line);border-radius:24px;background:#fff;padding:30px}.model-panel p{font-size:28px;line-height:1.52;margin-top:24px}.model-help{color:var(--muted);font-size:24px!important;margin-top:0!important}.final{display:grid;place-items:center}.final-panel{width:1180px;border-radius:30px;background:var(--green);color:#fff;padding:65px;text-align:center}.final-panel h1{font-size:64px;line-height:1.05;margin-bottom:22px}.final-panel p{font-size:30px;line-height:1.4;margin-bottom:34px}.copy{min-height:72px;border-radius:36px;background:#fff;color:var(--green-dark);font-size:26px;font-weight:800;padding:0 34px}.reset{background:transparent;color:#e7f1ed;font-size:22px;text-decoration:underline;margin-left:26px}.copy-status{display:block;min-height:32px;margin-top:18px;font-size:23px;font-weight:700}
+    .deck-controls{position:fixed;inset:0;z-index:1000;pointer-events:none}.nav-arrow{position:absolute;top:50%;width:var(--nav-size,92px);height:var(--nav-size,92px);border-radius:50%;background:var(--surface);color:var(--green-dark);box-shadow:var(--shadow);display:grid;place-items:center;pointer-events:auto;transform:translateY(-50%)}.nav-arrow svg{width:var(--nav-icon,48px);height:var(--nav-icon,48px)}.nav-arrow.back{left:var(--nav-edge,22px)}.nav-arrow.next{right:var(--nav-edge,22px)}.nav-arrow:disabled{opacity:.25;cursor:not-allowed}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+    .rotate{display:none;position:fixed;inset:0;z-index:2000;background:var(--stage);padding:34px;place-items:center;text-align:center}.rotate div{max-width:340px}.rotate strong{display:block;font-size:32px;margin-bottom:12px}.rotate p{font-size:21px;line-height:1.4;color:var(--muted)}
+    .viewer-warning{display:none;position:fixed;inset:0;background:var(--stage);padding:32px;place-items:center;text-align:center}.viewer-warning div{max-width:520px;border-radius:24px;background:var(--surface);box-shadow:var(--shadow);padding:34px}.viewer-warning strong{display:block;font-size:30px;margin-bottom:12px}.viewer-warning p{font-size:21px;line-height:1.45;color:var(--muted)}.no-js .viewer-warning{display:grid}.no-js .deck-viewport,.no-js .deck-controls,.no-js .rotate{display:none!important}
+    body.needs-rotate .rotate{display:grid}body.compact .deck-stage,body.compact .slide{width:1366px;height:630px}body.compact .sheet{inset:20px 60px;padding:22px 36px;border-radius:24px}body.compact .heading{gap:14px;margin-bottom:8px}body.compact .icon{width:38px;height:38px;font-size:21px}body.compact .heading h1{font-size:38px;letter-spacing:-.025em}body.compact .heading p{font-size:22px;margin-top:-3px}body.compact .eyebrow{font-size:16px;margin-bottom:4px}body.compact .method-grid{gap:12px;margin-top:12px}body.compact .method{height:205px;padding:18px}body.compact .number{width:36px;height:36px;font-size:19px;margin-bottom:10px}body.compact .method h2{font-size:25px;margin-bottom:8px}body.compact .method p{font-size:23px;line-height:1.25}body.compact .notice{margin-top:14px;padding:13px 18px;font-size:20px}body.compact .listen-grid{grid-template-columns:300px 1fr;gap:16px;height:434px}body.compact .audio-pane{padding:18px;gap:12px}body.compact .wave{width:140px;height:140px}body.compact .play{min-width:220px;min-height:50px;font-size:20px}body.compact .status{font-size:18px}body.compact .note-grid{gap:10px}body.compact .note{padding:10px 13px}body.compact .note label{font-size:18px;margin-bottom:5px}body.compact .note textarea{height:134px;font-size:22px;padding:10px}body.compact .save-row{margin-top:8px}body.compact .secondary{min-height:44px;font-size:19px;padding:0 20px}body.compact .save-status{font-size:18px}body.compact .support-layout{height:430px;gap:16px}body.compact .support-list{gap:10px}body.compact .support-card{padding:15px}body.compact .reveal{font-size:20px}body.compact .support-card p{font-size:20px;line-height:1.3;margin-top:10px}body.compact .support-audio{padding:20px;gap:12px}body.compact .support-audio .wave{width:130px;height:130px}body.compact .support-note{font-size:20px}body.compact .write-layout{height:430px;gap:16px}body.compact .frame{padding:22px;font-size:22px;line-height:1.45}body.compact .frame-note{font-size:19px;margin-top:10px}body.compact .summary{height:350px;font-size:23px;padding:16px}body.compact .counter{font-size:19px}body.compact .check-layout{height:430px;gap:16px}body.compact .checks{gap:10px}body.compact .check{padding:14px;font-size:21px}body.compact .check input{width:24px;height:24px}body.compact .model-panel{padding:20px}body.compact .model-panel p{font-size:20px;line-height:1.38;margin-top:12px}body.compact .model-help{font-size:19px!important}body.compact .final-panel{width:900px;padding:36px}body.compact .final-panel h1{font-size:46px;margin-bottom:16px}body.compact .final-panel p{font-size:23px;margin-bottom:24px}body.compact .copy{min-height:56px;font-size:22px}
+    [hidden]{display:none!important}
+  </style>
+</head>
+<body>
+<div class="viewer-warning"><div><strong>Open this practice in Chrome or Safari</strong><p>This file preview cannot run the audio, writing boxes or saved work.</p></div></div>
+<div class="rotate"><div><strong>Turn your device sideways</strong><p>This practice uses one clear screen at a time.</p></div></div>
+<div class="deck-viewport">
+  <main class="deck-stage" id="deckStage" aria-label="Summarize Spoken Text homework">
+    <section class="slide active" data-title="Four note sections">
+      <div class="sheet">
+        <header class="heading"><span class="icon">&#9998;</span><h1>Summarize Spoken Text</h1><p>Catch the meaning first. Use short notes and simple words.</p></header>
+        <div class="method-grid">
+          <article class="method"><span class="number">1</span><h2>Main idea</h2><p>What is the speaker most worried about?</p></article>
+          <article class="method"><span class="number">2</span><h2>Scale</h2><p>What numbers show how large the problem may be?</p></article>
+          <article class="method"><span class="number">3</span><h2>Research problem</h2><p>Why is testing taking too long?</p></article>
+          <article class="method"><span class="number">4</span><h2>Impact</h2><p>How can children and society be affected?</p></article>
+        </div>
+        <p class="notice">This is an official Pearson PTE Academic practice item. In the real test, you hear the recording once and write 50-70 words. Extra support opens after your first notes.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-title="First listen">
+      <div class="sheet">
+        <span class="eyebrow">First listen</span>
+        <header class="heading"><span class="icon">&#9835;</span><h1>Listen once and take short notes</h1><p>Do not try to write every word. Put useful ideas in the four boxes.</p></header>
+        <div class="listen-grid">
+          <section class="audio-pane">
+            <svg class="wave" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg>
+            <button class="play" id="play1">&#9654; Play the recording</button><p class="status" id="status1" aria-live="polite">Ready</p><audio id="audio1" preload="metadata" src="pearson-l13-sst-item-2.mp3"></audio>
+          </section>
+          <section>
+            <div class="note-grid">
+              <div class="note"><label for="mainIdea">Main idea</label><textarea id="mainIdea" placeholder="The main concern"></textarea></div>
+              <div class="note"><label for="scale">Scale</label><textarea id="scale" placeholder="Useful numbers"></textarea></div>
+              <div class="note"><label for="researchProblem">Research problem</label><textarea id="researchProblem" placeholder="Why testing is slow"></textarea></div>
+              <div class="note"><label for="impact">Impact</label><textarea id="impact" placeholder="Effects on children and society"></textarea></div>
+            </div>
+            <div class="save-row"><button class="secondary" id="saveNotes">Save my first notes</button><span class="save-status" id="notesStatus" aria-live="polite"></span></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Training support">
+      <div class="sheet">
+        <span class="eyebrow">Training support</span>
+        <header class="heading"><span class="icon">?</span><h1>Find only the part you missed</h1><p>Save your first notes before opening a transcript section.</p></header>
+        <div class="support-layout" id="supportCard">
+          <section class="support-list">
+            <article class="support-card"><button class="reveal" data-reveal="t1" disabled>Show the main idea</button><p id="t1" hidden>Many chemicals may harm the brain while it is developing.</p></article>
+            <article class="support-card"><button class="reveal" data-reveal="t2" disabled>Show the key numbers</button><p id="t2" hidden>The estimate was 750 chemicals twenty years ago and may now be more than 1,000.</p></article>
+            <article class="support-card"><button class="reveal" data-reveal="t3" disabled>Show the research problem</button><p id="t3" hidden>The OECD has spent ten years developing tests, but the testing system is still incomplete.</p></article>
+            <article class="support-card"><button class="reveal" data-reveal="t4" disabled>Show the impact</button><p id="t4" hidden>Children may lose IQ, concentration, memory or motor skills, and each lost IQ point also costs society money.</p></article>
+          </section>
+          <section class="support-audio">
+            <svg class="wave" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg>
+            <p class="support-note">This second listen is training support. The real test allows one listen.</p>
+            <button class="play" id="play2" disabled>&#9654; Listen once more</button><p class="status" id="status2" aria-live="polite">Locked until you save your first notes</p><audio id="audio2" preload="metadata" src="pearson-l13-sst-item-2.mp3"></audio>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Write summary">
+      <div class="sheet">
+        <span class="eyebrow">Write</span>
+        <header class="heading"><span class="icon">&#9998;</span><h1>Turn your notes into 50-70 words</h1><p>Use the ideas from the recording. The frame only organises them.</p></header>
+        <div class="write-layout">
+          <section><div class="frame"><strong>The talk explains that</strong> [main idea].<br><strong>It reports that</strong> [scale or key numbers].<br><strong>However,</strong> [research problem].<br><strong>Overall,</strong> [effects on children and society].</div><p class="frame-note">Use simple, accurate words. You do not need to copy difficult language from the recording.</p></section>
+          <section class="response-panel"><textarea class="summary" id="summary" placeholder="Write your summary here"></textarea><div class="save-row"><span class="counter" id="count">0 words</span><button class="secondary" id="saveSummary">Save my summary</button><span class="save-status" id="summaryStatus" aria-live="polite"></span></div></section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Check summary">
+      <div class="sheet">
+        <span class="eyebrow">Check after writing</span>
+        <header class="heading"><span class="icon">&#10003;</span><h1>Check your work</h1><p>Save your own summary before opening Pearson's sample.</p></header>
+        <div class="check-layout">
+          <section class="checks"><label class="check"><input type="checkbox">I wrote 50-70 words.</label><label class="check"><input type="checkbox">I included the main idea.</label><label class="check"><input type="checkbox">I included useful supporting points.</label><label class="check"><input type="checkbox">I used words I understand and can spell.</label></section>
+          <section class="model-panel"><p class="model-help">This is Pearson's strong sample response. Compare the ideas, not every word.</p><button class="secondary" id="showModel" disabled>Show Pearson's sample</button><p id="model" hidden>20 years ago, the list of chemicals which affected brain development was numbered at 750. Today, this number has increased to about 1000. There is insufficient research on the testing of such chemicals by OECD. These chemicals cause harmful effects like the loss of IQ, concentration, memory and motor functions. It is estimated that for every lost IQ point of a child, society stands to lose 8,000 to 10,000 dollars.</p></section>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Send work">
+      <div class="sheet final"><section class="final-panel"><h1>Send your work</h1><p id="persistenceMessage">Your notes and summary stay saved in this browser. Copy them and paste them into your Preply message.</p><button class="copy" id="copyWork">Copy my notes and summary</button><button class="reset" id="reset">Start again</button><span class="copy-status" id="copyStatus" aria-live="polite"></span></section></div>
+    </section>
+  </main>
+</div>
+
+<nav class="deck-controls" aria-label="Slide navigation"><button class="nav-arrow back" id="backButton" type="button" aria-label="Previous screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></button><button class="nav-arrow next" id="nextButton" type="button" aria-label="Next screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></button><output class="sr-only" id="slidePosition" aria-live="polite">1 of 6</output></nav>
+
+<script>
+  const KEY='viratee-sst-pearson-l13-item2-v3'; let storageAvailable=true;
+  function storageGet(){try{return localStorage.getItem(KEY)}catch(e){storageAvailable=false;return null}}
+  function storageSet(value){try{localStorage.setItem(KEY,value)}catch(e){storageAvailable=false}}
+  function storageRemove(){try{localStorage.removeItem(KEY)}catch(e){storageAvailable=false}}
+  const slides=[...document.querySelectorAll('.slide')]; let current=0; let touchStart=null;
+  const resetRequested=new URLSearchParams(location.search).get('reset')==='1';
+  if(resetRequested){storageRemove();try{history.replaceState({},'',location.pathname)}catch(e){}}
+  let state={};if(!resetRequested){try{state=JSON.parse(storageGet()||'{}')}catch(e){state={}}}
+  function viewportBox(){const vv=window.visualViewport;return{left:vv?vv.offsetLeft:0,top:vv?vv.offsetTop:0,width:vv?vv.width:document.documentElement.clientWidth,height:vv?vv.height:document.documentElement.clientHeight}}
+  function scaleStage(){const stage=document.getElementById('deckStage');const controls=document.querySelector('.deck-controls');const rotate=document.querySelector('.rotate');const box=viewportBox();const landscape=box.width>=box.height;const compact=(box.width<=1366&&landscape)||box.height<=720||box.width/box.height>2;const rotateNeeded=box.height>box.width&&box.width<=1024;const stageWidth=compact?1366:1920;const stageHeight=compact?630:1080;document.body.classList.toggle('compact',compact);document.body.classList.toggle('needs-rotate',rotateNeeded);const inset=compact?8:0;const factor=Math.min((box.width-inset*2)/stageWidth,(box.height-inset*2)/stageHeight);stage.style.left='0';stage.style.top='0';stage.style.transform=`translate(${box.left+(box.width-stageWidth*factor)/2}px,${box.top+(box.height-stageHeight*factor)/2}px) scale(${factor})`;for(const el of [controls,rotate]){el.style.inset='auto';el.style.left=box.left+'px';el.style.top=box.top+'px';el.style.width=box.width+'px';el.style.height=box.height+'px'}document.documentElement.style.setProperty('--nav-size',compact?'56px':'92px');document.documentElement.style.setProperty('--nav-icon',compact?'30px':'48px');document.documentElement.style.setProperty('--nav-edge',compact?'6px':'22px')}
+  function showSlide(index){current=Math.max(0,Math.min(slides.length-1,index));slides.forEach((s,i)=>s.classList.toggle('active',i===current));backButton.disabled=current===0;nextButton.disabled=current===slides.length-1;slidePosition.value=`${current+1} of ${slides.length}`;state.slide=current;save()}
+  function save(){storageSet(JSON.stringify(state))}
+  addEventListener('resize',scaleStage);if(window.visualViewport){visualViewport.addEventListener('resize',scaleStage);visualViewport.addEventListener('scroll',scaleStage)}scaleStage();backButton.addEventListener('click',()=>showSlide(current-1));nextButton.addEventListener('click',()=>showSlide(current+1));
+  document.addEventListener('keydown',e=>{if(e.target.closest('textarea,input,button'))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();showSlide(current+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();showSlide(current-1)}if(e.key==='Home')showSlide(0);if(e.key==='End')showSlide(slides.length-1)});
+  document.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].clientX,{passive:true});document.addEventListener('touchend',e=>{if(touchStart===null)return;const d=e.changedTouches[0].clientX-touchStart;touchStart=null;if(Math.abs(d)>60)showSlide(current+(d<0?1:-1))},{passive:true});
+  const ids=['mainIdea','scale','researchProblem','impact','summary'];ids.forEach(id=>{const el=document.getElementById(id);el.value=state[id]||'';el.addEventListener('input',()=>{state[id]=el.value;save();if(id==='summary')wordCount()})});
+  function wordCount(){const n=summary.value.trim().split(/\s+/).filter(Boolean).length;count.textContent=n+' '+(n===1?'word':'words');count.classList.toggle('bad',n>0&&(n<50||n>70));return n}
+  function setSupport(on){document.querySelectorAll('[data-reveal]').forEach(b=>b.disabled=!on);play2.disabled=!on;if(on&&status2.textContent.startsWith('Locked'))status2.textContent='Ready for your supported second listen'}
+  function setModel(on){showModel.disabled=!on}
+  function playOnce(button,audio,status,key){button.addEventListener('click',async()=>{if(state[key])return;state[key]=true;save();button.disabled=true;status.textContent='Playing';try{audio.currentTime=0;await audio.play()}catch(e){state[key]=false;save();button.disabled=false;status.textContent='The audio did not start. Try once more.'}});audio.addEventListener('ended',()=>status.textContent='Finished');audio.addEventListener('error',()=>status.textContent='Audio unavailable')}
+  playOnce(play1,audio1,status1,'played1');playOnce(play2,audio2,status2,'played2');if(state.played1){play1.disabled=true;status1.textContent='Played'}if(state.played2){play2.disabled=true;status2.textContent='Played'}
+  saveNotes.addEventListener('click',()=>{state.notesSaved=true;save();setSupport(true);notesStatus.textContent='First notes saved';showSlide(2)});document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{const p=document.getElementById(b.dataset.reveal);p.hidden=!p.hidden;b.textContent=p.hidden?b.textContent.replace('Hide','Show'):b.textContent.replace('Show','Hide')}));
+  saveSummary.addEventListener('click',()=>{state.summarySaved=true;save();setModel(true);summaryStatus.textContent='Summary saved';showSlide(4)});showModel.addEventListener('click',()=>{model.hidden=!model.hidden;showModel.textContent=model.hidden?"Show Pearson's sample":"Hide Pearson's sample"});
+  copyWork.addEventListener('click',async()=>{const text=`Viratee - SST homework\n\nMain idea\n${mainIdea.value}\n\nScale\n${scale.value}\n\nResearch problem\n${researchProblem.value}\n\nImpact\n${impact.value}\n\nFinal summary\n${summary.value}`;try{await navigator.clipboard.writeText(text);copyStatus.textContent='Copied'}catch(e){copyStatus.textContent='Please select and copy your work manually'}});reset.addEventListener('click',()=>{if(confirm('Clear only this homework and start again?')){storageRemove();location.reload()}});
+  if(!storageAvailable)persistenceMessage.textContent='Keep this page open until you copy your work. This file viewer cannot save after closing.';
+  if(state.notesSaved){setSupport(true);notesStatus.textContent='First notes saved'}else setSupport(false);if(state.summarySaved){setModel(true);summaryStatus.textContent='Summary saved'}else setModel(false);wordCount();showSlide(Number.isInteger(state.slide)?state.slide:0);
+</script>
+</body>
+</html>
