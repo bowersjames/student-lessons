@@ -44,14 +44,14 @@
           <article class="method"><span class="number">3</span><h2>Research problem</h2><p>Why is testing taking too long?</p></article>
           <article class="method"><span class="number">4</span><h2>Impact</h2><p>How can children and society be affected?</p></article>
         </div>
-        <p class="notice">This is an official Pearson PTE Academic practice item. In the real test, you hear the recording once and write 50-70 words. Extra support opens after your first notes.</p>
+        <p class="notice">This is an official Pearson PTE Academic practice item. In the real test, you hear the recording once and write 50-70 words. For this homework, replay the recording whenever you need more practice. Extra support opens after your first notes.</p>
       </div>
     </section>
 
     <section class="slide" data-title="First listen">
       <div class="sheet">
         <span class="eyebrow">First listen</span>
-        <header class="heading"><span class="icon">&#9835;</span><h1>Listen once and take short notes</h1><p>Do not try to write every word. Put useful ideas in the four boxes.</p></header>
+        <header class="heading"><span class="icon">&#9835;</span><h1>Start with one listen</h1><p>Take short notes. Do not try to write every word. Put useful ideas in the four boxes.</p></header>
         <div class="listen-grid">
           <section class="audio-pane">
             <svg class="wave" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100"/><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="64"/><circle cx="110" cy="110" r="48"/><path d="M80 116v-12M94 126V94M108 138V82M122 124V96M136 116v-12"/></svg>
@@ -140,8 +140,8 @@
   function wordCount(){const n=summary.value.trim().split(/\s+/).filter(Boolean).length;count.textContent=n+' '+(n===1?'word':'words');count.classList.toggle('bad',n>0&&(n<50||n>70));return n}
   function setSupport(on){document.querySelectorAll('[data-reveal]').forEach(b=>b.disabled=!on);play2.disabled=!on;if(on&&status2.textContent.startsWith('Locked'))status2.textContent='Ready for your supported second listen'}
   function setModel(on){showModel.disabled=!on}
-  function playOnce(button,audio,status,key){button.addEventListener('click',async()=>{if(state[key])return;state[key]=true;save();button.disabled=true;status.textContent='Playing';try{audio.currentTime=0;await audio.play()}catch(e){state[key]=false;save();button.disabled=false;status.textContent='The audio did not start. Try once more.'}});audio.addEventListener('ended',()=>status.textContent='Finished');audio.addEventListener('error',()=>status.textContent='Audio unavailable')}
-  playOnce(play1,audio1,status1,'played1');playOnce(play2,audio2,status2,'played2');if(state.played1){play1.disabled=true;status1.textContent='Played'}if(state.played2){play2.disabled=true;status2.textContent='Played'}
+  function playRecording(button,audio,status,key){button.addEventListener('click',async()=>{state[key]=(state[key]||0)+1;save();button.disabled=true;status.textContent='Playing';try{audio.currentTime=0;await audio.play()}catch(e){state[key]=Math.max(0,state[key]-1);save();button.disabled=false;status.textContent='The audio did not start. Try once more.'}});audio.addEventListener('ended',()=>{button.disabled=false;button.innerHTML='&#9654; Play again';status.textContent='Finished — replay whenever you need'});audio.addEventListener('error',()=>{button.disabled=false;status.textContent='Audio unavailable'})}
+  playRecording(play1,audio1,status1,'playCount1');playRecording(play2,audio2,status2,'playCount2');
   saveNotes.addEventListener('click',()=>{state.notesSaved=true;save();setSupport(true);notesStatus.textContent='First notes saved';showSlide(2)});document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{const p=document.getElementById(b.dataset.reveal);p.hidden=!p.hidden;b.textContent=p.hidden?b.textContent.replace('Hide','Show'):b.textContent.replace('Show','Hide')}));
   saveSummary.addEventListener('click',()=>{state.summarySaved=true;save();setModel(true);summaryStatus.textContent='Summary saved';showSlide(4)});showModel.addEventListener('click',()=>{model.hidden=!model.hidden;showModel.textContent=model.hidden?"Show Pearson's sample":"Hide Pearson's sample"});
   copyWork.addEventListener('click',async()=>{const text=`Viratee - SST homework\n\nMain idea\n${mainIdea.value}\n\nScale\n${scale.value}\n\nResearch problem\n${researchProblem.value}\n\nImpact\n${impact.value}\n\nFinal summary\n${summary.value}`;try{await navigator.clipboard.writeText(text);copyStatus.textContent='Copied'}catch(e){copyStatus.textContent='Please select and copy your work manually'}});reset.addEventListener('click',()=>{if(confirm('Clear only this homework and start again?')){storageRemove();location.reload()}});
