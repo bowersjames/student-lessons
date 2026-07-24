@@ -561,30 +561,29 @@
       <header class="task-heading">
         <span class="task-icon" aria-hidden="true">SGD</span>
         <h1>Summarize Group Discussion</h1>
-        <p class="instruction">Listen once. Capture each position and the shared point.</p>
+        <p class="instruction">Listen once. Capture each position, any change, and the outcome.</p>
       </header>
       <div class="notes-layout">
         <aside class="audio-panel">
-          <audio controls preload="metadata" src="audio/PTEA-SGD-001-peer-tutoring.mp3"></audio>
-          <button class="button secondary" type="button" data-open-transcript>Transcript support</button>
-          <div class="saved" data-saved="sgd1"></div>
+          <audio controls preload="metadata" src="audio/PTEA-SGD-002-university-electives.mp3"></audio>
+          <div class="saved" data-saved="sgd2"></div>
         </aside>
         <div class="notes-grid">
           <label class="note-card">
             <h2>Speaker 1</h2>
-            <textarea data-save="sgd1-speaker1" aria-label="Speaker 1 notes"></textarea>
+            <textarea data-save="sgd2-core-speaker1" aria-label="Speaker 1 notes"></textarea>
           </label>
           <label class="note-card">
             <h2>Speaker 2</h2>
-            <textarea data-save="sgd1-speaker2" aria-label="Speaker 2 notes"></textarea>
+            <textarea data-save="sgd2-core-speaker2" aria-label="Speaker 2 notes"></textarea>
           </label>
           <label class="note-card">
-            <h2>Speaker 3</h2>
-            <textarea data-save="sgd1-speaker3" aria-label="Speaker 3 notes"></textarea>
+            <h2>Speaker 3 / change</h2>
+            <textarea data-save="sgd2-core-speaker3" aria-label="Speaker 3 and change notes"></textarea>
           </label>
           <label class="note-card">
-            <h2>Shared point</h2>
-            <textarea data-save="sgd1-shared" aria-label="Shared point notes"></textarea>
+            <h2>Relationship / outcome</h2>
+            <textarea data-save="sgd2-core-outcome" aria-label="Relationship and outcome notes"></textarea>
           </label>
         </div>
       </div>
@@ -599,10 +598,10 @@
       <div class="task-grid">
         <section class="stimulus">
           <div class="notes-grid">
-            <div class="note-card"><h2>Speaker 1</h2><textarea data-mirror="sgd1-speaker1" readonly></textarea></div>
-            <div class="note-card"><h2>Speaker 2</h2><textarea data-mirror="sgd1-speaker2" readonly></textarea></div>
-            <div class="note-card"><h2>Speaker 3</h2><textarea data-mirror="sgd1-speaker3" readonly></textarea></div>
-            <div class="note-card"><h2>Shared point</h2><textarea data-mirror="sgd1-shared" readonly></textarea></div>
+            <div class="note-card"><h2>Speaker 1</h2><textarea data-mirror="sgd2-core-speaker1" readonly></textarea></div>
+            <div class="note-card"><h2>Speaker 2</h2><textarea data-mirror="sgd2-core-speaker2" readonly></textarea></div>
+            <div class="note-card"><h2>Speaker 3 / change</h2><textarea data-mirror="sgd2-core-speaker3" readonly></textarea></div>
+            <div class="note-card"><h2>Relationship / outcome</h2><textarea data-mirror="sgd2-core-outcome" readonly></textarea></div>
           </div>
         </section>
         <aside class="rail">
@@ -673,46 +672,11 @@
       </div>
     </section>
 
-    <section class="slide" data-slide="9">
-      <header class="task-heading">
-        <span class="task-icon" aria-hidden="true">+</span>
-        <h1>Extra discussion</h1>
-        <p class="instruction">Listen once. Capture each position and the shared decision.</p>
-      </header>
-      <div class="notes-layout">
-        <aside class="audio-panel">
-          <audio controls preload="metadata" src="audio/PTEA-SGD-002-university-electives.mp3"></audio>
-          <div class="saved" data-saved="sgd2"></div>
-        </aside>
-        <div class="notes-grid">
-          <label class="note-card"><h2>Speaker 1</h2><textarea data-save="sgd2-speaker1"></textarea></label>
-          <label class="note-card"><h2>Speaker 2</h2><textarea data-save="sgd2-speaker2"></textarea></label>
-          <label class="note-card"><h2>Speaker 3</h2><textarea data-save="sgd2-speaker3"></textarea></label>
-          <label class="note-card"><h2>Shared decision</h2><textarea data-save="sgd2-shared"></textarea></label>
-        </div>
-      </div>
-    </section>
-
-    <output class="step" aria-live="off">1 / 10</output>
+    <output class="step" aria-live="off">1 / 9</output>
   </main>
 
   <button class="nav-button prev" type="button" aria-label="Previous screen" hidden>‹</button>
   <button class="nav-button next" type="button" aria-label="Next screen">›</button>
-
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="transcript-title">
-    <div class="modal-card">
-      <div class="modal-top">
-        <h2 id="transcript-title">Official transcript</h2>
-        <button class="close" type="button" aria-label="Close transcript">×</button>
-      </div>
-      <p class="transcript-text"></p>
-      <div class="transcript-nav">
-        <button class="button secondary" type="button" data-transcript-prev>Previous</button>
-        <strong data-transcript-step>1 / 9</strong>
-        <button class="button secondary" type="button" data-transcript-next>Next</button>
-      </div>
-    </div>
-  </div>
 
   <script>
     const slides = [...document.querySelectorAll('.slide')];
@@ -802,42 +766,6 @@
           saved._timer = setTimeout(() => { saved.textContent = ''; }, 1400);
         }
       });
-    });
-
-    const transcript = [
-      `<strong>Speaker 1</strong> I've actually had a really good experience with peer tutoring. Last semester, I was struggling with advanced calculus, and my tutor really helped me get concepts I just couldn't understand from lectures. They explained things in a way that made so much more sense to me, kind of like translating what professors say into everyday student language. It really helped my confidence in that subject.`,
-      `<strong>Speaker 2</strong> That's great to hear! I was actually a peer tutor for an intro programming course last year, and it was surprisingly good for me too. Teaching someone else really makes you understand the material better yourself. I found myself going back to review things I thought I already knew, just so I could explain them clearly.`,
-      `<strong>Speaker 3</strong> Hmm, I'm a bit more unsure about formal peer tutoring. I've always found it more helpful to just study with friends or classmates and explain things to each other if someone's stuck. It feels less like a formal lesson and more like working together. And there's less pressure to perform for someone who's officially "tutoring" you.`,
-      `<strong>Speaker 1</strong> I can see your point about the pressure, but I think the way formal peer tutoring is set up is what made it so effective for me. We had specific sessions, and the tutor had been trained on how to teach. With friends, it can sometimes just turn into complaining about how hard the subject is, instead of actually breaking down the problems step-by-step.`,
-      `<strong>Speaker 3</strong> Yeah, that's fair. I guess I've just always preferred that informal, flexible way. When I'm learning with friends, I feel more comfortable saying what I don't know without feeling judged. Plus, if we get stuck, we can all look for answers together, or just take a break, which you might not feel as comfortable doing in a more formal setting.`,
-      `<strong>Speaker 2</strong> From the tutor's side, it can also be tricky to balance. You want to guide them, but you can't just give them the answers or do their work for them. I had a few students who just wanted me to tell them what to write, and I had to learn how to gently push them towards finding the solution themselves. It's a fine line to walk sometimes.`,
-      `<strong>Speaker 1</strong> That's a really good point, Chris. I think the key is finding the right peer tutor who knows how to help you learn, not just give you answers. It's not just about knowing the subject; it's also about being able to teach it well and change your approach for different learning styles. Some subjects might also work better with it than others.`,
-      `<strong>Speaker 2</strong> Absolutely. Some students learn well with visual explanations, others need to write things out, and some just need to talk through it. Changing your approach quickly is a challenge, especially when you're also a student with your own studies. It really shows how different learning can be.`,
-      `<strong>Speaker 3</strong> So I guess it really comes down to what you prefer and how good the program or the person is. If you find a good match, whether it's formal or informal, it can be super helpful. It's definitely a good thing to have when you're struggling, no matter how you get it.`
-    ];
-
-    const modal = document.querySelector('.modal');
-    const transcriptText = document.querySelector('.transcript-text');
-    const transcriptStep = document.querySelector('[data-transcript-step]');
-    let transcriptIndex = 0;
-
-    function showTranscript(index) {
-      transcriptIndex = Math.max(0, Math.min(transcript.length - 1, index));
-      transcriptText.innerHTML = transcript[transcriptIndex];
-      transcriptStep.textContent = `${transcriptIndex + 1} / ${transcript.length}`;
-      document.querySelector('[data-transcript-prev]').disabled = transcriptIndex === 0;
-      document.querySelector('[data-transcript-next]').disabled = transcriptIndex === transcript.length - 1;
-    }
-
-    document.querySelector('[data-open-transcript]').addEventListener('click', () => {
-      showTranscript(0);
-      modal.classList.add('open');
-    });
-    document.querySelector('.close').addEventListener('click', () => modal.classList.remove('open'));
-    document.querySelector('[data-transcript-prev]').addEventListener('click', () => showTranscript(transcriptIndex - 1));
-    document.querySelector('[data-transcript-next]').addEventListener('click', () => showTranscript(transcriptIndex + 1));
-    modal.addEventListener('click', event => {
-      if (event.target === modal) modal.classList.remove('open');
     });
 
     show(0);
