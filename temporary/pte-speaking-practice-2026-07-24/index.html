@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Live PTE Academic speaking lesson using official Pearson materials.">
+  <title>PTE speaking practice</title>
+  <style>
+    :root {
+      --canvas: #f3f0e8;
+      --surface: #fffefa;
+      --panel: #fbf9f3;
+      --ink: #171a18;
+      --muted: #5f6561;
+      --line: #ded9cf;
+      --green: #2d6a5b;
+      --green-soft: #dce9e4;
+      --terracotta: #b96345;
+      --shadow: 0 18px 52px rgba(41, 38, 31, .12);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, Aptos, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body { height: 100dvh; }
+
+    button, textarea, input { font: inherit; }
+
+    .app {
+      width: min(1500px, calc(100vw - 4vw));
+      height: min(900px, calc(100dvh - 4vh));
+      margin: 2vh auto;
+      overflow: hidden;
+      border: 1px solid rgba(70, 67, 58, .14);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(16px, 2.4vh, 28px);
+      padding: clamp(22px, 3vw, 48px) clamp(24px, 4vw, 66px);
+    }
+
+    .slide.active { display: grid; }
+
+    .task-heading {
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+    }
+
+    .task-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--green);
+      background: var(--green-soft);
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 3vw, 50px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .instruction {
+      grid-column: 2;
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.45vw, 22px);
+      line-height: 1.35;
+    }
+
+    .focus {
+      align-self: center;
+      width: min(1050px, 92%);
+      margin: 0 auto;
+      display: grid;
+      gap: clamp(18px, 3vh, 32px);
+    }
+
+    .focus h1 {
+      font-size: clamp(44px, 6vw, 82px);
+      max-width: 900px;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .focus-card {
+      min-height: 150px;
+      padding: 24px;
+      display: grid;
+      align-content: center;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      font-size: clamp(21px, 2vw, 30px);
+      font-weight: 750;
+      line-height: 1.2;
+    }
+
+    .task-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(250px, 23vw, 340px);
+      gap: clamp(18px, 2.4vw, 34px);
+    }
+
+    .stimulus, .rail, .note-card, .reflection-card {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+    }
+
+    .stimulus {
+      padding: clamp(24px, 3vw, 42px);
+      display: grid;
+      align-content: center;
+      gap: 20px;
+    }
+
+    .passage {
+      margin: 0;
+      font-size: clamp(23px, 2.15vw, 34px);
+      line-height: 1.5;
+      letter-spacing: -.015em;
+    }
+
+    .prompt {
+      margin: 0;
+      font-size: clamp(21px, 1.85vw, 29px);
+      line-height: 1.47;
+      letter-spacing: -.01em;
+    }
+
+    .rail {
+      padding: 24px;
+      display: grid;
+      align-content: center;
+      justify-items: stretch;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .timer {
+      color: var(--ink);
+      font-size: clamp(48px, 5vw, 76px);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -.045em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer.ready { color: var(--terracotta); }
+
+    .button {
+      min-height: 54px;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .12s ease, filter .16s ease;
+    }
+
+    .button:hover { filter: brightness(.94); }
+    .button:active { transform: scale(.96); }
+    .button:focus-visible,
+    .nav-button:focus-visible,
+    textarea:focus-visible,
+    input:focus-visible {
+      outline: 4px solid rgba(45, 106, 91, .24);
+      outline-offset: 3px;
+    }
+
+    .button.secondary {
+      border: 2px solid var(--green);
+      background: transparent;
+      color: var(--green);
+    }
+
+    audio {
+      width: 100%;
+      min-height: 48px;
+      accent-color: var(--green);
+    }
+
+    .frame-grid, .notes-grid, .reflection-grid {
+      min-height: 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    .frame-grid { grid-template-columns: repeat(3, 1fr); }
+    .notes-grid { grid-template-columns: repeat(2, 1fr); }
+    .reflection-grid { grid-template-columns: repeat(3, 1fr); align-self: center; }
+
+    .note-card, .reflection-card {
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .note-card h2, .reflection-card h2 {
+      margin: 0;
+      color: var(--terracotta);
+      font-size: clamp(18px, 1.5vw, 24px);
+      letter-spacing: .02em;
+    }
+
+    textarea, input {
+      width: 100%;
+      min-height: 0;
+      border: 1px solid #cfc9be;
+      border-radius: 14px;
+      background: #fffefa;
+      color: var(--ink);
+      padding: 14px;
+      font-size: clamp(19px, 1.55vw, 25px);
+      line-height: 1.35;
+      resize: none;
+    }
+
+    .frame-grid textarea { min-height: 270px; }
+
+    .notes-layout {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: clamp(260px, 25vw, 360px) minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    .audio-panel {
+      min-height: 0;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      display: grid;
+      align-content: center;
+      gap: 18px;
+    }
+
+    .audio-panel .button { width: 100%; }
+
+    .saved {
+      min-height: 22px;
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .nav-button {
+      position: fixed;
+      z-index: 20;
+      top: 50%;
+      width: clamp(52px, 5vw, 74px);
+      height: clamp(52px, 5vw, 74px);
+      border: 1px solid rgba(70, 67, 58, .14);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--green);
+      box-shadow: 0 10px 28px rgba(41, 38, 31, .14);
+      font-size: clamp(30px, 3vw, 44px);
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .nav-button:active { transform: translateY(-50%) scale(.96); }
+    .nav-button.prev { left: max(8px, calc((100vw - min(1500px, 96vw)) / 2 - 34px)); }
+    .nav-button.next { right: max(8px, calc((100vw - min(1500px, 96vw)) / 2 - 34px)); }
+    .nav-button[hidden] { display: none; }
+
+    .step {
+      position: absolute;
+      right: 24px;
+      bottom: 15px;
+      color: #858984;
+      font-size: 14px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: none;
+      padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      background: rgba(28, 30, 27, .62);
+      place-items: center;
+    }
+
+    .modal.open { display: grid; }
+
+    .modal-card {
+      width: min(1120px, 96vw);
+      height: min(760px, 92dvh);
+      padding: clamp(20px, 3vw, 38px);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 16px;
+    }
+
+    .modal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .modal-top h2 {
+      margin: 0;
+      font-size: clamp(25px, 2.2vw, 36px);
+    }
+
+    .close {
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .transcript-text {
+      margin: 0;
+      align-self: center;
+      font-size: clamp(19px, 1.7vw, 28px);
+      line-height: 1.52;
+    }
+
+    .transcript-text strong { color: var(--terracotta); }
+
+    .transcript-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .transcript-nav .button:last-child { justify-self: end; }
+
+    @media (max-width: 900px) {
+      .app {
+        width: 100vw;
+        height: 100dvh;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .slide { padding: 20px 44px 30px; gap: 14px; }
+      .task-grid, .notes-layout { grid-template-columns: 1fr; }
+      .task-grid { grid-template-rows: minmax(0, 1fr) auto; }
+      .rail { grid-template-columns: 1fr 1fr; align-items: center; padding: 15px; }
+      .rail .timer { grid-column: 1; }
+      .rail .button { grid-column: 2; }
+      .frame-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .frame-grid textarea { min-height: 180px; }
+      .audio-panel { grid-template-columns: 1fr 1fr; padding: 16px; }
+      .audio-panel .saved { grid-column: 1 / -1; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-card { min-height: 90px; }
+      .nav-button { top: auto; bottom: 10px; transform: none; }
+      .nav-button:active { transform: scale(.96); }
+      .nav-button.prev { left: 10px; }
+      .nav-button.next { right: 10px; }
+    }
+
+    @media (max-width: 1100px) and (orientation: portrait) {
+      .app {
+        width: 100vw;
+        height: 100dvh;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .slide { padding: 14px 18px 70px; gap: 10px; }
+      .task-heading { grid-template-columns: 40px minmax(0, 1fr); gap: 10px; }
+      .task-icon { width: 40px; height: 40px; font-size: 17px; }
+      h1 { font-size: clamp(25px, 8.5vw, 36px); }
+      .instruction { grid-column: 1 / -1; font-size: 15px; }
+      .focus { width: 100%; gap: 14px; }
+      .focus h1 { font-size: clamp(38px, 12vw, 58px); }
+      .focus-grid { gap: 10px; }
+      .focus-card { min-height: 76px; padding: 15px; font-size: 20px; }
+      .task-grid { gap: 10px; }
+      .stimulus { padding: 16px; }
+      .passage { font-size: clamp(18px, 4.8vw, 23px); line-height: 1.38; }
+      .prompt { font-size: clamp(17px, 4.6vw, 22px); line-height: 1.4; }
+      .rail { gap: 10px; padding: 10px; }
+      .timer { font-size: 38px; }
+      .button { min-height: 48px; padding: 9px 14px; font-size: 15px; }
+      .frame-grid { grid-template-columns: 1fr; gap: 8px; }
+      .frame-grid .note-card { grid-template-columns: 110px minmax(0, 1fr); grid-template-rows: 1fr; align-items: center; }
+      .frame-grid textarea { min-height: 88px; }
+      .notes-grid { gap: 8px; }
+      .note-card, .reflection-card { padding: 10px; gap: 6px; }
+      .note-card h2, .reflection-card h2 { font-size: 15px; }
+      textarea, input { padding: 10px; font-size: 16px; }
+      .notes-layout { gap: 9px; }
+      .audio-panel { gap: 8px; padding: 10px; }
+      audio { min-height: 40px; }
+      .reflection-grid { grid-template-columns: 1fr; gap: 10px; }
+      .reflection-card { grid-template-columns: 145px minmax(0, 1fr); grid-template-rows: 1fr; align-items: center; }
+      .reflection-card input { min-height: 52px; }
+      .modal-card { width: 100%; height: 100%; border-radius: 0; padding: 16px; }
+      .transcript-text { font-size: clamp(16px, 4.4vw, 20px); line-height: 1.42; }
+      .transcript-nav { grid-template-columns: 1fr auto 1fr; }
+      .step { right: 16px; bottom: 18px; }
+    }
+
+    @media (max-height: 560px) and (orientation: landscape) {
+      .slide { padding: 12px 70px 18px; gap: 8px; }
+      .task-heading { grid-template-columns: 38px minmax(0, 1fr); gap: 10px; }
+      .task-icon { width: 38px; height: 38px; }
+      h1 { font-size: 28px; }
+      .instruction { font-size: 14px; margin: 0; }
+      .stimulus { padding: 14px; }
+      .passage { font-size: 19px; line-height: 1.34; }
+      .prompt { font-size: 17px; line-height: 1.34; }
+      .rail { padding: 12px; gap: 8px; }
+      .timer { font-size: 38px; }
+      .button { min-height: 44px; }
+      .frame-grid textarea { min-height: 135px; }
+      .notes-layout { grid-template-columns: 230px minmax(0, 1fr); gap: 10px; }
+      .audio-panel { display: grid; grid-template-columns: 1fr; padding: 12px; gap: 8px; }
+      .note-card { padding: 9px; }
+      textarea { font-size: 16px; padding: 8px; }
+      .focus { gap: 10px; }
+      .focus h1 { font-size: 45px; }
+      .focus-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .focus-card { min-height: 80px; padding: 12px; font-size: 18px; }
+      .nav-button { top: 50%; bottom: auto; transform: translateY(-50%); }
+      .nav-button:active { transform: translateY(-50%) scale(.96); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-live="polite">
+    <section class="slide active" data-slide="0">
+      <div class="focus">
+        <h1>Clear speaking from essential meaning</h1>
+        <div class="focus-grid">
+          <div class="focus-card">Read in meaningful chunks</div>
+          <div class="focus-card">Respond with a clear outcome</div>
+          <div class="focus-card">Track three voices</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="1">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">RA</span>
+        <h1>Read Aloud</h1>
+        <p class="instruction">Prepare for 35 seconds. Then read the whole passage aloud.</p>
+      </header>
+      <div class="task-grid">
+        <section class="stimulus">
+          <p class="passage">The climate for doing business improved in Egypt more than in any other country last year, according to a global study that revealed a wave of company-oriented reforms across the Middle East. The World Bank rankings, which look at business regulations, also showed that the pace of business reforms in Eastern Europe was overtaking East Asia.</p>
+        </section>
+        <aside class="rail">
+          <output class="timer ready" data-output="ra">00:35</output>
+          <button class="button" type="button" data-timer="ra" data-seconds="35">Start preparation</button>
+          <button class="button secondary" type="button" data-timer="ra" data-seconds="35">Start speaking</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="2">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">RTS</span>
+        <h1>Respond to a Situation</h1>
+        <p class="instruction">Listen and read. Then say what you would say to IT support.</p>
+      </header>
+      <div class="task-grid">
+        <section class="stimulus">
+          <audio controls preload="metadata" src="audio/PTEA-RTS-010-university-account.mp3"></audio>
+          <p class="prompt">You are a student and you keep getting locked out of your university account. You've reset your password multiple times, but the problem persists. You call IT support to explain the situation and ask for a more permanent solution. What would you say?</p>
+        </section>
+        <aside class="rail">
+          <output class="timer ready" data-output="rts10">00:10</output>
+          <button class="button" type="button" data-timer="rts10" data-seconds="10">Start preparation</button>
+          <button class="button secondary" type="button" data-timer="rts10" data-seconds="40">Start speaking</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="3">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">3</span>
+        <h1>Three keywords</h1>
+        <p class="instruction">Build the response, then say it again.</p>
+      </header>
+      <div class="frame-grid">
+        <label class="note-card">
+          <h2>Problem</h2>
+          <textarea data-save="rts-problem" aria-label="Problem"></textarea>
+        </label>
+        <label class="note-card">
+          <h2>What I tried</h2>
+          <textarea data-save="rts-attempts" aria-label="What I tried"></textarea>
+        </label>
+        <label class="note-card">
+          <h2>Request</h2>
+          <textarea data-save="rts-request" aria-label="Request"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="4">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">SGD</span>
+        <h1>Summarize Group Discussion</h1>
+        <p class="instruction">Listen once. Capture each position and the shared point.</p>
+      </header>
+      <div class="notes-layout">
+        <aside class="audio-panel">
+          <audio controls preload="metadata" src="audio/PTEA-SGD-001-peer-tutoring.mp3"></audio>
+          <button class="button secondary" type="button" data-open-transcript>Transcript support</button>
+          <div class="saved" data-saved="sgd1"></div>
+        </aside>
+        <div class="notes-grid">
+          <label class="note-card">
+            <h2>Speaker 1</h2>
+            <textarea data-save="sgd1-speaker1" aria-label="Speaker 1 notes"></textarea>
+          </label>
+          <label class="note-card">
+            <h2>Speaker 2</h2>
+            <textarea data-save="sgd1-speaker2" aria-label="Speaker 2 notes"></textarea>
+          </label>
+          <label class="note-card">
+            <h2>Speaker 3</h2>
+            <textarea data-save="sgd1-speaker3" aria-label="Speaker 3 notes"></textarea>
+          </label>
+          <label class="note-card">
+            <h2>Shared point</h2>
+            <textarea data-save="sgd1-shared" aria-label="Shared point notes"></textarea>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="5">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">SGD</span>
+        <h1>Give the summary</h1>
+        <p class="instruction">Prepare for 10 seconds. Then speak for up to 2 minutes.</p>
+      </header>
+      <div class="task-grid">
+        <section class="stimulus">
+          <div class="notes-grid">
+            <div class="note-card"><h2>Speaker 1</h2><textarea data-mirror="sgd1-speaker1" readonly></textarea></div>
+            <div class="note-card"><h2>Speaker 2</h2><textarea data-mirror="sgd1-speaker2" readonly></textarea></div>
+            <div class="note-card"><h2>Speaker 3</h2><textarea data-mirror="sgd1-speaker3" readonly></textarea></div>
+            <div class="note-card"><h2>Shared point</h2><textarea data-mirror="sgd1-shared" readonly></textarea></div>
+          </div>
+        </section>
+        <aside class="rail">
+          <output class="timer ready" data-output="sgd1">00:10</output>
+          <button class="button" type="button" data-timer="sgd1" data-seconds="10">Start preparation</button>
+          <button class="button secondary" type="button" data-timer="sgd1" data-seconds="120">Start speaking</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="6">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">✓</span>
+        <h1>Key takeaways</h1>
+        <p class="instruction">Name the moves you will use in the test.</p>
+      </header>
+      <div class="reflection-grid">
+        <label class="reflection-card">
+          <h2>Speaking</h2>
+          <input data-save="takeaway-speaking" aria-label="Speaking takeaway">
+        </label>
+        <label class="reflection-card">
+          <h2>Notes</h2>
+          <input data-save="takeaway-notes" aria-label="Note-taking takeaway">
+        </label>
+        <label class="reflection-card">
+          <h2>Pronunciation</h2>
+          <input data-save="takeaway-pronunciation" aria-label="Pronunciation takeaway">
+        </label>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="7">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">RTS</span>
+        <h1>Fresh response</h1>
+        <p class="instruction">Listen once. Prepare for 10 seconds. Speak for up to 40 seconds.</p>
+      </header>
+      <div class="task-grid">
+        <section class="stimulus">
+          <audio controls preload="metadata" src="audio/PTEA-RTS-026-presenter-order.mp3"></audio>
+          <p class="prompt">You are working on a group presentation for class, and your teammates just decided on the order of presenters. They want you to go first, but you feel unprepared and think it would be better to go later. You’re in a meeting with your group now. What do you say to your teammates?</p>
+        </section>
+        <aside class="rail">
+          <output class="timer ready" data-output="rts26">00:10</output>
+          <button class="button" type="button" data-timer="rts26" data-seconds="10">Start preparation</button>
+          <button class="button secondary" type="button" data-timer="rts26" data-seconds="40">Start speaking</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="8">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">+</span>
+        <h1>Extra response</h1>
+        <p class="instruction">Listen once. Prepare for 10 seconds. Speak for up to 40 seconds.</p>
+      </header>
+      <div class="task-grid">
+        <section class="stimulus">
+          <audio controls preload="metadata" src="audio/PTEA-RTS-024-time-management-advice.mp3"></audio>
+          <p class="prompt">You are in the student lounge when a classmate tells you they are struggling to keep up with assignments and often miss deadlines because they can't manage their time. They seem frustrated and ask for your help. You remember you used to be disorganized too but have learned some strategies. What do you say to your classmate?</p>
+        </section>
+        <aside class="rail">
+          <output class="timer ready" data-output="rts24">00:10</output>
+          <button class="button" type="button" data-timer="rts24" data-seconds="10">Start preparation</button>
+          <button class="button secondary" type="button" data-timer="rts24" data-seconds="40">Start speaking</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-slide="9">
+      <header class="task-heading">
+        <span class="task-icon" aria-hidden="true">+</span>
+        <h1>Extra discussion</h1>
+        <p class="instruction">Listen once. Capture each position and the shared decision.</p>
+      </header>
+      <div class="notes-layout">
+        <aside class="audio-panel">
+          <audio controls preload="metadata" src="audio/PTEA-SGD-002-university-electives.mp3"></audio>
+          <div class="saved" data-saved="sgd2"></div>
+        </aside>
+        <div class="notes-grid">
+          <label class="note-card"><h2>Speaker 1</h2><textarea data-save="sgd2-speaker1"></textarea></label>
+          <label class="note-card"><h2>Speaker 2</h2><textarea data-save="sgd2-speaker2"></textarea></label>
+          <label class="note-card"><h2>Speaker 3</h2><textarea data-save="sgd2-speaker3"></textarea></label>
+          <label class="note-card"><h2>Shared decision</h2><textarea data-save="sgd2-shared"></textarea></label>
+        </div>
+      </div>
+    </section>
+
+    <output class="step" aria-live="off">1 / 10</output>
+  </main>
+
+  <button class="nav-button prev" type="button" aria-label="Previous screen" hidden>‹</button>
+  <button class="nav-button next" type="button" aria-label="Next screen">›</button>
+
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="transcript-title">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h2 id="transcript-title">Official transcript</h2>
+        <button class="close" type="button" aria-label="Close transcript">×</button>
+      </div>
+      <p class="transcript-text"></p>
+      <div class="transcript-nav">
+        <button class="button secondary" type="button" data-transcript-prev>Previous</button>
+        <strong data-transcript-step>1 / 9</strong>
+        <button class="button secondary" type="button" data-transcript-next>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+    const step = document.querySelector('.step');
+    let current = 0;
+    const noteMemory = new Map();
+
+    function readNote(key) {
+      if (noteMemory.has(key)) return noteMemory.get(key);
+      try {
+        const value = localStorage.getItem(key) || '';
+        noteMemory.set(key, value);
+        return value;
+      } catch {
+        return '';
+      }
+    }
+
+    function writeNote(key, value) {
+      noteMemory.set(key, value);
+      try {
+        localStorage.setItem(key, value);
+      } catch {
+        // Keep the current lesson writable in memory when storage is unavailable.
+      }
+    }
+
+    function show(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      prev.hidden = current === 0;
+      next.hidden = current === slides.length - 1;
+      step.textContent = `${current + 1} / ${slides.length}`;
+      document.querySelectorAll('[data-mirror]').forEach(field => {
+        field.value = readNote(`pte-speaking-practice-${field.dataset.mirror}`);
+      });
+    }
+
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    addEventListener('keydown', event => {
+      if (event.target.matches('textarea, input')) return;
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight' || event.key === ' ') show(current + 1);
+    });
+
+    const running = new Map();
+
+    document.querySelectorAll('[data-timer]').forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.timer;
+        const output = document.querySelector(`[data-output="${id}"]`);
+        let remaining = Number(button.dataset.seconds);
+        if (running.has(id)) clearInterval(running.get(id));
+        output.classList.remove('ready');
+        const paint = () => {
+          const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
+          const seconds = String(remaining % 60).padStart(2, '0');
+          output.textContent = `${minutes}:${seconds}`;
+        };
+        paint();
+        const interval = setInterval(() => {
+          remaining -= 1;
+          paint();
+          if (remaining <= 0) {
+            clearInterval(interval);
+            running.delete(id);
+            output.classList.add('ready');
+          }
+        }, 1000);
+        running.set(id, interval);
+      });
+    });
+
+    document.querySelectorAll('[data-save]').forEach(field => {
+      const key = `pte-speaking-practice-${field.dataset.save}`;
+      field.value = readNote(key);
+      field.addEventListener('input', () => {
+        writeNote(key, field.value);
+        const group = field.dataset.save.startsWith('sgd1') ? 'sgd1' : field.dataset.save.startsWith('sgd2') ? 'sgd2' : '';
+        if (group) {
+          const saved = document.querySelector(`[data-saved="${group}"]`);
+          saved.textContent = 'Saved on this device';
+          clearTimeout(saved._timer);
+          saved._timer = setTimeout(() => { saved.textContent = ''; }, 1400);
+        }
+      });
+    });
+
+    const transcript = [
+      `<strong>Speaker 1</strong> I've actually had a really good experience with peer tutoring. Last semester, I was struggling with advanced calculus, and my tutor really helped me get concepts I just couldn't understand from lectures. They explained things in a way that made so much more sense to me, kind of like translating what professors say into everyday student language. It really helped my confidence in that subject.`,
+      `<strong>Speaker 2</strong> That's great to hear! I was actually a peer tutor for an intro programming course last year, and it was surprisingly good for me too. Teaching someone else really makes you understand the material better yourself. I found myself going back to review things I thought I already knew, just so I could explain them clearly.`,
+      `<strong>Speaker 3</strong> Hmm, I'm a bit more unsure about formal peer tutoring. I've always found it more helpful to just study with friends or classmates and explain things to each other if someone's stuck. It feels less like a formal lesson and more like working together. And there's less pressure to perform for someone who's officially "tutoring" you.`,
+      `<strong>Speaker 1</strong> I can see your point about the pressure, but I think the way formal peer tutoring is set up is what made it so effective for me. We had specific sessions, and the tutor had been trained on how to teach. With friends, it can sometimes just turn into complaining about how hard the subject is, instead of actually breaking down the problems step-by-step.`,
+      `<strong>Speaker 3</strong> Yeah, that's fair. I guess I've just always preferred that informal, flexible way. When I'm learning with friends, I feel more comfortable saying what I don't know without feeling judged. Plus, if we get stuck, we can all look for answers together, or just take a break, which you might not feel as comfortable doing in a more formal setting.`,
+      `<strong>Speaker 2</strong> From the tutor's side, it can also be tricky to balance. You want to guide them, but you can't just give them the answers or do their work for them. I had a few students who just wanted me to tell them what to write, and I had to learn how to gently push them towards finding the solution themselves. It's a fine line to walk sometimes.`,
+      `<strong>Speaker 1</strong> That's a really good point, Chris. I think the key is finding the right peer tutor who knows how to help you learn, not just give you answers. It's not just about knowing the subject; it's also about being able to teach it well and change your approach for different learning styles. Some subjects might also work better with it than others.`,
+      `<strong>Speaker 2</strong> Absolutely. Some students learn well with visual explanations, others need to write things out, and some just need to talk through it. Changing your approach quickly is a challenge, especially when you're also a student with your own studies. It really shows how different learning can be.`,
+      `<strong>Speaker 3</strong> So I guess it really comes down to what you prefer and how good the program or the person is. If you find a good match, whether it's formal or informal, it can be super helpful. It's definitely a good thing to have when you're struggling, no matter how you get it.`
+    ];
+
+    const modal = document.querySelector('.modal');
+    const transcriptText = document.querySelector('.transcript-text');
+    const transcriptStep = document.querySelector('[data-transcript-step]');
+    let transcriptIndex = 0;
+
+    function showTranscript(index) {
+      transcriptIndex = Math.max(0, Math.min(transcript.length - 1, index));
+      transcriptText.innerHTML = transcript[transcriptIndex];
+      transcriptStep.textContent = `${transcriptIndex + 1} / ${transcript.length}`;
+      document.querySelector('[data-transcript-prev]').disabled = transcriptIndex === 0;
+      document.querySelector('[data-transcript-next]').disabled = transcriptIndex === transcript.length - 1;
+    }
+
+    document.querySelector('[data-open-transcript]').addEventListener('click', () => {
+      showTranscript(0);
+      modal.classList.add('open');
+    });
+    document.querySelector('.close').addEventListener('click', () => modal.classList.remove('open'));
+    document.querySelector('[data-transcript-prev]').addEventListener('click', () => showTranscript(transcriptIndex - 1));
+    document.querySelector('[data-transcript-next]').addEventListener('click', () => showTranscript(transcriptIndex + 1));
+    modal.addEventListener('click', event => {
+      if (event.target === modal) modal.classList.remove('open');
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
