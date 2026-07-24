@@ -182,40 +182,33 @@
     [data-screen="3"] .gap-number { color: #111; font-weight: 850; }
     [data-screen="2"] .action,
     [data-screen="3"] .action { border: 1px solid oklch(0.55 0 0); border-radius: 3px; background: white; color: #111; box-shadow: none; }
-    .map-frame { position: relative; width: min(680px,100%); max-width: 100%; min-width: 0; height: auto; min-height: 0; aspect-ratio: 3 / 2; place-self: start center; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .map-frame { position: relative; width: min(820px,100%); max-width: 100%; min-width: 0; height: auto; min-height: 0; aspect-ratio: 1140 / 955; place-self: start center; overflow: hidden; border: 1px solid var(--line); border-radius: 0; background: #fff; }
     .map-image { width: 100%; height: 100%; display: block; object-fit: contain; }
     .map-answer {
       position: absolute;
-      display: grid;
-      grid-template-columns: 30px minmax(0,1fr);
-      align-items: center;
-      overflow: hidden;
-      border: 1px solid oklch(0.48 0 0);
-      background: white;
-    }
-    .map-answer .gap-number {
-      position: static;
-      transform: none;
-      color: #111;
-      font-size: 13px;
-      font-weight: 850;
-      text-align: center;
-      pointer-events: none;
+      display: block;
+      border: 0;
+      background: transparent;
     }
     .map-answer .answer-input {
-      height: 40px;
-      min-width: 0;
-      padding: 7px 8px;
-      border: 0;
-      border-left: 1px solid oklch(0.65 0 0);
+      width: 100%;
+      height: 32px;
+      min-width: 56px;
+      padding: 2px 4px;
+      border: 1px solid #111;
       border-radius: 0;
+      background: #fff;
+      color: #111;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
     }
     .map-answer:focus-within { outline: 3px solid #c99325; outline-offset: 2px; }
-    .map-answer.q10 { left: 17.3%; top: 20.3%; width: 20%; }
-    .map-answer.q11 { left: 62.8%; top: 20.3%; width: 21%; }
-    .map-answer.q8 { left: 19.8%; top: 39.0%; width: 18%; }
-    .map-answer.q9 { left: 61.8%; top: 39.0%; width: 19%; }
-    .map-answer.q7 { left: 58.2%; top: 79.1%; width: 16%; }
+    .map-answer.q11 { left: 8.8%; top: 57.2%; width: 8.8%; }
+    .map-answer.q12 { left: 28.2%; top: 51.8%; width: 9.5%; }
+    .map-answer.q13 { left: 17.5%; top: 33.0%; width: 9.8%; }
+    .map-answer.q14 { left: 27.9%; top: 11.2%; width: 9.8%; }
+    .map-answer.q15 { left: 52.4%; top: 23.9%; width: 8.8%; }
     .map-linear { display: none; }
 
     .notes-card { min-height: max-content; padding: 14px 18px; overflow: visible; border: 1px solid var(--line); border-radius: 16px; background: white; }
@@ -259,7 +252,6 @@
       .ielts-table td { padding: 8px 10px; }
       .cell-answer { grid-template-columns: minmax(0,1fr); gap: 6px; }
       .table-answer { width: 100%; }
-      .map-answer { width: 160px; }
       .diagnosis-row { grid-template-columns: 1fr; }
     }
 
@@ -298,7 +290,7 @@
       .ielts-table td:nth-child(2)::before { content: "Main job"; }
       .ielts-table td:nth-child(3)::before { content: "Practical detail"; }
       [data-task-body="map"] .workspace { min-height: max-content; height: max-content; grid-template-rows: auto; align-self: start; align-content: start; }
-      .map-frame { width: 100%; height: auto; aspect-ratio: 3 / 2; }
+      .map-frame { width: 100%; height: auto; aspect-ratio: 1140 / 955; }
       .map-answer { display: none; }
       .map-linear { margin-top: 12px; display: grid; gap: 8px; }
       .map-linear-row { display: grid; grid-template-columns: 145px minmax(0,1fr); gap: 10px; align-items: center; }
@@ -435,31 +427,31 @@
           <div class="task-body" data-task-body="map" data-task-scroll tabindex="0" aria-label="Scrollable map task content">
             <div class="workspace">
               <div class="task-copy">
-                <h2 class="sr-only" tabindex="-1">Riverside Arts Festival</h2>
-                <p class="instruction">Label the map. Write NO MORE THAN TWO WORDS for each answer.</p>
+                <h2 class="sr-only" tabindex="-1">Town Library</h2>
+                <p class="instruction">Label the plan below. Choose FIVE answers from the box and select the correct letter, A–I, for questions 11–15.</p>
               </div>
               <p class="task-status" data-status="map" aria-live="polite"></p>
-              <p class="fallback" data-fallback="map" hidden>Audio did not start. <a data-backup="map" href="../audio/map-riverside-arts-festival-v3.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
+              <p class="fallback" data-fallback="map" hidden>Audio did not start. <a data-backup="map" href="../audio/town-library-plan-official.mp3" target="_blank" rel="noopener">Open the MP3 backup</a>.</p>
               <div class="map-frame">
-                <img class="map-image" src="assets/riverside-arts-festival-map-imagegen-v3.png" width="1536" height="1024" alt="Riverside Arts Festival site map showing the river, viewing deck, café, main hall, main entrance, north arrow and five answer areas.">
-                <label class="gap-field map-answer q7"><span class="gap-number">7</span><input class="answer-input" data-entry="map" data-answer-index="0" aria-label="Map answer 7, no more than two words" autocomplete="off" spellcheck="false"></label>
-                <label class="gap-field map-answer q8"><span class="gap-number">8</span><input class="answer-input" data-entry="map" data-answer-index="1" aria-label="Map answer 8, no more than two words" autocomplete="off" spellcheck="false"></label>
-                <label class="gap-field map-answer q9"><span class="gap-number">9</span><input class="answer-input" data-entry="map" data-answer-index="2" aria-label="Map answer 9, no more than two words" autocomplete="off" spellcheck="false"></label>
-                <label class="gap-field map-answer q10"><span class="gap-number">10</span><input class="answer-input" data-entry="map" data-answer-index="3" aria-label="Map answer 10, no more than two words" autocomplete="off" spellcheck="false"></label>
-                <label class="gap-field map-answer q11"><span class="gap-number">11</span><input class="answer-input" data-entry="map" data-answer-index="4" aria-label="Map answer 11, no more than two words" autocomplete="off" spellcheck="false"></label>
+                <img class="map-image" src="assets/town-library-plan-official.png" width="1140" height="955" alt="Official Town Library plan with locations A to I listed beside it and five numbered answer lines, questions 11 to 15.">
+                <label class="map-answer q11"><span class="sr-only">Question 11</span><select class="answer-input" data-entry="map" data-answer-index="0" aria-label="Question 11, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label>
+                <label class="map-answer q12"><span class="sr-only">Question 12</span><select class="answer-input" data-entry="map" data-answer-index="1" aria-label="Question 12, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label>
+                <label class="map-answer q13"><span class="sr-only">Question 13</span><select class="answer-input" data-entry="map" data-answer-index="2" aria-label="Question 13, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label>
+                <label class="map-answer q14"><span class="sr-only">Question 14</span><select class="answer-input" data-entry="map" data-answer-index="3" aria-label="Question 14, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label>
+                <label class="map-answer q15"><span class="sr-only">Question 15</span><select class="answer-input" data-entry="map" data-answer-index="4" aria-label="Question 15, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label>
               </div>
-              <div class="map-linear" aria-label="Map answers in route order">
-                <div class="map-linear-row"><span>7 · By the entrance</span><label class="gap-field"><span class="gap-number">7</span><input class="answer-input" data-mobile-entry="map" data-answer-index="0" aria-label="Map answer 7, no more than two words" autocomplete="off" spellcheck="false"></label></div>
-                <div class="map-linear-row"><span>8 · Beyond the café</span><label class="gap-field"><span class="gap-number">8</span><input class="answer-input" data-mobile-entry="map" data-answer-index="1" aria-label="Map answer 8, no more than two words" autocomplete="off" spellcheck="false"></label></div>
-                <div class="map-linear-row"><span>9 · Opposite answer 8</span><label class="gap-field"><span class="gap-number">9</span><input class="answer-input" data-mobile-entry="map" data-answer-index="2" aria-label="Map answer 9, no more than two words" autocomplete="off" spellcheck="false"></label></div>
-                <div class="map-linear-row"><span>10 · Beside the river</span><label class="gap-field"><span class="gap-number">10</span><input class="answer-input" data-mobile-entry="map" data-answer-index="3" aria-label="Map answer 10, no more than two words" autocomplete="off" spellcheck="false"></label></div>
-                <div class="map-linear-row"><span>11 · Beyond the hall</span><label class="gap-field"><span class="gap-number">11</span><input class="answer-input" data-mobile-entry="map" data-answer-index="4" aria-label="Map answer 11, no more than two words" autocomplete="off" spellcheck="false"></label></div>
+              <div class="map-linear" aria-label="Town Library answers">
+                <div class="map-linear-row"><span>11</span><label class="gap-field"><span class="sr-only">Question 11</span><select class="answer-input" data-mobile-entry="map" data-answer-index="0" aria-label="Question 11, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label></div>
+                <div class="map-linear-row"><span>12</span><label class="gap-field"><span class="sr-only">Question 12</span><select class="answer-input" data-mobile-entry="map" data-answer-index="1" aria-label="Question 12, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label></div>
+                <div class="map-linear-row"><span>13</span><label class="gap-field"><span class="sr-only">Question 13</span><select class="answer-input" data-mobile-entry="map" data-answer-index="2" aria-label="Question 13, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label></div>
+                <div class="map-linear-row"><span>14</span><label class="gap-field"><span class="sr-only">Question 14</span><select class="answer-input" data-mobile-entry="map" data-answer-index="3" aria-label="Question 14, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label></div>
+                <div class="map-linear-row"><span>15</span><label class="gap-field"><span class="sr-only">Question 15</span><select class="answer-input" data-mobile-entry="map" data-answer-index="4" aria-label="Question 15, choose a letter A to I"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option></select></label></div>
               </div>
               <div class="task-actions" data-actions="map"></div>
             </div>
             <aside class="diagnosis" data-diagnosis="map" hidden></aside>
           </div>
-          <audio data-audio="map" preload="metadata" src="../audio/map-riverside-arts-festival-v3.mp3"></audio>
+          <audio data-audio="map" preload="metadata" src="../audio/town-library-plan-official.mp3"></audio>
         </div>
       </section>
 
@@ -484,11 +476,11 @@
               <section class="notes-card" aria-label="Note completion task">
                 <h3>Light and museum collections</h3>
                 <ol class="note-list">
-                  <li class="note-row"><span>Strong light slowly removes an object’s</span><span class="note-answer"><span class="question-badge" aria-hidden="true">12</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="0" aria-label="Note answer 12, one word only" autocomplete="off" spellcheck="false"></label><span aria-hidden="true"></span></span></li>
-                  <li class="note-row"><span>One simple method is to fit</span><span class="note-answer"><span class="question-badge" aria-hidden="true">13</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="1" aria-label="Note answer 13, one word only" autocomplete="off" spellcheck="false"></label><span>over nearby windows.</span></span></li>
-                  <li class="note-row"><span>Modern displays may use</span><span class="note-answer"><span class="question-badge" aria-hidden="true">14</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="2" aria-label="Note answer 14, one word only" autocomplete="off" spellcheck="false"></label><span>to switch lights on.</span></span></li>
-                  <li class="note-row"><span>Some lamps produce</span><span class="note-answer"><span class="question-badge" aria-hidden="true">15</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="3" aria-label="Note answer 15, one word only" autocomplete="off" spellcheck="false"></label><span>and can dry out delicate materials.</span></span></li>
-                  <li class="note-row"><span>Museums limit display time by using a system of</span><span class="note-answer"><span class="question-badge" aria-hidden="true">16</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="4" aria-label="Note answer 16, one word only" autocomplete="off" spellcheck="false"></label><span aria-hidden="true"></span></span></li>
+                  <li class="note-row"><span>Strong light slowly removes an object’s</span><span class="note-answer"><span class="question-badge" aria-hidden="true">16</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="0" aria-label="Note answer 16, one word only" autocomplete="off" spellcheck="false"></label><span aria-hidden="true"></span></span></li>
+                  <li class="note-row"><span>One simple method is to fit</span><span class="note-answer"><span class="question-badge" aria-hidden="true">17</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="1" aria-label="Note answer 17, one word only" autocomplete="off" spellcheck="false"></label><span>over nearby windows.</span></span></li>
+                  <li class="note-row"><span>Modern displays may use</span><span class="note-answer"><span class="question-badge" aria-hidden="true">18</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="2" aria-label="Note answer 18, one word only" autocomplete="off" spellcheck="false"></label><span>to switch lights on.</span></span></li>
+                  <li class="note-row"><span>Some lamps produce</span><span class="note-answer"><span class="question-badge" aria-hidden="true">19</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="3" aria-label="Note answer 19, one word only" autocomplete="off" spellcheck="false"></label><span>and can dry out delicate materials.</span></span></li>
+                  <li class="note-row"><span>Museums limit display time by using a system of</span><span class="note-answer"><span class="question-badge" aria-hidden="true">20</span><label class="gap-field"><input class="answer-input" data-entry="notes" data-answer-index="4" aria-label="Note answer 20, one word only" autocomplete="off" spellcheck="false"></label><span aria-hidden="true"></span></span></li>
                 </ol>
               </section>
               <div class="task-actions" data-actions="notes"></div>
@@ -533,13 +525,13 @@
 
   <script>
     (() => {
-      const STORAGE_KEY = "ielts-listening-homework-2026-07-19-v3";
+      const STORAGE_KEY = "ielts-listening-homework-2026-07-19-v4-official-map";
       const VERSION = 1;
       const taskOrder = ["table", "map", "notes"];
       const taskConfig = {
         table: { start: 1, limit: 2, answers: ["plastic waste", "old bridge", "seedlings", "gardening gloves", "photographs", "friday"] },
-        map: { start: 7, limit: 2, answers: ["information desk", "workshop tent", "first aid", "sculpture garden", "picnic area"] },
-        notes: { start: 12, limit: 1, answers: ["colour", "curtains", "sensors", "heat", "rotation"] },
+        map: { start: 11, limit: 1, answers: ["h", "g", "d", "b", "f"] },
+        notes: { start: 16, limit: 1, answers: ["colour", "curtains", "sensors", "heat", "rotation"] },
       };
       const causeOptions = ["didn't hear it", "lost my place", "direction language", "missed the paraphrase", "followed a distractor", "spelling/word limit", "overthought it"];
       const screens = [...document.querySelectorAll("[data-screen]")];
@@ -875,7 +867,7 @@
         const lines = ["IELTS Listening Practice", ""];
         taskOrder.forEach((name,taskIndex) => {
           const task = state.tasks[name];
-          const title = ["Community project briefing — table", "Riverside Arts Festival — map", "Protecting museum objects — notes"][taskIndex];
+          const title = ["Community project briefing — table", "Town Library — plan", "Protecting museum objects — notes"][taskIndex];
           lines.push(`${taskIndex + 1}. ${title}`);
           taskConfig[name].answers.forEach((answer,index) => {
             const number = taskConfig[name].start + index;
