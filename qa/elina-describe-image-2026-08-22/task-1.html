@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Describe Image</title>
+  <style>
+    :root { --ink:#18201e; --muted:#5f6a67; --paper:#f5f3ed; --card:#fffefa; --line:#dedbd2; --teal:#2f6758; --teal-soft:#dce8e2; --orange:#b76548; --shadow:0 18px 50px rgba(37,38,34,.10),0 2px 7px rgba(37,38,34,.06); }
+    * { box-sizing:border-box; }
+    html, body { width:100%; height:100%; margin:0; overflow:hidden; background:var(--paper); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    button { font:inherit; }
+    .app { width:min(1536px,calc(100vw - 5vw)); max-width:100%; height:min(864px,calc(100dvh - 5vh)); margin:2.5vh auto; display:grid; grid-template-rows:minmax(0,1fr); overflow:hidden; background:var(--card); border:1px solid rgba(77,78,71,.16); border-radius:24px; box-shadow:var(--shadow); }
+    .stage { width:100%; min-width:0; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) clamp(248px,23vw,332px); gap:clamp(16px,2.2vw,32px); padding:clamp(18px,2.4vw,38px); }
+    .visual { width:100%; max-width:100%; min-width:0; min-height:0; display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:12px; }
+    .eyebrow { margin:0; color:var(--muted); font-size:clamp(13px,1.1vw,16px); letter-spacing:.03em; }
+    .stimulus { width:100%; max-width:100%; min-width:0; min-height:0; display:grid; place-items:center; padding:clamp(8px,1.1vw,18px); border:1px solid var(--line); border-radius:18px; background:#fff; overflow:hidden; }
+    .stimulus img { display:block; min-width:0; max-width:100%; max-height:100%; width:100%; height:100%; object-fit:contain; }
+    .rail { width:100%; max-width:100%; min-width:0; min-height:0; display:flex; flex-direction:column; gap:clamp(12px,2vh,22px); align-items:stretch; justify-content:center; padding:clamp(18px,2vw,28px); border:1px solid var(--line); border-radius:18px; background:#fffdf8; }
+    .state { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:14px; }
+    .dot { width:12px; height:12px; flex:0 0 auto; border-radius:50%; background:#bcb9b0; }
+    .dot.prep { background:var(--orange); }
+    .dot.speak { background:#a43f34; box-shadow:0 0 0 5px rgba(164,63,52,.12); }
+    .dot.done { background:var(--teal); }
+    .time { display:block; color:var(--ink); font-size:clamp(52px,5vw,76px); line-height:1; font-weight:780; letter-spacing:-.055em; font-variant-numeric:tabular-nums; }
+    .timer-caption { margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
+    .primary, .secondary { min-height:52px; border:0; border-radius:999px; padding:0 18px; cursor:pointer; font-weight:730; transition:transform .18s ease,background .18s ease; }
+    .primary { color:#fff; background:var(--teal); box-shadow:0 8px 18px rgba(47,103,88,.17); }
+    .primary:hover:not(:disabled) { background:#27594d; transform:translateY(-1px); }
+    .primary:active:not(:disabled), .secondary:active:not(:disabled) { transform:scale(.96); }
+    .primary:disabled { color:#8a8b88; background:#e6e2da; box-shadow:none; cursor:default; }
+    .secondary { color:var(--ink); background:var(--teal-soft); }
+    .secondary:hover { background:#c9ded5; }
+    button:focus-visible { outline:4px solid rgba(183,101,72,.28); outline-offset:3px; }
+    .cue-line { margin:0; color:var(--muted); font-size:12px; font-weight:700; letter-spacing:.06em; text-align:center; }
+    .status { min-height:40px; margin:0; color:var(--muted); font-size:13px; line-height:1.4; }
+    .footnote { margin:0; color:var(--muted); font-size:12px; line-height:1.35; }
+    @media (max-height:720px) and (min-width:761px) { .stage { padding:18px 26px; gap:22px; } .rail { gap:10px; padding:18px; } .time { font-size:54px; } .stimulus { padding:6px; } }
+    @media (max-width:760px) { html, body { overflow:auto; } .app { width:100vw; min-width:0; min-height:100dvh; height:auto; margin:0; border:0; border-radius:0; } .stage { grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto; gap:10px; padding:12px; } .visual { gap:8px; } .stimulus { min-height:230px; padding:4px; border-radius:14px; } .stimulus img { height:auto; max-height:none; } .rail { display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr); align-items:center; gap:8px 12px; padding:12px; border-radius:14px; } .rail > * { min-width:0; max-width:100%; } .state, .timer-caption, .status, .footnote { grid-column:1 / -1; } .time { font-size:42px; } .primary, .secondary { min-height:46px; min-width:0; } .cues { grid-column:1 / -1; } }
+    @media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition-duration:.01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="Describe Image practice">
+    <div class="stage">
+      <section class="visual" aria-label="Current task visual and notes">
+        <div class="stimulus"><img src="assets/PTEA-DI-PTP2-2018-003-item.png" alt="Pearson Describe Image task visual"></div>
+      </section>
+      <aside class="rail" aria-label="Task controls">
+        <div class="state"><span class="dot" id="stateDot" aria-hidden="true"></span><span id="stateText">Ready</span></div>
+        <output class="time" id="time" aria-live="polite">00:25</output>
+        <p class="timer-caption" id="timerCaption">Preparation timer</p>
+        <button class="primary" id="startButton" type="button">Start preparation</button>
+        <button class="secondary" id="resetButton" type="button">Reset</button>
+        <p class="cue-line" aria-label="Speaking sequence">MAIN → DETAILS → RELATION → END</p>
+        <p class="status" id="status" aria-live="polite"></p>
+      </aside>
+    </div>
+  </main>
+  <script>
+    (() => {
+      const prepSeconds = 25;
+      const responseSeconds = 40;
+      const time = document.getElementById('time');
+      const stateDot = document.getElementById('stateDot');
+      const stateText = document.getElementById('stateText');
+      const timerCaption = document.getElementById('timerCaption');
+      const status = document.getElementById('status');
+      const startButton = document.getElementById('startButton');
+      const resetButton = document.getElementById('resetButton');
+      let timerId = null;
+      let phase = 'ready';
+      const format = value => `00:${String(value).padStart(2, '0')}`;
+      const setPhase = next => {
+        phase = next;
+        stateDot.className = `dot ${next === 'prep' ? 'prep' : next === 'speak' ? 'speak' : next === 'done' ? 'done' : ''}`;
+        stateText.textContent = next === 'prep' ? 'Preparing' : next === 'speak' ? 'Speak now' : next === 'done' ? 'Complete' : 'Ready';
+        timerCaption.textContent = next === 'prep' ? 'Preparation timer' : next === 'speak' ? 'Response timer' : next === 'done' ? 'Response complete' : 'Preparation timer';
+      };
+      const clearTimer = () => { if (timerId !== null) { clearInterval(timerId); timerId = null; } };
+      const tone = () => { try { const ctx = new AudioContext(); const osc = ctx.createOscillator(); const gain = ctx.createGain(); osc.frequency.value = 880; gain.gain.setValueAtTime(.0001, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(.12, ctx.currentTime + .015); gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + .22); osc.connect(gain).connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + .23); } catch (_) {} };
+      const run = (seconds, next) => { let remaining = seconds; time.value = remaining; time.textContent = format(remaining); timerId = setInterval(() => { remaining -= 1; time.value = remaining; time.textContent = format(Math.max(remaining, 0)); if (remaining <= 0) { clearTimer(); next(); } }, 1000); };
+      const beginResponse = () => { tone(); setPhase('speak'); startButton.disabled = true; startButton.textContent = 'Response running'; status.textContent = 'Tone finished. Speak now for up to 40 seconds.'; run(responseSeconds, finish); };
+      const finish = () => { setPhase('done'); startButton.disabled = true; startButton.textContent = 'Complete'; status.textContent = 'Response window ended. Use Reset for another attempt.'; };
+      const reset = () => { clearTimer(); setPhase('ready'); time.value = prepSeconds; time.textContent = format(prepSeconds); startButton.disabled = false; startButton.textContent = 'Start preparation'; status.textContent = ''; };
+      startButton.addEventListener('click', () => { if (phase !== 'ready') return; setPhase('prep'); startButton.disabled = true; startButton.textContent = 'Preparing…'; status.textContent = 'Preparation started.'; run(prepSeconds, beginResponse); });
+      resetButton.addEventListener('click', reset);
+      reset();
+    })();
+  </script>
+</body>
+</html>

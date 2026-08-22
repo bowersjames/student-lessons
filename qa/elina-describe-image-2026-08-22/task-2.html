@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teacher transfer visual</title>
+  <style>
+    :root { --ink:#18201e; --muted:#5f6a67; --paper:#f5f3ed; --card:#fffefa; --line:#dedbd2; --teal:#2f6758; --warn:#8c3a2e; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; background:var(--paper); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { width:min(1240px,calc(100% - 28px)); margin:14px auto 22px; }
+    .banner { padding:12px 16px; color:#fff; background:var(--warn); border-radius:12px; font-weight:760; }
+    .card { margin-top:12px; padding:clamp(16px,2vw,28px); background:var(--card); border:1px solid var(--line); border-radius:18px; }
+    h1 { margin:0 0 8px; font-size:clamp(24px,3vw,38px); letter-spacing:-.03em; }
+    .lead { margin:0 0 16px; color:var(--muted); line-height:1.45; }
+    .visual { width:100%; max-width:100%; min-width:0; display:grid; place-items:center; padding:8px; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    .visual img { display:block; min-width:0; max-width:100%; width:100%; height:auto; max-height:70vh; object-fit:contain; }
+    .controls { display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:10px; margin-top:12px; color:var(--muted); }
+    .state { display:flex; align-items:center; gap:8px; font-size:13px; }
+    .dot { width:10px; height:10px; border-radius:50%; background:#bcb9b0; }
+    .dot.prep { background:#b76548; } .dot.speak { background:#a43f34; } .dot.done { background:#2f6758; }
+    .time { font-size:36px; font-weight:780; line-height:1; font-variant-numeric:tabular-nums; color:var(--ink); }
+    .timer-caption { margin:0; font-size:13px; }
+    button { min-height:42px; border:0; border-radius:999px; padding:0 15px; color:#fff; background:#2f6758; font:inherit; font-weight:700; cursor:pointer; }
+    button.secondary { color:var(--ink); background:#dce8e2; }
+    button:disabled { color:#8a8b88; background:#e6e2da; cursor:default; }
+    .cue-line { margin:12px 0 0; color:var(--muted); font-size:12px; font-weight:700; letter-spacing:.06em; text-align:center; }
+    @media (max-width:650px) { .controls { grid-template-columns:1fr 1fr; } .state,.timer-caption,.cue-line { grid-column:1 / -1; } }
+    .manual { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .manual div { padding:12px; background:#e8f1ed; border-radius:12px; }
+    .manual strong { display:block; margin-bottom:4px; }
+    @media (max-width:650px) { main { width:100%; margin:0; } .banner,.card { border-radius:0; } .manual { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="visual"><img src="assets/PTEA-DI-PTP2-2018-004-item.png" alt="Pearson Describe Image transfer visual"></div>
+      <div class="controls" aria-label="Timer controls"><span class="state"><span class="dot" id="dot" aria-hidden="true"></span><span id="state">Ready</span></span><output class="time" id="time" aria-live="polite">00:25</output><p class="timer-caption" id="caption">Preparation timer</p><button id="start" type="button">Start preparation</button><button class="secondary" id="reset" type="button">Reset</button></div>
+      <p class="cue-line" aria-label="Speaking sequence">MAIN → DETAILS → RELATION → END</p>
+    </section>
+  </main>
+  <script>
+    (() => { const prep=25,response=40,time=document.getElementById('time'),dot=document.getElementById('dot'),state=document.getElementById('state'),caption=document.getElementById('caption'),start=document.getElementById('start'),reset=document.getElementById('reset'); let id=null,phase='ready'; const fmt=n=>`00:${String(n).padStart(2,'0')}`; const clear=()=>{if(id!==null){clearInterval(id);id=null;}}; const set=p=>{phase=p;dot.className=`dot ${p==='prep'?'prep':p==='speak'?'speak':p==='done'?'done':''}`;state.textContent=p==='prep'?'Preparing':p==='speak'?'Speak now':p==='done'?'Complete':'Ready';caption.textContent=p==='speak'?'Response timer':p==='done'?'Response complete':'Preparation timer';}; const run=(n,next)=>{let r=n;time.textContent=fmt(r);id=setInterval(()=>{r--;time.textContent=fmt(Math.max(0,r));if(r<=0){clear();next();}},1000);}; const finish=()=>{set('done');start.disabled=true;start.textContent='Complete';}; const responseStart=()=>{set('speak');start.disabled=true;start.textContent='Response running';run(response,finish);}; const resetAll=()=>{clear();set('ready');time.textContent='00:25';start.disabled=false;start.textContent='Start preparation';}; start.addEventListener('click',()=>{if(phase!=='ready')return;set('prep');start.disabled=true;start.textContent='Preparing…';run(prep,responseStart);}); reset.addEventListener('click',resetAll); resetAll(); })();
+  </script>
+</body>
+</html>
