@@ -3,9 +3,9 @@
 <meta name="robots" content="noindex">
 <title>Let's write better Ends</title>
 <style>
-:root{--ink:#1e1e1e;--soft:#5a6170;--faint:#80868f;--rule:#e6e3dc;--accent:#1971c2;--tint:#fff9db;--weak:#ffc9c9;--ok:#2e6b45;--okbg:#eaf4ec;--no:#9a3b2c;--nobg:#f8e8e4;--exbg:#ebfbee;--bg:#fff;--card:#fff;--onink:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--weak:#4a2626;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--exbg:#1d3326;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}}
-:root[data-theme="dark"]{--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--weak:#4a2626;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--exbg:#1d3326;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}
+:root{--ink:#1e1e1e;--soft:#5a6170;--faint:#80868f;--rule:#e6e3dc;--accent:#1971c2;--tint:#fff9db;--weak:#e9ecef;--ok:#2e6b45;--okbg:#eaf4ec;--exbg:#ebfbee;--bg:#fff;--card:#fff;--onink:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--weak:#2c313c;--ok:#6fbf8b;--okbg:#1d3326;--exbg:#1d3326;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--weak:#2c313c;--ok:#6fbf8b;--okbg:#1d3326;--exbg:#1d3326;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}
 /* Excalidraw look: Virgil for headings and labels, thick hand-drawn edges */
 @font-face{font-family:Virgil;src:url(virgil.woff2) format("woff2");font-display:swap}
 :root{--hand:Virgil,"Segoe Print","Comic Sans MS",cursive;--wob:255px 12px 225px 12px/12px 225px 12px 255px}
@@ -44,7 +44,7 @@ p{margin:0 0 14px}
 .sym{display:grid;gap:8px;margin:6px 0 4px}
 .sym button{min-height:50px;padding:8px 14px;border:2px solid var(--ink);border-radius:var(--wob);background:var(--card);display:flex;align-items:center;gap:12px;text-align:left;font-family:inherit;font-size:17px}
 .sym button.right{border-color:var(--ok);background:var(--okbg)}
-.sym button.wrong{border-color:var(--no);background:var(--nobg)}
+.sym button.wrong{border-color:var(--faint);background:var(--weak)}
 .fb{font-size:16px;min-height:26px;margin:6px 0 0}
 
 
