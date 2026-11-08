@@ -117,9 +117,9 @@ p{margin:0 0 14px}
 
 <section class="step"><h2>A quick check</h2>
 <div class="check">
-<label><input type="checkbox"><span>All your verbs are in the past, except after "Now".</span></label>
-<label><input type="checkbox"><span>Your feeling sentence has "because", like "I felt relieved because all my photos were on it."</span></label>
-<label><input type="checkbox"><span>Each End has a sentence 1, 2 and 3. If a number is missing, add that sentence.</span></label>
+<label><input type="checkbox" autocomplete="off"><span>All your verbs are in the past, except after "Now".</span></label>
+<label><input type="checkbox" autocomplete="off"><span>Your feeling sentence has "because", like "I felt relieved because all my photos were on it."</span></label>
+<label><input type="checkbox" autocomplete="off"><span>Each End has a sentence 1, 2 and 3. If a number is missing, add that sentence.</span></label>
 </div>
 <p style="margin-top:18px">When you're done, take a photo of your 3 Ends and send it to me in our Preply chat. On Friday at 6:30 pm, I'd love to hear your favourite and why you like it.</p></section>
 
@@ -136,5 +136,7 @@ document.querySelectorAll('.sym').forEach(g=>g.onclick=e=>{const b=e.target.clos
  [...g.children].forEach(x=>{x.classList.remove('right','wrong');x.setAttribute('aria-pressed',x===b)});const ok=b.dataset.s===g.dataset.a;b.classList.add(ok?'right':'wrong');
  const f=g.nextElementSibling;f.textContent=ok?g.dataset.yes:'Not this one. The End already has that part. Have another look.';f.scrollIntoView({block:'nearest',behavior:'smooth'})});
 go(0);
+// always open fresh: no ticks or screen kept from a back/forward visit
+addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 </script>
 </body></html>
