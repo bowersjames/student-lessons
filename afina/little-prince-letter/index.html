@@ -76,7 +76,8 @@ sup{font-family:"Segoe UI",sans-serif;font-size:12px;font-weight:700;margin-left
 .key{display:none;gap:6px;margin:12px 0 0;font-size:15px}
 .ends.shown .key{display:grid}
 .key span{display:flex;gap:8px;align-items:center}
-.key i{width:16px;height:16px;border-radius:3px;flex:0 0 16px}
+.key .ic{width:20px;height:20px}
+sup .ic{width:15px;height:15px}
 
 /* lines to finish */
 .finish{display:grid;gap:10px;margin-bottom:14px}
@@ -107,8 +108,21 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 .divider .num{font-family:Georgia,serif;font-size:72px;line-height:1;color:var(--sand);margin-bottom:10px}
 .divider h2{font-size:32px;margin-bottom:12px}
 .divider p{font-size:19px;color:var(--soft)}
+/* the 3 End symbols, simple enough to draw by hand */
+.ic{width:1.2em;height:1.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.qs{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px;font-size:16px;color:var(--ink)}
+.qs li{display:flex;gap:10px;align-items:center}
+.mtn{display:block;width:100%;height:auto;margin:4px 0 14px}
+.mtn .hill{fill:var(--sandbg);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.mtn text{fill:var(--ink);font-family:Georgia,serif;font-size:19px}
+.mtn .sym{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 3v18M6 4h12l-3.5 4 3.5 4H6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-10.5A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8 2.5C20 15.2 12 20 12 20z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6"/></symbol>
+</defs></svg>
 <div class="wrap">
 <div class="top"><div class="dots" id="dots"></div><span class="part" id="part"></span></div>
 
@@ -122,7 +136,8 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <div class="plan" style="margin-top:14px">
 <div><b>Beginning</b><span>Where and when? Who is there? What is the problem?</span></div>
 <div><b>Middle</b><span>What happens? It gets harder or more exciting.</span></div>
-<div><b>End</b><span>A great End answers 3 questions. Is the problem finished? How did I feel? What changed?</span></div></div></section>
+<div><b>End</b><span>A great End answers 3 questions. Each one has a symbol. You will draw them on your paper.</span>
+<ul class="qs"><li><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Is the problem finished?</li><li><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How did I feel?</li><li><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed?</li></ul></div></div></section>
 
 <section class="step"><h2>Why the End matters most</h2>
 <p class="big">The End is the last thing your reader reads, so it is the part they remember.</p>
@@ -159,9 +174,9 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <section class="step"><h2>Which question is still open?</h2>
 <p class="soft small">Look at the 3 questions. Which one does the book's last page leave open? Tap it.</p>
 <div class="choices" id="choices">
-<button data-r="1">1. Is the problem finished?</button>
-<button data-r="2">2. How did the pilot feel?</button>
-<button data-r="3">3. What changed for the pilot?</button></div>
+<button data-r="1"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg> Is the problem finished?</button>
+<button data-r="2"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> How did the pilot feel?</button>
+<button data-r="3"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg> What changed for the pilot?</button></div>
 <p class="fb" id="fb"></p></section>
 
 <section class="step"><h2>Your task</h2>
@@ -190,27 +205,29 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 
 <!-- lesson: two Ends -->
 <section class="step ends" id="ends"><h2>Two Ends for Sam's letter</h2>
-<p class="soft small">Which is better? On paper, write the numbers 1, 2 and 3 for the parts of the better End that answer each question. Then tap the better End to check.</p>
+<p class="soft small">Which is better? On paper, draw the flag, the heart and the arrow next to the parts of the better End that answer each question. Then tap the better End to check.</p>
 <div class="endpick" id="endpick">
 <button data-r="0"><b>End A</b>Then he left. We went home. It was nice.</button>
-<button data-r="1"><b>End B</b><mark class="m1">When the train started again, he waved and walked away into the dark. I never saw him again, but that night one star was very bright, and I knew he was home with his rose.<sup>1</sup></mark> <mark class="m2">I felt a little sad, but mostly calm, because he looked so happy.<sup>2</sup></mark> <mark class="m3">Now, when I am on a train at night, I always look for that star.<sup>3</sup></mark></button></div>
+<button data-r="1"><b>End B</b><mark class="m1">When the train started again, he waved and walked away into the dark. I never saw him again, but that night one star was very bright, and I knew he was home with his rose.<sup><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg></sup></mark> <mark class="m2">I felt a little sad, but mostly calm, because he looked so happy.<sup><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></sup></mark> <mark class="m3">Now, when I am on a train at night, I always look for that star.<sup><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></sup></mark></button></div>
 <p class="fb" id="endfb"></p>
-<div class="key"><span><i class="m1"></i>1 The problem is finished</span><span><i class="m2"></i>2 How I felt, and why</span><span><i class="m3"></i>3 What changed</span></div></section>
+<div class="key"><span><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>The problem is finished</span><span><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How I felt, and why</span><span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed</span></div></section>
 
 <section class="step divider" data-part="4"><div class="num">4</div><h2>Write your own End</h2><p>Plan, write and check your letter by hand. Take the most care with the End.</p></section>
 
 <!-- lesson: plan -->
-<section class="step"><h2>Plan on paper</h2>
-<p>Draw 3 boxes. Write a few words in each, not full sentences.</p>
-<div class="plan">
-<div><b>Beginning</b><span>Where were you? When? What was the problem?</span></div>
-<div><b>Middle</b><span>What happened when you met the little prince?</span></div>
-<div><b>End</b><span>Is he OK? How did you feel? What changed?</span></div></div></section>
+<section class="step"><h2>Plan on a story mountain</h2>
+<p>Draw a mountain like this on your paper. Write a few words at each place, not full sentences.</p>
+<svg class="mtn" viewBox="0 0 360 230" role="img" aria-label="A story mountain. Beginning at the foot on the left, Middle at the top, and the End on the long slope down to the right, with a flag, a heart and an arrow.">
+<path class="hill" d="M8 200 L40 200 Q95 150 140 52 Q200 120 352 200 Z"/>
+<text x="10" y="222">Beginning</text><text x="140" y="36" text-anchor="middle">Middle</text><text x="352" y="222" text-anchor="end">End</text>
+<g class="sym"><use href="#i-flag" x="182" y="70" width="28" height="28"/><use href="#i-heart" x="236" y="104" width="28" height="28"/><use href="#i-arrow" x="290" y="138" width="28" height="28"/></g>
+</svg>
+<ul class="bul"><li>At the foot, write where and when it was, and the problem.</li><li>At the top, write the biggest moment, when you met the little prince.</li><li>On the way down, write a few words next to each symbol. The End gets the most space.</li></ul></section>
 
 <!-- lesson: write -->
 <section class="step"><h2>Write it by hand</h2>
 <p class="big">By hand, on paper. Start with "Dear Pilot,".</p>
-<ul class="bul"><li>Write 1 or 2 sentences for the Beginning.</li><li>Write 2 sentences for the Middle. Start with your "When" sentence.</li><li>Write 3 sentences for the End, one for each question. Take most care with this part.</li><li>Then sign your name.</li></ul>
+<ul class="bul"><li>Write 1 or 2 sentences for the Beginning.</li><li>Write 2 sentences for the Middle. Start with your "When" sentence.</li><li>Write 3 sentences for the End, one for each symbol on your mountain. Take most care with this part.</li><li>Then sign your name.</li></ul>
 <details><summary>Stuck at the Beginning?</summary><p>Last ______, I was ______ with ______. The problem was ______.</p></details>
 <details><summary>Stuck in the Middle?</summary><p>When I first saw him, he was ______. He ______.</p></details>
 <details><summary>Stuck at the End?</summary><p>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details></section>
@@ -221,8 +238,8 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <label><input type="checkbox">Every verb is in the past. (A "Now ..." sentence can use the present, and so can words inside quotation marks.)</label>
 <label><input type="checkbox">Each sentence has a subject and a verb.</label>
 <label><input type="checkbox">Every "When ..." sentence has a comma and a second part.</label>
-<label><input type="checkbox">My End answers all 3 questions.</label></div>
-<p style="margin-top:18px" class="serif">Bring your plan and your letter to our lesson on Friday at 6:30 pm. You'll read your letter to me. If you like, send me a photo before then.</p></section>
+<label><input type="checkbox"><span>In the margin, draw <svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg> next to the End sentences that answer each question. If one is missing, write that sentence.</span></label></div>
+<p style="margin-top:18px" class="serif">Bring your story mountain and your letter to our lesson on Friday at 6:30 pm. You'll read your letter to me. If you like, send me a photo before then.</p></section>
 
 <nav class="nav"><button id="back" aria-label="Back">&lsaquo;</button><button id="next">Next</button></nav>
 </div>
@@ -242,7 +259,7 @@ $('choices').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('
 const toggle=(btn,box,a,b)=>{$(btn).onclick=()=>{const o=$(box).classList.toggle('open');$(btn).textContent=o?b:a}};
 toggle('commaBtn','comma','Check','Hide');toggle('exBtn','ex','Show an example','Hide the example');
 $('endpick').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('endpick').children].forEach(x=>x.classList.remove('right','wrong'));
- if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check your numbers against the colours. End A finishes, but there is no feeling and no change."}
+ if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check where you drew your symbols. End A finishes, but there is no feeling and no change."}
  else{b.classList.add('wrong');$('endfb').textContent="Look again. Does End A say how Sam felt, or what changed?"}};
 go(0);
 </script>
