@@ -96,14 +96,30 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 .big{font-family:Georgia,serif;font-size:22px;line-height:1.45;margin-bottom:18px}
 .check label{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--rule)}
 .check input{width:22px;height:22px;flex:0 0 22px;margin-top:3px;accent-color:var(--ok)}
+
+/* cover and chapter dividers */
+.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.top .dots{flex:1;margin:0}
+.top .part{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.cover,.divider{justify-content:center}
+.cover h1{font-size:40px;margin-bottom:10px}
+.cover .desert{max-width:360px;margin:6px 0 22px}
+.divider .num{font-family:Georgia,serif;font-size:72px;line-height:1;color:var(--sand);margin-bottom:10px}
+.divider h2{font-size:32px;margin-bottom:12px}
+.divider p{font-size:19px;color:var(--soft)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <div class="wrap">
-<div class="dots" id="dots"></div>
+<div class="top"><div class="dots" id="dots"></div><span class="part" id="part"></span></div>
+
+<section class="step cover"><svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg><h1>A letter to the pilot</h1>
+<p>Homework after our lesson on Sunday 8 November. At the end of <i>The Little Prince</i>, the pilot asks his readers for help. This week, you answer him.</p>
+<p class="soft">You need paper and a pen. It takes about 45 minutes.</p></section>
+
+<section class="step divider" data-part="1"><div class="num">1</div><h2>Remember the lesson</h2><p>Remember the 3 questions, the feeling words and the past verbs.</p></section>
 
 <!-- lesson: review -->
-<section class="step"><h1>A letter to the pilot</h1>
-<p>At the end of <i>The Little Prince</i>, the pilot asks his readers for help. This week, you answer him, with the same steps as our lesson.</p>
+<section class="step"><h2>The 3 questions</h2>
 <p class="soft">A great End answers 3 questions. Write them on your paper from memory. Then tap each one to check.</p>
 <ul class="reveal"><li><button><span>1</span><em>Is the problem finished?</em></button></li><li><button><span>2</span><em>How did I feel?</em></button></li><li><button><span>3</span><em>What changed?</em></button></li></ul></section>
 
@@ -125,6 +141,8 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <li><button><span>say</span><em>said</em></button></li><li><button><span>leave</span><em>left</em></button></li>
 <li><button><span>laugh</span><em>laughed</em></button></li><li><button><span>know</span><em>knew</em></button></li></ul></section>
 
+<section class="step divider" data-part="2"><div class="num">2</div><h2>The book's End</h2><p>Find the question the book's End leaves open.</p></section>
+
 <!-- lesson: read -->
 <section class="step"><h2>The last page</h2>
 <svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg>
@@ -144,6 +162,8 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <p>Imagine you met the little prince. Write to the pilot and tell him what happened. Your letter can finish his story.</p>
 <ul class="bul"><li>In the Beginning, tell him where you were, when it was, and what the problem was.</li><li>In the Middle, tell him what happened when you met the little prince.</li><li>In the End, tell him if the little prince is OK, how you felt, and what changed for you.</li></ul>
 <p class="idea">In the book, it is the desert in Africa. In your letter, you can choose another place, like a train, the beach, school, or the sky on your skydive.</p></section>
+
+<section class="step divider" data-part="3"><div class="num">3</div><h2>Another reader's letter</h2><p>Write "When" sentences and a better End.</p></section>
 
 <!-- lesson: read the model Beginning and Middle -->
 <section class="step"><h2>Sam's letter</h2>
@@ -178,6 +198,8 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <button class="btn" id="aBtn">Show an example</button>
 <div class="ex" id="aEx">In the morning, the train was fixed, and the boy was gone. I felt relieved, but I missed his laugh. Now, I am never bored on a long trip, because I look at the sky.</div></section>
 
+<section class="step divider" data-part="4"><div class="num">4</div><h2>Write your letter</h2><p>Plan, write and check your letter to the pilot, by hand.</p></section>
+
 <!-- lesson: plan -->
 <section class="step"><h2>Plan on paper</h2>
 <p>Draw 3 boxes. Write a few words in each, not full sentences.</p>
@@ -187,7 +209,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <div><b>End</b><span>Is he OK? How did you feel? What changed?</span></div></div></section>
 
 <!-- lesson: write -->
-<section class="step"><h2>Write your letter</h2>
+<section class="step"><h2>Write it by hand</h2>
 <p class="big">By hand, on paper. Start with "Dear Pilot,".</p>
 <ul class="bul"><li>Write 2 sentences for the Beginning.</li><li>Write 2 or 3 sentences for the Middle.</li><li>Write 4 or 5 sentences for the End. Take most care with this part.</li><li>Then sign your name.</li></ul>
 <details><summary>Stuck at the Beginning?</summary><p>Last ______, I was ______ with ______. The problem was ______.</p></details>
@@ -207,9 +229,10 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 </div>
 <script>
 const S=[...document.querySelectorAll('.step')],$=id=>document.getElementById(id);let i=0;
+let p=0;S.forEach(x=>{if(x.dataset.part)p=+x.dataset.part;x.dataset.p=p});
 $('dots').innerHTML=S.map(()=>'<i></i>').join('');const D=[...$('dots').children];
 const go=k=>{i=Math.max(0,Math.min(S.length-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));D.forEach((d,j)=>d.classList.toggle('on',j<=i));
- $('back').disabled=i===0;$('next').style.visibility=i===S.length-1?'hidden':'visible';scrollTo(0,0)};
+ $('part').textContent=+S[i].dataset.p?'Part '+S[i].dataset.p+' of 4':'';$('back').disabled=i===0;$('next').style.visibility=i===S.length-1?'hidden':'visible';scrollTo(0,0)};
 $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
 document.querySelectorAll('.reveal button').forEach(b=>b.onclick=()=>b.classList.add('shown'));
 const FB={1:"Yes. The pilot doesn't know if the rose is safe, or if the little prince is happy. The problem isn't finished. Your letter can finish it.",
