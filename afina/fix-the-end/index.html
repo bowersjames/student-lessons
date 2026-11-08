@@ -77,10 +77,10 @@ details p{margin:8px 0 0;font-size:17px}
 <h3>Which one is missing? Tap it.</h3>
 <div class="sym" data-a="1q" data-yes="Yes. We never find out if you got the phone back. The problem isn't finished."><button data-s="1q"><b>1</b>The problem is finished</button><button data-s="2q"><b>2</b>How I felt, and why</button><button data-s="3q"><b>3</b>What changed</button></div>
 <p class="fb"></p>
-<h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. Write 1, 2 and 3 next to the sentences that answer each question.</p>
+<h3>Write a better End</h3>
+<p class="small">On paper, write 3 or 4 sentences that answer all 3 questions. Then write 1, 2 or 3 next to each sentence.</p>
 <details><summary>Stuck?</summary><p>The woman ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
-<button class="btn" data-ex>Show an example</button>
+<button class="btn" data-ex>Done? Compare with an example</button>
 <p class="ex">The woman held up my phone. She found it on a bench near the river. I felt so relieved because all my photos were on it. Now, I always check my bag twice before I leave.</p></section>
 
 <section class="step"><h2>Story 2</h2>
@@ -89,10 +89,10 @@ details p{margin:8px 0 0;font-size:17px}
 <h3>Which one is missing? Tap it.</h3>
 <div class="sym" data-a="2q" data-yes="Yes. We know what happened and what changed, but not how the pilot felt, or why."><button data-s="1q"><b>1</b>The problem is finished</button><button data-s="2q"><b>2</b>How I felt, and why</button><button data-s="3q"><b>3</b>What changed</button></div>
 <p class="fb"></p>
-<h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. You are the pilot, so write "I". Write 1, 2 and 3 next to the sentences that answer each question.</p>
+<h3>Write a better End</h3>
+<p class="small">You are the pilot. On paper, write 3 or 4 sentences that answer all 3 questions. Then write 1, 2 or 3 next to each sentence.</p>
 <details><summary>Stuck?</summary><p>When I turned around, ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
-<button class="btn" data-ex>Show an example</button>
+<button class="btn" data-ex>Done? Compare with an example</button>
 <p class="ex">When I turned around, the little prince was there, and he was laughing. He told me his rose was safe. I felt so happy that I cried, because I was not alone any more. Now, when I look at the stars, I hear him laugh.</p></section>
 
 <section class="step"><h2>Story 3</h2>
@@ -101,10 +101,10 @@ details p{margin:8px 0 0;font-size:17px}
 <h3>Which one is missing? Tap it.</h3>
 <div class="sym" data-a="3q" data-yes="Yes. The problem is finished and we know how you felt, but nothing changed."><button data-s="1q"><b>1</b>The problem is finished</button><button data-s="2q"><b>2</b>How I felt, and why</button><button data-s="3q"><b>3</b>What changed</button></div>
 <p class="fb"></p>
-<h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. Write 1, 2 and 3 next to the sentences that answer each question.</p>
+<h3>Write a better End</h3>
+<p class="small">On paper, write 3 or 4 sentences that answer all 3 questions. Then write 1, 2 or 3 next to each sentence.</p>
 <details><summary>Stuck?</summary><p>When I saw my friend, ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
-<button class="btn" data-ex>Show an example</button>
+<button class="btn" data-ex>Done? Compare with an example</button>
 <p class="ex">When I saw my friend smile, I remembered my words and finished the speech. Everyone clapped. I felt proud because I didn't give up. Now, I am not so scared when I speak in class.</p></section>
 
 <section class="step"><h2>Check your 3 Ends</h2>
@@ -126,7 +126,7 @@ $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
 document.querySelectorAll('.sym').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b)return;
  [...g.children].forEach(x=>x.classList.remove('right','wrong'));const ok=b.dataset.s===g.dataset.a;b.classList.add(ok?'right':'wrong');
  g.nextElementSibling.textContent=ok?g.dataset.yes:'Look again. The End already has that one.'});
-document.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{const o=b.nextElementSibling.classList.toggle('open');b.textContent=o?'Hide the example':'Show an example'});
+document.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{const o=b.nextElementSibling.classList.toggle('open');b.textContent=o?'Hide the example':'Done? Compare with an example'});
 go(0);
 </script>
 </body></html>
