@@ -3,7 +3,7 @@
 <meta name="robots" content="noindex">
 <title>How to write a great End</title>
 <style>
-:root{--ink:#1f2430;--soft:#5a6170;--faint:#9097a3;--rule:#e6e3dc;--sand:#2f5bea;--sandbg:#f1f3f7;--star:#d9a520;--mark1:#fde9b0;--mark2:#d8ecf7;--mark3:#e3f1e2;--ok:#2e6b45;--bg:#fff;--card:#fff;--onink:#fff;--okbg:#eaf4ec;--no:#9a3b2c;--nobg:#f8e8e4}
+:root{--ink:#1e1e1e;--soft:#5a6170;--faint:#9097a3;--rule:#e6e3dc;--sand:#1971c2;--sandbg:#fff9db;--star:#d9a520;--mark1:#ffec99;--mark2:#a5d8ff;--mark3:#b2f2bb;--ok:#2e6b45;--bg:#fff;--card:#fff;--onink:#fff;--okbg:#eaf4ec;--no:#9a3b2c;--nobg:#f8e8e4}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--sand:#8aa6ff;--sandbg:#222733;--star:#e0b03a;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}}
 :root[data-theme="dark"]{--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--sand:#8aa6ff;--sandbg:#222733;--star:#e0b03a;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}
 *{box-sizing:border-box}
@@ -116,8 +116,34 @@ details p{margin:10px 0 0;font-family:inherit}
 .qs.big3 .ic{width:30px;height:30px}
 .mtn .sym{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Excalidraw look: hand-drawn type for headings and labels, wobbly hand-drawn edges, hachure fill */
+@font-face{font-family:Virgil;src:url(virgil.woff2) format("woff2");font-display:swap}
+:root{--hand:Virgil,"Segoe Print","Comic Sans MS",cursive;--wob:255px 12px 225px 12px/12px 225px 12px 255px}
+h1,h2,.mtn text,.qs.big3,.nav button,.btn,summary,.endpick button b{font-family:var(--hand)}
+h1{font-weight:400;letter-spacing:0;font-size:36px}
+h2{font-weight:400;letter-spacing:0;font-size:28px}
+.mtn text{font-size:21px}
+.qs.big3{font-size:22px}
+.reveal button,.choices button,.letter,.endpick button,.idea,.qs.big3,.btn,.nav button,.ex{border:2px solid var(--ink);border-radius:var(--wob)}
+.reveal button{background:var(--card)}
+.reveal button.shown{background:var(--mark3)}
+.idea,.qs.big3{background:var(--sandbg)}
+.letter{border-radius:6px 14px 8px 12px/12px 6px 14px 8px}
+.choices button.right,.endpick button.right{border-color:var(--ok);background:var(--okbg)}
+.choices button.wrong,.endpick button.wrong{border-color:var(--no);background:var(--nobg)}
+.ex{background:var(--mark3)}
+.nav button{font-weight:400;font-size:21px}
+#back{border-color:var(--rule)}
+.check input{accent-color:var(--sand)}
+.mtn .hill{fill:url(#hatch);stroke-width:2.6;filter:url(#rough)}
+.mtn .sym{filter:url(#rough)}
+.desert path{filter:url(#rough)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hatch-line{stroke:#5a4e1c}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-41)"><rect width="9" height="9" fill="var(--sandbg)"/><line class="hatch-line" x1="0" y1="0" x2="0" y2="9" stroke="#f0c419" stroke-width="2"/></pattern>
+<filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
 <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 3v18M6 4h12l-3.5 4 3.5 4H6"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-10.5A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8 2.5C20 15.2 12 20 12 20z"/></symbol>
 <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6"/></symbol>
