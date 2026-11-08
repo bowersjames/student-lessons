@@ -104,7 +104,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <!-- lesson: review -->
 <section class="step"><h1>A letter to the pilot</h1>
 <p>At the end of <i>The Little Prince</i>, the pilot asks his readers for help. This week, you answer him, with the same steps as our lesson.</p>
-<p class="soft">First, from memory: a great End answers 3 questions. Write them on your paper. Then tap each one to check.</p>
+<p class="soft">A great End answers 3 questions. Write them on your paper from memory. Then tap each one to check.</p>
 <ul class="reveal"><li><button><span>1</span><em>Is the problem finished?</em></button></li><li><button><span>2</span><em>How did I feel?</em></button></li><li><button><span>3</span><em>What changed?</em></button></li></ul></section>
 
 <!-- lesson: match the words -->
@@ -141,9 +141,9 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <p class="fb" id="fb"></p></section>
 
 <section class="step"><h2>Your task</h2>
-<p>Imagine you met the little prince. Write to the pilot and tell him what happened. Your letter can finish his story. The pilot wants to know:</p>
-<ul class="bul"><li>Beginning: Where were you? When? What was the problem?</li><li>Middle: What happened when you met the little prince?</li><li>End: Is the little prince OK? How did you feel? What changed for you?</li></ul>
-<p class="idea">In the book, it is the desert in Africa. In your letter, you can choose another place: a train, the beach, school, or the sky on your skydive.</p></section>
+<p>Imagine you met the little prince. Write to the pilot and tell him what happened. Your letter can finish his story.</p>
+<ul class="bul"><li>In the Beginning, tell him where you were, when it was, and what the problem was.</li><li>In the Middle, tell him what happened when you met the little prince.</li><li>In the End, tell him if the little prince is OK, how you felt, and what changed for you.</li></ul>
+<p class="idea">In the book, it is the desert in Africa. In your letter, you can choose another place, like a train, the beach, school, or the sky on your skydive.</p></section>
 
 <!-- lesson: read the model Beginning and Middle -->
 <section class="step"><h2>Sam's letter</h2>
@@ -156,7 +156,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <p class="ex" id="comma">After "outside". The comma ends the "When" part. Then comes what happened.</p></section>
 
 <!-- lesson: When sentences -->
-<section class="step"><h2>Your turn: "When" sentences</h2>
+<section class="step"><h2>Your "When" sentences</h2>
 <p class="soft">On paper, finish them for your letter. Keep the comma.</p>
 <div class="finish"><p>When I first saw him, ______.</p><p>When he spoke to me, ______.</p><p>When it was time to say goodbye, ______.</p></div>
 <button class="btn" id="exBtn">Show examples</button>
@@ -189,7 +189,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <!-- lesson: write -->
 <section class="step"><h2>Write your letter</h2>
 <p class="big">By hand, on paper. Start with "Dear Pilot,".</p>
-<ul class="bul"><li>Beginning: 2 sentences</li><li>Middle: 2 or 3 sentences</li><li>End: 4 or 5 sentences. Take most care with this part.</li><li>Then sign your name.</li></ul>
+<ul class="bul"><li>Write 2 sentences for the Beginning.</li><li>Write 2 or 3 sentences for the Middle.</li><li>Write 4 or 5 sentences for the End. Take most care with this part.</li><li>Then sign your name.</li></ul>
 <details><summary>Stuck at the Beginning?</summary><p>Last ______, I was ______ with ______. The problem was ______.</p></details>
 <details><summary>Stuck in the Middle?</summary><p>When I ______, I met the little prince.</p></details>
 <details><summary>Stuck at the End?</summary><p>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details></section>
@@ -201,7 +201,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <label><input type="checkbox">Each sentence has a subject and a verb.</label>
 <label><input type="checkbox">Every "When ..." sentence has a comma and a second part.</label>
 <label><input type="checkbox">My End answers all 3 questions.</label></div>
-<p style="margin-top:18px" class="serif">Bring all your papers to our lesson on Friday at 6:30 pm: your "When" sentences, your new End A, your plan and your letter. You'll read your letter to me. If you like, send me a photo before then.</p></section>
+<p style="margin-top:18px" class="serif">Bring your "When" sentences, your new End A, your plan and your letter to our lesson on Friday at 6:30 pm. You'll read your letter to me. If you like, send me a photo before then.</p></section>
 
 <nav class="nav"><button id="back" aria-label="Back">&lsaquo;</button><button id="next">Next</button></nav>
 </div>
@@ -213,8 +213,8 @@ const go=k=>{i=Math.max(0,Math.min(S.length-1,k));S.forEach((s,j)=>s.classList.t
 $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
 document.querySelectorAll('.reveal button').forEach(b=>b.onclick=()=>b.classList.add('shown'));
 const FB={1:"Yes. The pilot doesn't know if the rose is safe, or if the little prince is happy. The problem isn't finished. Your letter can finish it.",
- 2:"We know that one: he is sad, but a little better. Which question is still open?",
- 3:"We know that one: now the stars sound like bells to him. Which question is still open?"};
+ 2:"We know that one. He is sad, but a little better. Which question is still open?",
+ 3:"We know that one. Now the stars sound like bells to him. Which question is still open?"};
 $('choices').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('choices').children].forEach(x=>x.classList.remove('right','wrong'));b.classList.add(b.dataset.r==='1'?'right':'wrong');$('fb').textContent=FB[b.dataset.r]};
 // show or hide a hidden example
 const toggle=(btn,box,a,b)=>{$(btn).onclick=()=>{const o=$(box).classList.toggle('open');$(btn).textContent=o?b:a}};
