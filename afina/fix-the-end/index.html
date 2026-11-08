@@ -20,7 +20,7 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .step{display:none;flex:1;flex-direction:column}
 .step.on{display:flex;animation:in .4s cubic-bezier(.16,1,.3,1)}
 @keyframes in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
-h1,h2,h3,summary,.nav button,.qs,.tag,.sym button,.btn{font-family:var(--hand);font-weight:400}
+h1,h2,h3,summary,.nav button,.qs,.tag,.btn{font-family:var(--hand);font-weight:400}
 h1{font-size:34px;line-height:1.15;margin:0 0 16px}
 h2{font-size:28px;line-height:1.2;margin:0 0 12px}
 h3{font-size:20px;margin:18px 0 8px}
@@ -30,19 +30,19 @@ p{margin:0 0 14px}
 .box{border:2px solid var(--ink);border-radius:var(--wob);padding:14px 16px;background:var(--card)}
 .tint{background:var(--tint)}
 
-/* the 3 End questions and their symbols, simple enough to draw by hand */
-.ic{width:1.2em;height:1.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
-.qs{list-style:none;margin:0 0 16px;display:grid;gap:12px;font-size:22px}
-.qs li{display:flex;gap:12px;align-items:center}
-.qs .ic{width:30px;height:30px}
+/* the 3 End questions, numbered so she can write the numbers in her margin */
+.qs{list-style:none;margin:0 0 16px;padding:14px 16px;display:grid;gap:12px;font-size:22px}
+.qs li{display:flex;gap:14px;align-items:baseline}
+.qs b,.sym b{font-family:var(--hand);font-weight:400;color:var(--accent)}
+.qs b{font-size:28px}
+.sym b{font-size:22px;min-width:16px}
 
 /* a story with a weak End */
 .story p{margin:0 0 10px;font-size:17px}
 .tag{display:block;font-size:15px;color:var(--faint)}
 .weak{background:var(--weak);border-radius:4px;padding:1px 3px}
-.sym{display:flex;gap:10px;margin:6px 0 4px}
-.sym button{flex:1;min-height:56px;border:2px solid var(--ink);border-radius:var(--wob);background:var(--card);display:flex;align-items:center;justify-content:center}
-.sym button .ic{width:28px;height:28px}
+.sym{display:grid;gap:8px;margin:6px 0 4px}
+.sym button{min-height:50px;padding:8px 14px;border:2px solid var(--ink);border-radius:var(--wob);background:var(--card);display:flex;align-items:center;gap:12px;text-align:left;font-family:inherit;font-size:17px}
 .sym button.right{border-color:var(--ok);background:var(--okbg)}
 .sym button.wrong{border-color:var(--no);background:var(--nobg)}
 .fb{font-size:16px;min-height:26px;margin:6px 0 0}
@@ -63,27 +63,22 @@ details p{margin:8px 0 0;font-size:17px}
 #back:disabled{visibility:hidden}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 3v18M6 4h12l-3.5 4 3.5 4H6"/></symbol>
-<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-10.5A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8 2.5C20 15.2 12 20 12 20z"/></symbol>
-<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6"/></symbol>
-</defs></svg>
 <div class="wrap">
 <div class="dots" id="dots"></div>
 
 <section class="step"><h1>Fix the End</h1>
 <p>A great End answers 3 questions.</p>
-<ul class="qs box tint"><li><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Is the problem finished?</li><li><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How did I feel, and why?</li><li><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed?</li></ul>
+<ol class="qs box tint"><li><b>1</b>Is the problem finished?</li><li><b>2</b>How did I feel, and why?</li><li><b>3</b>What changed?</li></ol>
 <p>Each of the next 3 stories has a weak End. Find what is missing. Then write a better End on paper.</p></section>
 
 <section class="step"><h2>Story 1</h2>
 <div class="box story"><p>On Saturday, I lost my phone at South Bank. I looked everywhere, and I started to panic. Then a woman tapped me on the shoulder.</p>
 <span class="tag">End</span><p><span class="weak">I felt relieved because she was so kind, and I smiled all the way home. Now, I always check my bag twice.</span></p></div>
 <h3>Which one is missing? Tap it.</h3>
-<div class="sym" data-a="flag" data-yes="Yes. We never find out if you got the phone back. The problem isn't finished."><button data-s="flag" aria-label="Is the problem finished?"><svg class="ic"><use href="#i-flag"/></svg></button><button data-s="heart" aria-label="How did I feel?"><svg class="ic"><use href="#i-heart"/></svg></button><button data-s="arrow" aria-label="What changed?"><svg class="ic"><use href="#i-arrow"/></svg></button></div>
+<div class="sym" data-a="1q" data-yes="Yes. We never find out if you got the phone back. The problem isn't finished."><button data-s="1q"><b>1</b>Is the problem finished?</button><button data-s="2q"><b>2</b>How did I feel, and why?</button><button data-s="3q"><b>3</b>What changed?</button></div>
 <p class="fb"></p>
 <h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. Draw the 3 symbols next to the sentences that answer each question.</p>
+<p class="small">On paper, 3 or 4 sentences. Write 1, 2 and 3 next to the sentences that answer each question.</p>
 <details><summary>Stuck?</summary><p>The woman ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
 <button class="btn" data-ex>Show an example</button>
 <p class="ex">The woman held up my phone. She found it on a bench near the river. I felt so relieved because all my photos were on it. Now, I always check my bag twice before I leave.</p></section>
@@ -92,10 +87,10 @@ details p{margin:8px 0 0;font-size:17px}
 <div class="box story"><p>One year after the little prince left, I flew back to the desert. I sat under his star and waited all night. Just before morning, I heard a small laugh behind me.</p>
 <span class="tag">End</span><p><span class="weak">When I turned around, the little prince was there. He told me his rose was safe. Now, I look at the stars every night.</span></p></div>
 <h3>Which one is missing? Tap it.</h3>
-<div class="sym" data-a="heart" data-yes="Yes. We know what happened and what changed, but not how the pilot felt, or why."><button data-s="flag" aria-label="Is the problem finished?"><svg class="ic"><use href="#i-flag"/></svg></button><button data-s="heart" aria-label="How did I feel?"><svg class="ic"><use href="#i-heart"/></svg></button><button data-s="arrow" aria-label="What changed?"><svg class="ic"><use href="#i-arrow"/></svg></button></div>
+<div class="sym" data-a="2q" data-yes="Yes. We know what happened and what changed, but not how the pilot felt, or why."><button data-s="1q"><b>1</b>Is the problem finished?</button><button data-s="2q"><b>2</b>How did I feel, and why?</button><button data-s="3q"><b>3</b>What changed?</button></div>
 <p class="fb"></p>
 <h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. You are the pilot, so write "I". Draw the 3 symbols next to the sentences that answer each question.</p>
+<p class="small">On paper, 3 or 4 sentences. You are the pilot, so write "I". Write 1, 2 and 3 next to the sentences that answer each question.</p>
 <details><summary>Stuck?</summary><p>When I turned around, ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
 <button class="btn" data-ex>Show an example</button>
 <p class="ex">When I turned around, the little prince was there, and he was laughing. He told me his rose was safe. I felt so happy that I cried, because I was not alone any more. Now, when I look at the stars, I hear him laugh.</p></section>
@@ -104,10 +99,10 @@ details p{margin:8px 0 0;font-size:17px}
 <div class="box story"><p>Last term, I had to give a speech to my whole class. My hands were shaking, and I forgot my first line. Then my friend smiled at me from the front row.</p>
 <span class="tag">End</span><p><span class="weak">I remembered the words and finished my speech. Everyone clapped. I felt proud because I didn't give up.</span></p></div>
 <h3>Which one is missing? Tap it.</h3>
-<div class="sym" data-a="arrow" data-yes="Yes. The problem is finished and we know how you felt, but nothing changed."><button data-s="flag" aria-label="Is the problem finished?"><svg class="ic"><use href="#i-flag"/></svg></button><button data-s="heart" aria-label="How did I feel?"><svg class="ic"><use href="#i-heart"/></svg></button><button data-s="arrow" aria-label="What changed?"><svg class="ic"><use href="#i-arrow"/></svg></button></div>
+<div class="sym" data-a="3q" data-yes="Yes. The problem is finished and we know how you felt, but nothing changed."><button data-s="1q"><b>1</b>Is the problem finished?</button><button data-s="2q"><b>2</b>How did I feel, and why?</button><button data-s="3q"><b>3</b>What changed?</button></div>
 <p class="fb"></p>
 <h3>Now write a better End</h3>
-<p class="small">On paper, 3 or 4 sentences. Draw the 3 symbols next to the sentences that answer each question.</p>
+<p class="small">On paper, 3 or 4 sentences. Write 1, 2 and 3 next to the sentences that answer each question.</p>
 <details><summary>Stuck?</summary><p>When I saw my friend, ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details>
 <button class="btn" data-ex>Show an example</button>
 <p class="ex">When I saw my friend smile, I remembered my words and finished the speech. Everyone clapped. I felt proud because I didn't give up. Now, I am not so scared when I speak in class.</p></section>
@@ -116,7 +111,7 @@ details p{margin:8px 0 0;font-size:17px}
 <div class="check">
 <label><input type="checkbox">Every verb is in the past, except in your "Now, ..." sentence.</label>
 <label><input type="checkbox">Every "When ..." sentence has a comma and a second part.</label>
-<label><input type="checkbox">Each End has a flag, a heart and an arrow next to it. If one is missing, write that sentence.</label></div>
+<label><input type="checkbox">Each End has 1, 2 and 3 next to it. If a number is missing, write that sentence.</label></div>
 <p style="margin-top:18px">On Friday at 6:30 pm, read me your best End and tell me why it is the best. If you like, send me a photo before then.</p></section>
 
 <nav class="nav"><button id="back" aria-label="Back">&lsaquo;</button><button id="next">Next</button></nav>
@@ -127,7 +122,7 @@ $('dots').innerHTML=S.map(()=>'<i></i>').join('');const D=[...$('dots').children
 const go=k=>{i=Math.max(0,Math.min(S.length-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));D.forEach((d,j)=>d.classList.toggle('on',j<=i));
  $('back').disabled=i===0;$('next').style.visibility=i===S.length-1?'hidden':'visible';scrollTo(0,0)};
 $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
-// which symbol is missing: right turns green, wrong turns red
+// which question is missing: right turns green, wrong turns red
 document.querySelectorAll('.sym').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b)return;
  [...g.children].forEach(x=>x.classList.remove('right','wrong'));const ok=b.dataset.s===g.dataset.a;b.classList.add(ok?'right':'wrong');
  g.nextElementSibling.textContent=ok?g.dataset.yes:'Look again. The End already has that one.'});
