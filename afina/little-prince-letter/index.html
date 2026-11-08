@@ -259,7 +259,7 @@ $('choices').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('
 const toggle=(btn,box,a,b)=>{$(btn).onclick=()=>{const o=$(box).classList.toggle('open');$(btn).textContent=o?b:a}};
 toggle('commaBtn','comma','Check','Hide');toggle('exBtn','ex','Show an example','Hide the example');
 $('endpick').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('endpick').children].forEach(x=>x.classList.remove('right','wrong'));
- if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check where you drew your symbols. End A finishes, but "nice" is a weak feeling with no "because", and nothing changed."}
+ if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check where you drew your symbols. End A finishes, but 'nice' is a weak feeling with no 'because', and nothing changed."}
  else{b.classList.add('wrong');$('endfb').textContent="Look again. Does End A say how Sam felt, or what changed?"}};
 go(0);
 </script>
