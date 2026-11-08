@@ -3,14 +3,16 @@
 <meta name="robots" content="noindex">
 <title>How to write a great End</title>
 <style>
-:root{--ink:#1e1e1e;--soft:#5a6170;--faint:#9097a3;--rule:#e6e3dc;--sand:#1971c2;--sandbg:#fff9db;--star:#d9a520;--mark1:#ffec99;--mark2:#a5d8ff;--mark3:#b2f2bb;--ok:#2e6b45;--bg:#fff;--card:#fff;--onink:#fff;--okbg:#eaf4ec;--no:#9a3b2c;--nobg:#f8e8e4}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--sand:#8aa6ff;--sandbg:#222733;--star:#e0b03a;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}}
-:root[data-theme="dark"]{--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--sand:#8aa6ff;--sandbg:#222733;--star:#e0b03a;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}
+:root{--ink:#1e1e1e;--soft:#5a6170;--faint:#80868f;--rule:#e6e3dc;--accent:#1971c2;--tint:#fff9db;--mark1:#ffec99;--mark2:#a5d8ff;--mark3:#b2f2bb;--ok:#2e6b45;--okbg:#eaf4ec;--no:#9a3b2c;--nobg:#f8e8e4;--bg:#fff;--card:#fff;--onink:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e9e6df;--soft:#b3b8c2;--faint:#8b919c;--rule:#343a46;--accent:#8aa6ff;--tint:#2a2718;--mark1:#5a4a14;--mark2:#1e3a4d;--mark3:#23402a;--ok:#6fbf8b;--okbg:#1d3326;--no:#e08a78;--nobg:#3a221d;--bg:#15181f;--card:#1c2029;--onink:#15181f;color-scheme:dark}
+/* Excalidraw look: Virgil for headings and labels, thick hand-drawn edges */
+@font-face{font-family:Virgil;src:url(virgil.woff2) format("woff2");font-display:swap}
+:root{--hand:Virgil,"Segoe Print","Comic Sans MS",cursive;--wob:255px 12px 225px 12px/12px 225px 12px 255px}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--ink);font:18px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif;-webkit-text-size-adjust:100%}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.serif,h1,h2{font-family:inherit}
 .wrap{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding-block:18px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .dots{display:flex;gap:5px;margin-bottom:22px}
 .dots i{flex:1;height:3px;border-radius:2px;background:var(--rule);transition:background .3s}
@@ -18,249 +20,107 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .step{display:none;flex:1;flex-direction:column}
 .step.on{display:flex;animation:in .4s cubic-bezier(.16,1,.3,1)}
 @keyframes in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
-h1{font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.02em;margin:0 0 14px}
-h2{font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.015em;margin:0 0 12px}
+h1,h2,summary,.nav button,.qs,.part{font-family:var(--hand);font-weight:400}
+h1{font-size:34px;line-height:1.15;margin:0 0 16px}
+h2{font-size:28px;line-height:1.2;margin:0 0 12px}
 p{margin:0 0 14px}
 .soft{color:var(--soft)}
 .small{font-size:16px}
-.nav{display:flex;gap:10px;padding-top:18px;margin-top:auto}
-.nav button{min-height:52px;border-radius:10px;font-size:17px;font-weight:600}
-#back{flex:0 0 52px;border:1px solid var(--rule);background:var(--card)}
-#next{flex:1;border:0;background:var(--ink);color:var(--onink)}
-#back:disabled{visibility:hidden}
-.btn{min-height:48px;padding:0 18px;border-radius:10px;border:1px solid var(--ink);background:var(--card);font-size:16px;font-weight:600}
+.box{border:2px solid var(--ink);border-radius:var(--wob);padding:14px 16px;background:var(--card)}
+.tint{background:var(--tint)}
 
-.verbs{grid-template-columns:1fr 1fr}
-.tip{font-size:15px;color:var(--faint);margin-top:10px}
+/* the 3 End questions and their symbols, simple enough to draw by hand */
+.ic{width:1.2em;height:1.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.qs{list-style:none;margin:0 0 16px;display:grid;gap:12px;font-size:22px}
+.qs li{display:flex;gap:12px;align-items:center}
+.qs .ic{width:30px;height:30px}
 
-/* the last page */
-.page{font-family:inherit;font-size:20px;line-height:1.65}
-.desert{display:block;width:100%;height:auto;margin:4px 0 18px}
-.desert path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
-.desert .s{fill:var(--star);stroke:none}
+/* weak End, strong End */
+.story{font-size:16px;color:var(--soft)}
+.endpick{display:grid;gap:10px}
+.endpick button{text-align:left;border:2px solid var(--ink);border-radius:var(--wob);background:var(--card);padding:12px 16px;font-size:17px;line-height:1.6}
+.endpick button b{font-family:var(--hand);font-weight:400;font-size:15px;color:var(--faint);display:block}
+.endpick button.right{border-color:var(--ok);background:var(--okbg)}
+.endpick button.wrong{border-color:var(--no);background:var(--nobg)}
+mark{color:inherit;padding:1px 2px;border-radius:3px;background:transparent;transition:background .5s}
+.shown mark.m1{background:var(--mark1)}.shown mark.m2{background:var(--mark2)}.shown mark.m3{background:var(--mark3)}
+sup{opacity:0;transition:opacity .5s;margin-left:2px}
+sup .ic{width:15px;height:15px}
+.shown sup{opacity:1}
+.fb{font-size:16px;min-height:48px;margin-top:10px}
 
-/* feeling words: tap the word that fits */
-.fit{display:grid;gap:14px}
-.q p{margin:0 0 6px;font-size:18px}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opts button{min-height:44px;padding:0 14px;background:var(--card);font-size:16px}
-.opts button.right{background:var(--mark3)}
-.opts button.wrong{background:var(--nobg);border-color:var(--no)}
+/* the pilot's story */
+.part{display:block;font-size:15px;color:var(--faint);margin:0 0 2px}
+.letter p{margin:0 0 12px}
+.letter p:last-child{margin:0}
+.gap{border:2px dashed var(--faint);border-radius:var(--wob);padding:12px 16px;margin-top:12px;color:var(--soft);font-size:16px}
 
-/* choices */
-.choices{display:grid;gap:10px;margin:6px 0 12px}
-.choices button{text-align:left;padding:14px 16px;border-radius:10px;border:1px solid var(--rule);background:var(--card);font-size:17px;min-height:52px}
-.choices button.right{border-color:var(--ok);background:var(--okbg)}
-.choices button.wrong{border-color:var(--no);background:var(--nobg)}
-.fb{font-size:16px;min-height:50px}
-
-/* task */
+/* write */
 .bul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:8px}
 .bul li{padding-left:22px;position:relative}
-.bul li::before{content:"";position:absolute;left:4px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--sand)}
-.idea{background:var(--sandbg);border-radius:10px;padding:14px 16px;font-size:17px}
-
-/* letters */
-.letter{font-family:inherit;font-size:18px;line-height:1.7;border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
-.letter p{margin:0 0 10px}
-.letter p:last-child{margin:0}
-.part{display:block;font-family:"Segoe UI",system-ui,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:12px 0 2px}
-.m1{background:var(--mark1)}.m2{background:var(--mark2)}.m3{background:var(--mark3)}
-mark{color:inherit;padding:1px 2px;border-radius:3px;background:transparent;transition:background .5s}
-.ends.shown mark.m1{background:var(--mark1)}.ends.shown mark.m2{background:var(--mark2)}.ends.shown mark.m3{background:var(--mark3)}
-sup{font-family:"Segoe UI",sans-serif;font-size:12px;font-weight:700;margin-left:2px;opacity:0;transition:opacity .5s}
-.ends.shown sup{opacity:1}
-.endpick{display:grid;gap:10px}
-.endpick button{text-align:left;border:1px solid var(--rule);border-radius:10px;background:var(--card);padding:14px 16px;font-family:inherit;font-size:17px;line-height:1.6}
-.endpick button b{font-family:"Segoe UI",sans-serif;font-size:14px;color:var(--faint);display:block;margin-bottom:2px}
-.endpick button.right{border-color:var(--ok)}
-.endpick button.wrong{border-color:var(--no);background:var(--nobg)}
-.key{display:none;gap:6px;margin:12px 0 0;font-size:15px}
-.ends.shown .key{display:grid}
-.key span{display:flex;gap:8px;align-items:center}
-.key .ic{width:20px;height:20px}
-sup .ic{width:15px;height:15px}
-
-/* lines to finish */
-.finish{display:grid;gap:10px;margin-bottom:14px}
-.finish p{font-family:inherit;font-size:19px;margin:0;padding-bottom:6px;border-bottom:1px dashed var(--rule)}
-.ex{display:none;background:var(--okbg);border-radius:10px;padding:14px 16px;font-family:inherit;margin-top:12px}
-.ex.open{display:block}
-
-/* plan */
-.plan{display:grid;gap:10px}
-.plan div{border:1.5px dashed var(--sand);border-radius:10px;padding:12px 16px}
-.plan b{font-family:inherit;font-weight:700;font-size:20px;display:block}
-.plan span{font-size:16px;color:var(--soft)}
-
+.bul li::before{content:"";position:absolute;left:4px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
 details{border-bottom:1px solid var(--rule);padding:12px 0}
-summary{cursor:pointer;font-weight:600;min-height:28px}
-details p{margin:10px 0 0;font-family:inherit}
-.big{font-family:inherit;font-size:21px;font-weight:600;line-height:1.4;margin-bottom:18px}
+summary{cursor:pointer;font-size:19px;min-height:28px}
+details p{margin:10px 0 0}
 .check label{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--rule)}
-.check input{width:22px;height:22px;flex:0 0 22px;margin-top:3px;accent-color:var(--ok)}
+.check input{width:22px;height:22px;flex:0 0 22px;margin-top:3px;accent-color:var(--accent)}
 
-/* cover */
-.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.top .dots{flex:1;margin:0}
-.cover{justify-content:center}
-.cover h1{font-size:40px;margin-bottom:10px}
-.cover .desert{max-width:360px;margin:6px 0 22px}
-/* the 3 End symbols, simple enough to draw by hand */
-.ic{width:1.2em;height:1.2em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
-.qs{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px;font-size:16px;color:var(--ink)}
-.qs li{display:flex;gap:10px;align-items:center}
-.mtn{display:block;width:100%;height:auto;margin:4px 0 14px}
-.mtn .hill{fill:var(--sandbg);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
-.mtn text{fill:var(--ink);font-family:inherit;font-size:19px}
-.mtn .cap{fill:var(--soft);font-family:"Segoe UI",system-ui,sans-serif;font-size:16px}
-.qs.big3{background:var(--sandbg);border-radius:12px;padding:16px 18px;gap:12px;margin:0 0 16px;font-family:inherit;font-size:21px}
-.qs.big3 .ic{width:30px;height:30px}
-.mtn .sym{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav{display:flex;gap:10px;padding-top:18px;margin-top:auto}
+.nav button{min-height:52px;border-radius:var(--wob);font-size:21px;border:2px solid var(--ink)}
+#back{flex:0 0 52px;border-color:var(--rule);background:var(--card)}
+#next{flex:1;background:var(--ink);color:var(--onink)}
+#back:disabled{visibility:hidden}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* Excalidraw look: hand-drawn type for headings and labels, wobbly hand-drawn edges, hachure fill */
-@font-face{font-family:Virgil;src:url(virgil.woff2) format("woff2");font-display:swap}
-:root{--hand:Virgil,"Segoe Print","Comic Sans MS",cursive;--wob:255px 12px 225px 12px/12px 225px 12px 255px}
-h1,h2,.mtn text,.qs.big3,.nav button,.btn,summary,.endpick button b{font-family:var(--hand)}
-h1{font-weight:400;letter-spacing:0;font-size:36px}
-h2{font-weight:400;letter-spacing:0;font-size:28px}
-.mtn text{font-size:21px}
-.qs.big3{font-size:22px}
-.opts button,.choices button,.letter,.endpick button,.idea,.qs.big3,.btn,.nav button,.ex{border:2px solid var(--ink);border-radius:var(--wob)}
-.idea,.qs.big3{background:var(--sandbg)}
-.letter{border-radius:6px 14px 8px 12px/12px 6px 14px 8px}
-.choices button.right,.endpick button.right{border-color:var(--ok);background:var(--okbg)}
-.choices button.wrong,.endpick button.wrong{border-color:var(--no);background:var(--nobg)}
-.ex{background:var(--mark3)}
-.nav button{font-weight:400;font-size:21px}
-#back{border-color:var(--rule)}
-.check input{accent-color:var(--sand)}
-.mtn .hill{fill:url(#hatch);stroke-width:2.6;filter:url(#rough)}
-.mtn .sym{filter:url(#rough)}
-.desert path{filter:url(#rough)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hatch-line{stroke:#5a4e1c}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-41)"><rect width="9" height="9" fill="var(--sandbg)"/><line class="hatch-line" x1="0" y1="0" x2="0" y2="9" stroke="#f0c419" stroke-width="2"/></pattern>
-<filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
 <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 3v18M6 4h12l-3.5 4 3.5 4H6"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-10.5A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8 2.5C20 15.2 12 20 12 20z"/></symbol>
 <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6"/></symbol>
 </defs></svg>
 <div class="wrap">
-<div class="top"><div class="dots" id="dots"></div></div>
+<div class="dots" id="dots"></div>
 
-<section class="step cover"><svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg><h1>How to write a great End</h1></section>
+<section class="step"><h1>How to write a great End</h1>
+<p>People remember the End of a story best. A great End answers 3 questions.</p>
+<ul class="qs box tint"><li><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Is the problem finished?</li><li><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How did I feel, and why?</li><li><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed?</li></ul></section>
 
-<section class="step"><h2>Every story has 3 parts</h2>
-<p>Aristotle, a Greek thinker, worked this out over 2,300 years ago. Film writers still use it today. They call it the three-act structure.</p>
-<svg class="mtn" viewBox="0 0 360 272" role="img" aria-label="A story mountain. The Beginning is at the foot on the left, the Middle is at the top, and the End is the long slope down to the right, with a flag, a heart and an arrow.">
-<g transform="translate(0 24)"><path class="hill" d="M8 200 L40 200 Q95 150 140 52 Q200 120 352 200 Z"/>
-<g class="sym"><use href="#i-flag" x="182" y="70" width="28" height="28"/><use href="#i-heart" x="236" y="104" width="28" height="28"/><use href="#i-arrow" x="290" y="138" width="28" height="28"/></g></g>
-<text x="140" y="34" text-anchor="middle">Middle</text><text class="cap" x="140" y="56" text-anchor="middle">it gets harder</text>
-<text x="10" y="248">Beginning</text><text class="cap" x="10" y="268">where, who, the problem</text>
-<text x="352" y="248" text-anchor="end">End</text><text class="cap" x="352" y="268" text-anchor="end">how it finishes</text>
-</svg></section>
-
-<section class="step"><h2>People remember the End</h2>
-<p class="big">It is the last thing they read. A weak End can spoil a good story.</p>
-<p>A great End answers 3 questions.</p>
-<ul class="qs big3"><li><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Is the problem finished?</li><li><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How did I feel?</li><li><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed?</li></ul></section>
-
-<!-- lesson: match the words -->
-<section class="step"><h2>Feeling words</h2>
-<p class="soft">Tap the word that fits.</p>
-<div class="fit">
-<div class="q" data-a="nervous"><p>The night before my skydive, I was ______.</p><div class="opts"><button>nervous</button><button>relieved</button><button>terrified</button><button>proud</button></div></div>
-<div class="q" data-a="terrified"><p>When the door opened, I was ______. I couldn't move.</p><div class="opts"><button>relieved</button><button>terrified</button><button>proud</button><button>nervous</button></div></div>
-<div class="q" data-a="relieved"><p>When my feet touched the ground, I felt ______.</p><div class="opts"><button>proud</button><button>nervous</button><button>relieved</button><button>terrified</button></div></div>
-<div class="q" data-a="proud"><p>I did it! I felt so ______.</p><div class="opts"><button>terrified</button><button>proud</button><button>nervous</button><button>relieved</button></div></div>
-</div></section>
-
-<section class="step"><h2>The last page</h2>
-<svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg>
-<div class="page"><p>On the last page, the pilot draws the desert and one star. It is the place where the little prince came to Earth, and where he left.</p>
-<p>The pilot believes the little prince got home to his planet. But he still worries. Did the sheep eat the rose? Is the little prince happy?</p>
-<p>So he asks you, the reader, for help. If you are ever in the desert in Africa, wait under the star. If a boy with golden hair laughs and won't answer your questions, write to the pilot quickly. Tell him the little prince came back.</p></div></section>
-
-<section class="step"><h2>Which question is still open?</h2>
-<p class="soft small">Look at the 3 questions. Which question does the last page not answer? Tap it.</p>
-<div class="choices" id="choices">
-<button data-r="1"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg> Is the problem finished?</button>
-<button data-r="2"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> How did the pilot feel?</button>
-<button data-r="3"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg> What changed for the pilot?</button></div>
-<p class="fb" id="fb"></p></section>
-
-<section class="step"><h2>Your turn</h2>
-<p>Write a short story with a strong End. Write it as a letter to the pilot. Imagine you met the little prince, and tell the pilot what happened. Your End can finish his story.</p>
-<ul class="bul"><li>In the Beginning, tell him where you were, when it was, and what the problem was.</li><li>In the Middle, tell him what happened when you met the little prince.</li><li>In the End, finish your problem, tell him the little prince got home, and say how you felt and what changed for you.</li></ul>
-<p class="idea">In the book, the pilot meets him in the desert in Africa. In your letter, you can choose another place, like the beach, school, or the sky during your skydive.</p></section>
-
-<section class="step"><h2>Sam's letter</h2>
-<p class="soft small">Another reader wrote to the pilot. Here are the Beginning and the Middle.</p>
-<div class="letter"><p>Dear Pilot,</p>
-<span class="part">Beginning</span><p>Last summer, I was on a train to the mountains with my family. At night, the train broke down, and we waited for hours at a tiny station.</p>
-<span class="part">Middle</span><p>When I walked outside, I saw a boy with golden hair. He was sitting alone and looking at the sky. I asked him where he came from. He didn't answer. He only laughed and pointed at a star.</p></div>
-<p class="tip">Find the "When" sentence. Where is the comma?</p>
-<button class="btn" id="commaBtn">Check</button>
-<p class="ex" id="comma">After "outside". The comma ends the "When" part. Then comes what happened.</p></section>
-
-<!-- lesson: two Ends -->
-<section class="step ends" id="ends"><h2>Two Ends for Sam's letter</h2>
-<p class="soft small">Which End is better? Tap it. Then find the part that answers each question, and check it with the symbols.</p>
+<section class="step" id="ends"><h2>Which End is better?</h2>
+<p class="story">Sam wrote a story about a night when his train broke down. At the station, he met a boy with golden hair who laughed and pointed at a star. Here are 2 Ends for Sam's story. Tap the better one.</p>
 <div class="endpick" id="endpick">
 <button data-r="0"><b>End A</b>Then he left. We went home. It was nice.</button>
-<button data-r="1"><b>End B</b><mark class="m1">When the train started again, he waved and walked away into the dark. I never saw him again, but that night one star was very bright, and I knew he was home with his rose.<sup><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg></sup></mark> <mark class="m2">I felt a little sad, but mostly calm, because he looked so happy.<sup><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></sup></mark> <mark class="m3">Now, when I am on a train at night, I always look for that star.<sup><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></sup></mark></button></div>
-<p class="fb" id="endfb"></p>
-<div class="key"><span><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>The problem is finished</span><span><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>How I felt, and why</span><span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>What changed</span></div></section>
+<button data-r="1"><b>End B</b><mark class="m1">When the train started again, the boy waved and walked away. That night, one star was very bright, and I knew he was home.<sup><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg></sup></mark> <mark class="m2">I felt a little sad, but mostly calm, because he looked so happy.<sup><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></sup></mark> <mark class="m3">Now, when I am on a train at night, I always look for that star.<sup><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></sup></mark></button></div>
+<p class="fb" id="endfb"></p></section>
 
-<section class="step"><h2>Plan on a story mountain</h2>
-<p>Draw a mountain like this on your paper. Write a few words at each place, not full sentences.</p>
-<svg class="mtn" viewBox="0 0 360 230" role="img" aria-label="A story mountain. Beginning at the foot on the left, Middle at the top, and the End on the long slope down to the right, with a flag, a heart and an arrow.">
-<path class="hill" d="M8 200 L40 200 Q95 150 140 52 Q200 120 352 200 Z"/>
-<text x="10" y="222">Beginning</text><text x="140" y="36" text-anchor="middle">Middle</text><text x="352" y="222" text-anchor="end">End</text>
-<g class="sym"><use href="#i-flag" x="182" y="70" width="28" height="28"/><use href="#i-heart" x="236" y="104" width="28" height="28"/><use href="#i-arrow" x="290" y="138" width="28" height="28"/></g>
-</svg>
-<ul class="bul"><li>At the foot, write where and when it was, and the problem.</li><li>At the top, write the biggest moment, when you met the little prince.</li><li>On the way down, write a few words next to each symbol. The End gets the most space.</li></ul></section>
+<section class="step"><h2>The pilot goes back</h2>
+<p class="soft small">The book never tells us what happened next. Here is a Beginning and a Middle. You write the End.</p>
+<div class="box letter">
+<span class="part">Beginning</span><p>One year after the little prince left, I flew back to the desert. I wanted to know if he was happy, and if his rose was safe.</p>
+<span class="part">Middle</span><p>I sat under his star and waited. The night was cold and very quiet. Then, just before morning, I heard a small laugh behind me.</p></div>
+<p class="gap">Your End goes here.</p></section>
 
-<!-- lesson: write -->
-<section class="step"><h2>Write it by hand</h2>
-<p class="big">By hand, on paper. Start with "Dear Pilot,".</p>
-<ul class="bul"><li>Write 1 or 2 sentences for the Beginning.</li><li>Write 2 sentences for the Middle. Start with a "When" sentence.</li><li>Write 3 or 4 sentences for the End. Each symbol on your mountain needs at least one. Take most care with this part.</li><li>Then sign your name.</li></ul>
-<details><summary>Stuck at the Beginning?</summary><p>Last ______, I was ______ with ______. The problem was ______.</p></details>
-<details><summary>Stuck in the Middle?</summary><p>When I first saw him, he was ______. He ______.</p></details>
-<details><summary>Stuck at the End?</summary><p>When ______, ______. I knew the little prince was home.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details></section>
+<section class="step"><h2>Write 2 different Ends</h2>
+<p>On paper, by hand. You are the pilot, so write "I".</p>
+<ul class="bul"><li>Write End 1 in 3 or 4 sentences, in the past.</li><li>Write End 2. Make it really different. Maybe the laugh is the little prince, and maybe it is someone else.</li><li>Next to each End, draw <svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg> beside the sentences that answer each question.</li></ul>
+<details><summary>Stuck?</summary><p>When I turned around, I saw ______.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p><p class="soft small">Feeling words you know: nervous, terrified, relieved, proud, calm, sad.</p></details></section>
 
-<!-- lesson: check -->
-<section class="step"><h2>Check your letter</h2>
+<section class="step"><h2>Check your Ends</h2>
 <div class="check">
 <label><input type="checkbox">Every verb is in the past, except in your "Now, when ..." sentence.</label>
-<label><input type="checkbox">Each sentence has a subject and a verb.</label>
 <label><input type="checkbox">Every "When ..." sentence has a comma and a second part.</label>
-<label><input type="checkbox"><span>In the margin, draw <svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg> next to the End sentences that answer each question. If one is missing, write that sentence.</span></label></div>
-<p style="margin-top:18px" class="serif">Have your story mountain and your letter ready for our lesson on Friday at 6:30 pm. You'll read your letter to me. If you like, send me a photo before then.</p></section>
+<label><input type="checkbox">Each End has a flag, a heart and an arrow next to it. If one is missing, write that sentence.</label></div>
+<p style="margin-top:18px">On Friday at 6:30 pm, read me your better End and tell me why it is better. If you like, send me a photo before then.</p></section>
 
 <nav class="nav"><button id="back" aria-label="Back">&lsaquo;</button><button id="next">Next</button></nav>
 </div>
 <script>
 const S=[...document.querySelectorAll('.step')],$=id=>document.getElementById(id);let i=0;
-
 $('dots').innerHTML=S.map(()=>'<i></i>').join('');const D=[...$('dots').children];
 const go=k=>{i=Math.max(0,Math.min(S.length-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));D.forEach((d,j)=>d.classList.toggle('on',j<=i));
  $('back').disabled=i===0;$('next').style.visibility=i===S.length-1?'hidden':'visible';scrollTo(0,0)};
 $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
-document.querySelectorAll('.q').forEach(q=>q.onclick=e=>{const b=e.target.closest('button');if(!b)return;const ok=b.textContent===q.dataset.a;b.classList.toggle('right',ok);b.classList.toggle('wrong',!ok);if(ok)q.querySelector('p').innerHTML=q.querySelector('p').innerHTML.replace('______','<b>'+q.dataset.a+'</b>')});
-const FB={1:"Yes. The pilot doesn't know if the rose is safe, or if the little prince is happy. The problem isn't finished. The writer leaves it open on purpose. Your letter can close it.",
- 2:"We know that one. He is sad, but a little better. Which question is still open?",
- 3:"We know that one. Now the stars sound like bells to him. Which question is still open?"};
-$('choices').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('choices').children].forEach(x=>x.classList.remove('right','wrong'));b.classList.add(b.dataset.r==='1'?'right':'wrong');$('fb').textContent=FB[b.dataset.r]};
-// show or hide a hidden example
-const toggle=(btn,box,a,b)=>{$(btn).onclick=()=>{const o=$(box).classList.toggle('open');$(btn).textContent=o?b:a}};
-toggle('commaBtn','comma','Check','Hide');
 $('endpick').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('endpick').children].forEach(x=>x.classList.remove('right','wrong'));
- if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check where you drew your symbols. End A finishes, but 'nice' is a weak feeling with no 'because', and nothing changed."}
- else{b.classList.add('wrong');$('endfb').textContent="Look again. Does End A say how Sam felt, or what changed?"}};
+ if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. End A finishes, but 'nice' is a weak feeling with no 'because', and nothing changed."}
+ else{b.classList.add('wrong');$('endfb').textContent="Look again. Does End A say how Sam felt and why, or what changed?"}};
 go(0);
 </script>
 </body></html>
