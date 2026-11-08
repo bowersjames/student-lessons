@@ -48,14 +48,13 @@ p{margin:0 0 14px}
 .fb{font-size:16px;min-height:26px;margin:6px 0 0}
 
 
-.bul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:10px}
-.bul li{padding-left:22px;position:relative}
-.bul li::before{content:"";position:absolute;left:4px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
 /* word ideas: plain tags, not buttons */
 .wl{font-size:15px;color:var(--faint);margin:0 0 6px}
 .words{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
 .words li{background:var(--tint);border-radius:6px;padding:3px 10px;font-size:16px}
 .lead{font-size:21px;font-weight:600;line-height:1.4}
+.check label{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.check input{width:24px;height:24px;flex:0 0 24px;margin-top:2px;accent-color:var(--accent)}
 .nav{display:flex;gap:10px;padding-top:18px;margin-top:auto}
 .nav button{min-height:52px;border-radius:var(--wob);font-size:21px;border:2px solid var(--ink)}
 #back{flex:0 0 52px;border-color:var(--rule);background:var(--card)}
@@ -103,10 +102,11 @@ p{margin:0 0 14px}
 <p class="wl">Words you can use</p><ul class="words"><li>brave</li><li>confident</li><li>proud</li><li>not so scared</li><li>Now, when I speak in class, ...</li></ul></section>
 
 <section class="step"><h2>Check your 3 Ends</h2>
-<ul class="bul">
-<li>All your verbs are in the past, except after "Now".</li>
-<li>Your feeling sentence has "because", like "I felt relieved because all my photos were on it."</li>
-<li>Number your sentences 1, 2 and 3 for the 3 questions. If a number is missing, add a sentence.</li></ul>
+<div class="check">
+<label><input type="checkbox"><span>All your verbs are in the past, except after "Now".</span></label>
+<label><input type="checkbox"><span>Your feeling sentence has "because", like "I felt relieved because all my photos were on it."</span></label>
+<label><input type="checkbox"><span>Number your sentences 1, 2 and 3 for the 3 questions. If a number is missing, add a sentence.</span></label>
+</div>
 <p style="margin-top:18px">On Friday at 6:30 pm, read me your best End and tell me why it's the best. You can send me a photo before then if you like.</p></section>
 
 <nav class="nav"><button id="back" aria-label="Back">&lsaquo;</button><button id="next">Next</button></nav>
