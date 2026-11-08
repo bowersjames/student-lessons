@@ -128,7 +128,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 
 <section class="step cover"><svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg><h1>How to write a great End</h1></section>
 
-<section class="step divider" data-part="1"><div class="num">1</div><h2>Remember the lesson</h2><p>Remember the 3 parts of a story, the feeling words and the past verbs.</p></section>
+<section class="step divider" data-part="1"><div class="num">1</div><h2>Remember the lesson</h2><p>Remember the 3 parts of a story and the feeling words.</p></section>
 
 <!-- lesson: review -->
 <section class="step"><h2>Beginning, Middle and End</h2>
@@ -152,15 +152,6 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <li><button><span>a little scared before something happens</span><em>nervous</em></button></li>
 <li><button><span>happy because a scary thing is finished</span><em>relieved</em></button></li>
 <li><button><span>happy because you did something hard</span><em>proud</em></button></li></ul></section>
-
-<!-- lesson: past verbs -->
-<section class="step"><h2>A story happened before</h2>
-<p class="soft">Write the past on your paper. Then tap to check.</p>
-<ul class="reveal verbs">
-<li><button><span>see</span><em>saw</em></button></li><li><button><span>feel</span><em>felt</em></button></li>
-<li><button><span>think</span><em>thought</em></button></li><li><button><span>meet</span><em>met</em></button></li>
-<li><button><span>say</span><em>said</em></button></li><li><button><span>leave</span><em>left</em></button></li>
-<li><button><span>laugh</span><em>laughed</em></button></li><li><button><span>know</span><em>knew</em></button></li></ul></section>
 
 <section class="step divider" data-part="2"><div class="num">2</div><h2>Study a real End</h2><p>See which question the End of <i>The Little Prince</i> does not answer.</p></section>
 
@@ -196,13 +187,6 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <button class="btn" id="commaBtn">Check</button>
 <p class="ex" id="comma">After "outside". The comma ends the "When" part. Then comes what happened.</p></section>
 
-<!-- lesson: When sentences -->
-<section class="step"><h2>Your "When" sentence</h2>
-<p class="soft">On paper, finish it for your letter. Keep the comma. It will start your Middle.</p>
-<div class="finish"><p>When I first saw him, ______.</p></div>
-<button class="btn" id="exBtn">Show an example</button>
-<div class="ex" id="ex">When I first saw him, he was standing on the beach in the rain.</div></section>
-
 <!-- lesson: two Ends -->
 <section class="step ends" id="ends"><h2>Two Ends for Sam's letter</h2>
 <p class="soft small">Which End is better? Tap it. Then find the part that answers each question, and check it with the symbols.</p>
@@ -227,7 +211,7 @@ details p{margin:10px 0 0;font-family:Georgia,serif}
 <!-- lesson: write -->
 <section class="step"><h2>Write it by hand</h2>
 <p class="big">By hand, on paper. Start with "Dear Pilot,".</p>
-<ul class="bul"><li>Write 1 or 2 sentences for the Beginning.</li><li>Write 2 sentences for the Middle. Start with your "When" sentence.</li><li>Write 3 or 4 sentences for the End. Each symbol on your mountain needs at least one. Take most care with this part.</li><li>Then sign your name.</li></ul>
+<ul class="bul"><li>Write 1 or 2 sentences for the Beginning.</li><li>Write 2 sentences for the Middle. Start with a "When" sentence.</li><li>Write 3 or 4 sentences for the End. Each symbol on your mountain needs at least one. Take most care with this part.</li><li>Then sign your name.</li></ul>
 <details><summary>Stuck at the Beginning?</summary><p>Last ______, I was ______ with ______. The problem was ______.</p></details>
 <details><summary>Stuck in the Middle?</summary><p>When I first saw him, he was ______. He ______.</p></details>
 <details><summary>Stuck at the End?</summary><p>When ______, ______. I knew the little prince was home.<br>I felt ______ because ______.<br>Now, when I ______, I ______.</p></details></section>
@@ -257,7 +241,7 @@ const FB={1:"Yes. The pilot doesn't know if the rose is safe, or if the little p
 $('choices').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('choices').children].forEach(x=>x.classList.remove('right','wrong'));b.classList.add(b.dataset.r==='1'?'right':'wrong');$('fb').textContent=FB[b.dataset.r]};
 // show or hide a hidden example
 const toggle=(btn,box,a,b)=>{$(btn).onclick=()=>{const o=$(box).classList.toggle('open');$(btn).textContent=o?b:a}};
-toggle('commaBtn','comma','Check','Hide');toggle('exBtn','ex','Show an example','Hide the example');
+toggle('commaBtn','comma','Check','Hide');
 $('endpick').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('endpick').children].forEach(x=>x.classList.remove('right','wrong'));
  if(b.dataset.r==='1'){b.classList.add('right');$('ends').classList.add('shown');$('endfb').textContent="Yes. End B answers all 3 questions. Check where you drew your symbols. End A finishes, but 'nice' is a weak feeling with no 'because', and nothing changed."}
  else{b.classList.add('wrong');$('endfb').textContent="Look again. Does End A say how Sam felt, or what changed?"}};
