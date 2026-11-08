@@ -30,12 +30,6 @@ p{margin:0 0 14px}
 #back:disabled{visibility:hidden}
 .btn{min-height:48px;padding:0 18px;border-radius:10px;border:1px solid var(--ink);background:var(--card);font-size:16px;font-weight:600}
 
-/* tap to reveal: she answers on paper first */
-.reveal{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:8px}
-.reveal button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;padding:12px 16px;border:0;border-radius:10px;background:var(--sandbg);font-size:17px;min-height:52px}
-.reveal button span{flex:1}
-.reveal button em{font-style:normal;font-weight:700;font-family:inherit;font-size:19px;filter:blur(6px);transition:filter .4s;user-select:none}
-.reveal button.shown em{filter:none}
 .verbs{grid-template-columns:1fr 1fr}
 .tip{font-size:15px;color:var(--faint);margin-top:10px}
 
@@ -44,6 +38,14 @@ p{margin:0 0 14px}
 .desert{display:block;width:100%;height:auto;margin:4px 0 18px}
 .desert path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
 .desert .s{fill:var(--star);stroke:none}
+
+/* feeling words: tap the word that fits */
+.fit{display:grid;gap:14px}
+.q p{margin:0 0 6px;font-size:18px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{min-height:44px;padding:0 14px;background:var(--card);font-size:16px}
+.opts button.right{background:var(--mark3)}
+.opts button.wrong{background:var(--nobg);border-color:var(--no)}
 
 /* choices */
 .choices{display:grid;gap:10px;margin:6px 0 12px}
@@ -125,9 +127,7 @@ h1{font-weight:400;letter-spacing:0;font-size:36px}
 h2{font-weight:400;letter-spacing:0;font-size:28px}
 .mtn text{font-size:21px}
 .qs.big3{font-size:22px}
-.reveal button,.choices button,.letter,.endpick button,.idea,.qs.big3,.btn,.nav button,.ex{border:2px solid var(--ink);border-radius:var(--wob)}
-.reveal button{background:var(--card)}
-.reveal button.shown{background:var(--mark3)}
+.opts button,.choices button,.letter,.endpick button,.idea,.qs.big3,.btn,.nav button,.ex{border:2px solid var(--ink);border-radius:var(--wob)}
 .idea,.qs.big3{background:var(--sandbg)}
 .letter{border-radius:6px 14px 8px 12px/12px 6px 14px 8px}
 .choices button.right,.endpick button.right{border-color:var(--ok);background:var(--okbg)}
@@ -170,12 +170,13 @@ h2{font-weight:400;letter-spacing:0;font-size:28px}
 
 <!-- lesson: match the words -->
 <section class="step"><h2>Feeling words</h2>
-<p class="soft">Say or write the word. Then tap to check.</p>
-<ul class="reveal">
-<li><button><span>very, very scared</span><em>terrified</em></button></li>
-<li><button><span>a little scared before something happens</span><em>nervous</em></button></li>
-<li><button><span>happy because a scary thing is finished</span><em>relieved</em></button></li>
-<li><button><span>happy because you did something hard</span><em>proud</em></button></li></ul></section>
+<p class="soft">Tap the word that fits.</p>
+<div class="fit">
+<div class="q" data-a="nervous"><p>The night before my skydive, I was ______.</p><div class="opts"><button>nervous</button><button>relieved</button><button>terrified</button><button>proud</button></div></div>
+<div class="q" data-a="terrified"><p>When the door opened, I was ______. I couldn't move.</p><div class="opts"><button>relieved</button><button>terrified</button><button>proud</button><button>nervous</button></div></div>
+<div class="q" data-a="relieved"><p>When my feet touched the ground, I felt ______.</p><div class="opts"><button>proud</button><button>nervous</button><button>relieved</button><button>terrified</button></div></div>
+<div class="q" data-a="proud"><p>I did it! I felt so ______.</p><div class="opts"><button>terrified</button><button>proud</button><button>nervous</button><button>relieved</button></div></div>
+</div></section>
 
 <section class="step"><h2>The last page</h2>
 <svg class="desert" viewBox="0 0 500 170" aria-hidden="true"><path d="M10 150 Q160 70 300 118 T490 96"/><path d="M60 160 Q220 112 330 140 T480 150"/><path class="s" d="M250 22 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1Z"/></svg>
@@ -249,7 +250,7 @@ $('dots').innerHTML=S.map(()=>'<i></i>').join('');const D=[...$('dots').children
 const go=k=>{i=Math.max(0,Math.min(S.length-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));D.forEach((d,j)=>d.classList.toggle('on',j<=i));
  $('back').disabled=i===0;$('next').style.visibility=i===S.length-1?'hidden':'visible';scrollTo(0,0)};
 $('back').onclick=()=>go(i-1);$('next').onclick=()=>go(i+1);
-document.querySelectorAll('.reveal button').forEach(b=>b.onclick=()=>b.classList.add('shown'));
+document.querySelectorAll('.q').forEach(q=>q.onclick=e=>{const b=e.target.closest('button');if(!b)return;const ok=b.textContent===q.dataset.a;b.classList.toggle('right',ok);b.classList.toggle('wrong',!ok);if(ok)q.querySelector('p').innerHTML=q.querySelector('p').innerHTML.replace('______','<b>'+q.dataset.a+'</b>')});
 const FB={1:"Yes. The pilot doesn't know if the rose is safe, or if the little prince is happy. The problem isn't finished. The writer leaves it open on purpose. Your letter can close it.",
  2:"We know that one. He is sad, but a little better. Which question is still open?",
  3:"We know that one. Now the stars sound like bells to him. Which question is still open?"};
